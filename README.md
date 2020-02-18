@@ -22,7 +22,7 @@ improving of the functionalities.
 * Overview of popular sport's app.
 * Advanteges and disadvanteges of available platforms.
 * Neeeds of profeional cyclists' training.
-* Defining pecification of application (UI/UC, archteture, backend, frontend)
+* Defining specification of application (UI/UC, archteture, backend, frontend)
 * Creating and app.
 * Tests.
 * Feedback from athlets.
