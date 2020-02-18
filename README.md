@@ -30,6 +30,47 @@ improving of the functionalities.
 * Tests and feedback from athlets one more time.
 * Conclusions
 
-### Defining specification
+### Defining functionality
+* Athleths can
+  * create an account
+  * retrieve lost passwords
+  * change passwords
+  * add his metrics (age, weight, height)
+  * plan training
+  * upload trainig from garmin automaticly
+  * upload training data manually
+  * make comments
+  * view statistics of workout
+  * view statistics of week and month
+  * view the best houres for training
+  * recive push notification
+  * assign to a trainer
+   
+* Trainer can
+  * creat an account
+  * retrieve lost passwords
+  * change passwords
+  * view metrics of athlets
+  * view workouts of athlets
+  * plan trainings
+  * upload athlets training mannualy
+  * make additional comments before and after workout
+  * view statistics of week/month and make comments on them
 
-### 
+### Sketch of Web App
+
+### Workflow plan
+* Homepage
+  * log in (a calendar with planned workouts)
+    * settings
+    * statistics
+  * log out (options to creat account and log in)
+    * create account
+
+### Prototype in Adobe XD or UXPin
+
+### Structure of SQL database
+
+### Connection with Garmin devices
+
+
