@@ -58,6 +58,16 @@ improving of the functionalities.
   * view statistics of week/month and make comments on them
 
 ### Sketch of Web App
+1.Mobile v1
+![Mobile v1](img/1.png)
+![Mobile v1](img/2.png)
+2.Mobile v2
+![Mobile v2](img/1(1).png)
+![Mobile v2](img/2(1).png)
+3.Desktop v1
+![Desktop v1](img/Desktop(1).png)
+4.Desktop v2
+![Desktop v2](img/Desktop.png)
 
 ### Workflow plan
 * Homepage
