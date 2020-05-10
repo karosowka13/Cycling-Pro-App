@@ -1,5 +1,5 @@
 .Input {
-  color: #4285f4;
+  color: #4169b1;
   font-size: 12px;
   text-decoration: none;
   display: inline-block;
@@ -12,7 +12,6 @@
   flex-wrap: wrap;
   -webkit-box-pack: justify;
   justify-content: space-between;
-
 }
 
 .Input:focus {
@@ -21,7 +20,7 @@
 
 .Input h1 {
   padding: 4px 0;
-  color: #4285f4;
+  color: #4169b1;
   font-size: 24px;
   font-weight: 700;
   text-transform: uppercase;
@@ -39,8 +38,6 @@
   display: -webkit-box;
   display: flex;
   flex-wrap: wrap;
-  /* -webkit-box-pack: justify;
-  justify-content: space-between; */
   margin: 0 0 20px;
   outline: none;
   display: block;

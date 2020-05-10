@@ -66,7 +66,7 @@ class LogIn extends Component {
       <div className={classes.Form}>
         <div>
           <header>
-            <h1>Sign In</h1>
+            <h1>Sign up</h1>
           </header>
           <TextInput
             label="Email"

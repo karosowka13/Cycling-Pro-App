@@ -2,6 +2,7 @@
   z-index: 15;
   position: relative;
   background: #ffffff;
+  color: rgba(0, 0, 0, 0.6);
   width: 500px;
   border-radius: 4px;
   box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
@@ -18,14 +19,14 @@
 
 .Form header h1 {
   padding: 4px 0;
-  color: #4285f4;
+  color: #4169b1;
   font-size: 24px;
   font-weight: 700;
   text-transform: uppercase;
   text-align: left;
 }
 
-@media (max-width:600px) {
+@media (max-width: 600px) {
   .Form {
     margin: 0;
     width: 300px;
@@ -34,7 +35,7 @@
 
 .SubmitButton {
   outline: none;
-  background: #4285f4;
+  background: #4169b1;
   width: 100%;
   border: 0;
   border-radius: 4px;
@@ -46,4 +47,24 @@
   line-height: inherit;
   text-transform: uppercase;
   cursor: pointer;
+  margin-top: 5px;
+}
+
+.Form label {
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  float: left;
+}
+.Form input[type='checkbox'] {
+  width: auto;
+  margin: 0 10px 0 0;
+  float: left;
+}
+.ForgotLink {
+  color: #4169b1;
+  font-size: 12px;
+  text-decoration: none;
+  float: right;
 }

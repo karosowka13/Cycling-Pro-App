@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import validate from '../../components/Validation/Input/Validate';
 import TextInput from '../../components/TextInput/TextInput';
 import classes from './LogIn.module.css';
@@ -89,7 +90,13 @@ class LogIn extends Component {
             touched={this.state.formData.password.touched}
             valid={this.state.formData.password.valid}
           />
-
+          <div className={classes.RememberForgotBox}>
+            <input type="checkbox" />
+            <label>Remember Me</label>
+            <Link className={classes.ForgotLink} to="/recoverpassword">
+              Forgot Password?
+            </Link>
+          </div>
           <button
             className={classes.SubmitButton}
             disabled={!this.state.dataIsValid}
