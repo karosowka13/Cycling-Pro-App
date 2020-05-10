@@ -6,4 +6,6 @@ WORKDIR /app
 
 RUN npm install
 EXPOSE 3000
-CMD ["/bin/bash", "-c", "/app/entrypoint.sh"]
+RUN chmod 777 entrypoint.sh
+#CMD ["/bin/bash", "-c", "/app/entrypoint.sh"]
+CMD ["npm", "start"]
