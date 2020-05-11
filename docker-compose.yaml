@@ -13,6 +13,7 @@ services:
   # DB for backend
   postgres:
     image: postgres:11
+    hostname: postgres
     environment:
       POSTGRES_DB: postgres
       POSTGRES_USER: postgres
@@ -23,6 +24,25 @@ services:
     restart: always
     volumes:
       - pgdata:/var/lib/postgresql/data
+    networks:
+      - my-network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    depends_on:
+      - postgres
+    ports:
+      - "5555:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSecret
+    restart: unless-stopped
+    networks:
+      - my-network
 
 volumes:
   pgdata:
+
+networks:
+  my-network:
+    driver: bridge
