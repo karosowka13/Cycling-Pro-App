@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import classes from './WelcomPage.module.css';
-import Button1 from '../../components/UI/Button/Button1';
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import classes from "./WelcomPage.module.css";
+import Button from "../../components/UI/Button/Button";
+import { Link } from "react-router-dom";
 
 class WelcomPage extends Component {
   state = {
@@ -14,10 +14,10 @@ class WelcomPage extends Component {
       <div className={classes.WelcomePage}>
         <div className={classes.Form}>
           <Link exact to="/login">
-            <Button1 name="Log in" />
+            <Button name="Log in">Log in</Button>
           </Link>
           <Link to="/createaccount">
-            <Button1 name="Sign up" />
+            <Button name="Sign up">Sign up</Button>
           </Link>
         </div>
       </div>

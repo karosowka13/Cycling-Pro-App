@@ -3,16 +3,17 @@ const validate = (value, rules) => {
 
   for (let rule in rules) {
     switch (rule) {
-      case 'minLength':
+      case "minLength":
         isValid = isValid && minLengthValidator(value, rules[rule]);
         break;
 
-      case 'isRequired':
+      case "isRequired":
         isValid = isValid && requiredValidator(value);
         break;
 
-      case 'isEmail':
+      case "isEmail":
         isValid = isValid && emailValidator(value);
+
         break;
 
       default:
@@ -40,7 +41,7 @@ const minLengthValidator = (value, minLength) => {
  * @return
  */
 const requiredValidator = (value) => {
-  return value.trim() !== '';
+  return value.trim() !== "";
 };
 
 /**

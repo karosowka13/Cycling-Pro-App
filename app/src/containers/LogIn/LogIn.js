@@ -1,23 +1,29 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import validate from '../../components/Validation/Input/Validate';
-import TextInput from '../../components/TextInput/TextInput';
-import classes from './LogIn.module.css';
+import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+
+import * as actions from "../../store/actions/index";
+
+import validate from "../../components/Validation/Input/Validate";
+import TextInput from "../../components/UI/TextInput/TextInput";
+import Button from "../../components/UI/Button/Button";
+import classes from "./LogIn.module.css";
 
 class LogIn extends Component {
   state = {
+    loading: false,
     dataIsValid: false,
     formData: {
       email: {
-        value: '',
-        placeholder: 'name@domain.com',
+        value: "",
+        placeholder: "name@domain.com",
         valid: false,
         touched: false,
         validationRules: { isEmail: false, isRequired: true },
       },
       password: {
-        value: '',
-        placeholder: 'minimum 8 characters',
+        value: "",
+        placeholder: "minimum 8 characters",
         valid: false,
         touched: false,
         validationRules: { minLength: 8, isRequired: true },
@@ -25,13 +31,21 @@ class LogIn extends Component {
     },
   };
 
-  submitHandler = () => {
-    console.log(this.state.formData);
-    console.log({ TextInput });
+  submitHandler = (event) => {
+    event.preventDefault(); //prevent reload of the page
+    this.setState({ loading: true });
+    const formAuth = {};
+    // add only the input to send it to DB
+    for (let formElementIdentifier in this.state.formData) {
+      formAuth[formElementIdentifier] = this.state.formData[
+        formElementIdentifier
+      ].value;
+      this.props.onAuth(formAuth);
+    }
   };
 
-  changeHandler = (event) => {
-    const name = event.target.name;
+  changeHandler = (event, formElementName) => {
+    const name = formElementName;
     const value = event.target.value;
 
     const updatedData = {
@@ -43,7 +57,7 @@ class LogIn extends Component {
     };
 
     updatedDataElement.value = value;
-    updatedDataElement.touched = true;
+    updatedDataElement.touched = true && value !== "";
     updatedDataElement.valid = validate(
       value,
       updatedDataElement.validationRules
@@ -63,33 +77,30 @@ class LogIn extends Component {
   };
 
   render() {
+    const formElementArray = [];
+    for (let key in this.state.formData) {
+      formElementArray.push({ id: key, config: this.state.formData[key] });
+    }
+
     return (
       <div className={classes.Form}>
         <div>
           <header>
             <h1>Log In</h1>
           </header>
-          <TextInput
-            label="Email"
-            type="email"
-            name="email"
-            value={this.state.formData.email.value}
-            placeholder={this.state.formData.email.placeholder}
-            onChange={this.changeHandler}
-            touched={this.state.formData.email.touched}
-            valid={this.state.formData.email.valid}
-          />
+          {formElementArray.map((formElement) => (
+            <TextInput
+              key={formElement.id}
+              type={formElement.id}
+              label={formElement.id}
+              value={formElement.config.value}
+              placeholder={formElement.config.placeholder}
+              touched={formElement.config.touched}
+              valid={formElement.config.valid}
+              onChange={(event) => this.changeHandler(event, formElement.id)}
+            />
+          ))}
 
-          <TextInput
-            label="Password"
-            type="password"
-            name="password"
-            value={this.state.formData.password.value}
-            placeholder={this.state.formData.password.placeholder}
-            onChange={this.changeHandler}
-            touched={this.state.formData.password.touched}
-            valid={this.state.formData.password.valid}
-          />
           <div className={classes.RememberForgotBox}>
             <input type="checkbox" />
             <label>Remember Me</label>
@@ -97,17 +108,21 @@ class LogIn extends Component {
               Forgot Password?
             </Link>
           </div>
-          <button
-            className={classes.SubmitButton}
+          <Button
             disabled={!this.state.dataIsValid}
             onClick={this.submitHandler}
           >
             Log in
-          </button>
+          </Button>
         </div>
       </div>
     );
   }
 }
 
-export default LogIn;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (email, password) => dispatch(actions.auth(email, password)),
+  };
+};
+export default connect(null, mapDispatchToProps)(LogIn);

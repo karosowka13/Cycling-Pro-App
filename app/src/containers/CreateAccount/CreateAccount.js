@@ -1,22 +1,22 @@
-import React, { Component } from 'react';
-import validate from '../../components/Validation/Input/Validate';
-import TextInput from '../../components/TextInput/TextInput';
-import classes from './CreateAccount.module.css';
+import React, { Component } from "react";
+import validate from "../../components/Validation/Input/Validate";
+import TextInput from "../../components/UI/TextInput/TextInput";
+import classes from "./CreateAccount.module.css";
 
 class LogIn extends Component {
   state = {
     dataIsValid: false,
     formData: {
       email: {
-        value: '',
-        placeholder: 'name@domain.com',
+        value: "",
+        placeholder: "name@domain.com",
         valid: false,
         touched: false,
         validationRules: { isEmail: false, isRequired: true },
       },
       password: {
-        value: '',
-        placeholder: 'minimum 8 characters',
+        value: "",
+        placeholder: "minimum 8 characters",
         valid: false,
         touched: false,
         validationRules: { minLength: 8, isRequired: true },
