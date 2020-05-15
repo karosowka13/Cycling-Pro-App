@@ -13,10 +13,10 @@ class WelcomPage extends Component {
     return (
       <div className={classes.WelcomePage}>
         <div className={classes.Form}>
-          <Link exact to="/login">
+          <Link to="/authentication/login">
             <Button name="Log in">Log in</Button>
           </Link>
-          <Link to="/createaccount">
+          <Link to="/authentication/signup">
             <Button name="Sign up">Sign up</Button>
           </Link>
         </div>
