@@ -7,6 +7,7 @@ import * as actions from "../../store/actions/index";
 import validate from "../../components/Validation/Input/Validate";
 import TextInput from "../../components/UI/TextInput/TextInput";
 import Button from "../../components/UI/Button/Button";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./Authentication.module.css";
 
 class Authentication extends Component {
@@ -92,13 +93,31 @@ class Authentication extends Component {
         formName = <p>Error 404</p>;
       }
     }
+
     const formElementArray = [];
     for (let key in this.state.formData) {
       formElementArray.push({ id: key, config: this.state.formData[key] });
     }
-    let logInAddition = null;
+    let form = formElementArray.map((formElement) => (
+      <TextInput
+        key={formElement.id}
+        type={formElement.id}
+        label={formElement.id}
+        value={formElement.config.value}
+        placeholder={formElement.config.placeholder}
+        touched={formElement.config.touched}
+        valid={formElement.config.valid}
+        onChange={(event) => this.changeHandler(event, formElement.id)}
+      />
+    ));
+    form.push(
+      <Button disabled={!this.state.dataIsValid} clicked={this.submitHandler}>
+        {formName}
+      </Button>
+    );
+
     if (!this.state.isSignUp) {
-      logInAddition = (
+      form.push(
         <div className={classes.RememberForgotBox}>
           <input type="checkbox" />
           <label>Remember Me</label>
@@ -109,36 +128,52 @@ class Authentication extends Component {
       );
     }
 
+    if (this.props.loading) {
+      form = <Spinner />;
+    }
+
+    let errorMessage = null;
+    if (this.props.error) {
+      switch (this.props.error.message) {
+        case "EMAIL_EXISTS":
+          errorMessage = <p>Email already taken</p>;
+          break;
+        case "OPERATION_NOT_ALLOWED":
+          errorMessage = <p>Password is disabled</p>;
+          break;
+        case "TOO_MANY_ATTEMPTS_TRY_LATER":
+          errorMessage = <p>Too many attempts, try later</p>;
+          break;
+        case "EMAIL_NOT_FOUND":
+          errorMessage = <p>Email not found</p>;
+          break;
+        case "INVALID_PASSWORD":
+          errorMessage = <p>Invalid password</p>;
+          break;
+        case "USER_DISABLED":
+          errorMessage = <p>User disabled</p>;
+          break;
+        default:
+          errorMessage = <p>{this.props.error.message}</p>;
+      }
+    }
     return (
       <div className={classes.Form}>
         <div>
           <header>
             <h1>{formName}</h1>
           </header>
-          {formElementArray.map((formElement) => (
-            <TextInput
-              key={formElement.id}
-              type={formElement.id}
-              label={formElement.id}
-              value={formElement.config.value}
-              placeholder={formElement.config.placeholder}
-              touched={formElement.config.touched}
-              valid={formElement.config.valid}
-              onChange={(event) => this.changeHandler(event, formElement.id)}
-            />
-          ))}
-          {logInAddition}
-          <Button
-            disabled={!this.state.dataIsValid}
-            clicked={this.submitHandler}
-          >
-            {formName}
-          </Button>
+          {errorMessage}
+          {form}
         </div>
       </div>
     );
   }
 }
+
+const mapStateToPtops = (state) => {
+  return { loading: state.auth.loading, error: state.auth.error };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -146,4 +181,4 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.auth(email, password, isSignUp)),
   };
 };
-export default connect(null, mapDispatchToProps)(Authentication);
+export default connect(mapStateToPtops, mapDispatchToProps)(Authentication);
