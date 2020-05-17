@@ -1,6 +1,5 @@
 .Button {
   outline: none;
-  background: #4168b1e0;
   width: 100%;
   border: 0;
   border-radius: 4px;
@@ -8,18 +7,19 @@
   color: #ffffff;
   font-family: inherit;
   font-size: inherit;
-  font-weight: 500;
+  font-weight: 600;
   line-height: inherit;
   text-transform: uppercase;
   cursor: pointer;
   margin-bottom: 10px;
   margin-top: 10px;
+  background: #1a8fff;
+  transition: 0.5s ease-out;
 }
 
 .Button:hover {
-  background-color: #4169b1;
+  background: #1a90ffe8;
 }
-
 .Button:disabled {
   background-color: gray;
 }
