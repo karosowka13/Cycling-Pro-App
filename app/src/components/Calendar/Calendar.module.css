@@ -37,6 +37,9 @@ body {
   margin-left: 1em;
   justify-content: flex-start;
   text-align: left;
+  color: #1a8fff;
+  cursor: pointer;
+  transition: 0.25s ease-out;
 }
 
 .Month {
@@ -44,6 +47,8 @@ body {
   flex-basis: 0;
   justify-content: center;
   text-align: center;
+  font-size: 25px;
+  font-weight: bold;
 }
 .Next {
   flex-grow: 1;
@@ -51,6 +56,14 @@ body {
   margin-right: 1em;
   justify-content: flex-end;
   text-align: right;
+  color: #1a8fff;
+  cursor: pointer;
+  transition: 0.25s ease-out;
+}
+
+.Next:hover,
+.Previous:hover {
+  color: #1a90ffc7;
 }
 
 .Day {

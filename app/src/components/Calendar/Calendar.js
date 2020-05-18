@@ -1,6 +1,8 @@
 import React from "react";
 import * as dateFns from "date-fns";
-import Button from "../UI/Button/Button";
+import ButtonIcon from "../UI/ButtonIcon/ButtonIcon";
+import ArrowBackIosIcon from "@material-ui/icons/ArrowBackIos";
+import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import classes from "./Calendar.module.css";
 
 class Calendar extends React.Component {
@@ -15,13 +17,16 @@ class Calendar extends React.Component {
     return (
       <div className={classes.header}>
         <div className={classes.Previous}>
-          <Button clicked={this.prevMonth}>PREV</Button>
+          <ArrowBackIosIcon style={{ fontSize: 60 }} onClick={this.prevMonth} />
         </div>
         <div className={classes.Month}>
           <span>{dateFns.format(this.state.currentMonth, dateFormat)}</span>
         </div>
         <div className={classes.Next}>
-          <Button clicked={this.nextMonth}>NEXT</Button>
+          <ArrowForwardIosIcon
+            style={{ fontSize: 60 }}
+            onClick={this.nextMonth}
+          />
         </div>
       </div>
     );
@@ -77,6 +82,7 @@ class Calendar extends React.Component {
             onClick={() => this.onDateClick(dateFns.parse(cloneDay))}
           >
             <span className={classes.Number}>{formattedDate}</span>
+            <ButtonIcon btntype="AddCircleOutlineIcon" />
           </div>
         );
         day = dateFns.addDays(day, 1);

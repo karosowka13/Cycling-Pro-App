@@ -1,0 +1,23 @@
+.ButtonIcon {
+  cursor: pointer;
+  display: inline-block;
+  color: #1a8fff;
+  font-size: 12px;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.ButtonIcon:hover,
+.ButtonIcon:active {
+  color: #1a8fff;
+  font-size: 12px;
+  opacity: 1;
+  transition: 0.5s ease-out;
+}
+.ButtonIcon:first-child {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
