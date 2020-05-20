@@ -18,3 +18,9 @@
 .ButtonIcon label {
   cursor: pointer;
 }
+
+@media (max-width: 650px) {
+  .ButtonIcon {
+    transition: none;
+  }
+}

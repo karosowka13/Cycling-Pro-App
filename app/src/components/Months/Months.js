@@ -13,7 +13,7 @@ const months = (props) => {
         <ArrowBackIosIcon style={{ fontSize: 60 }} onClick={props.prevMonth} />
       </div>
       <div className={classes.Month}>
-        <span>{dateFns.format(props.currentMonth, dateFormat)}</span>
+        {dateFns.format(props.currentMonth, dateFormat)}
       </div>
       <div className={classes.Next}>
         <ArrowForwardIosIcon

@@ -93,7 +93,7 @@ class Calendar extends Component {
       );
       days = [];
     }
-    return <div>{rows}</div>;
+    return <div className={classes.AllDaysContainer}>{rows}</div>;
   }
 
   render() {

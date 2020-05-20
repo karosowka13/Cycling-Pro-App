@@ -7,7 +7,7 @@ const navigationItems = () => (
     <NavigationItem link="/" active>
       Cycling Pro
     </NavigationItem>
-    <NavigationItem link="/">Panel</NavigationItem>
+    <NavigationItem link="/">Log out</NavigationItem>
   </ul>
 );
 
