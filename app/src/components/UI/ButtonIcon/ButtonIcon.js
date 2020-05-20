@@ -2,27 +2,31 @@ import React from "react";
 import classes from "./ButtonIcon.module.css";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const buttonIcon = (props) => {
   let icon = null;
   switch (props.btntype) {
     case "AddCircleOutlineIcon":
       icon = (
-        <div className={classes.ButtonIcon}>
+        <React.Fragment>
           <label htmlFor="single">
             <AddCircleOutlineIcon />
           </label>
           <input type="file" id="single" onChange={props.onChange} />
-        </div>
+        </React.Fragment>
       );
       break;
     case "EditIcon":
       icon = <EditIcon />;
       break;
+    case "DeleteIcon":
+      icon = <DeleteIcon />;
+      break;
     default:
       icon = null;
   }
-  return icon;
+  return <div className={classes.ButtonIcon}>{icon}</div>;
 };
 
 export default buttonIcon;

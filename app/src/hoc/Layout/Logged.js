@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import classes from './Layout.css';
-import Toolbar from '../../components/Navigation/Toolbar/Toolbar';
-import Drawer from '../../components/Navigation/Drawer/Drawer';
+import React, { useState } from "react";
+import classes from "./Logged.module.css";
+import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
+import Drawer from "../../components/Navigation/Drawer/Drawer";
 
-function Layout(props) {
+const Logged = (props) => {
   const [showDrawer, setShowDrawer] = useState(false);
 
   const drawerClosedHandler = () => {
@@ -26,6 +26,6 @@ function Layout(props) {
       <main className={classes.Content}>{props.children}</main>
     </React.Fragment>
   );
-}
+};
 
-export default Layout;
+export default Logged;

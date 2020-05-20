@@ -23,7 +23,23 @@ body {
   cursor: pointer;
   background: #fff;
 }
-
+.Container {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-auto-rows: 33% 33% 33%;
+  grid-template-areas:
+    "button button button number"
+    "active active active active"
+    "active active active active";
+}
+.Container > * {
+  align-items: center;
+  text-align: center;
+  padding: 1px;
+  margin: 1px;
+}
 .Cell:hover {
   background: #f9f9f9;
   transition: 0.5s ease-out;
@@ -46,16 +62,19 @@ body {
   flex-basis: calc(100% / 7);
   width: calc(100% / 7);
   transition: 0.25s ease-out;
+  cursor: default;
 }
 
-.Number {
-  position: absolute;
-  font-size: 82.5%;
-  line-height: 1;
-  top: 0.75em;
-  right: 0.75em;
+.Selected div {
+  color: #1a8fff;
+  opacity: 1;
+}
+
+.Container .Number {
+  font-size: 15px;
   font-weight: 700;
   transition: 0.25s ease-out;
+  grid-area: number;
 }
 
 .DaysRow {

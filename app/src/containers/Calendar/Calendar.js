@@ -9,6 +9,7 @@ import classes from "./Calendar.module.css";
 
 class Calendar extends Component {
   state = {
+    today: new Date(),
     currentMonth: new Date(),
     selectedDate: new Date(),
     loading: false,
@@ -72,12 +73,15 @@ class Calendar extends Component {
             key={day}
             onClick={() => this.onDateClick(cloneDay)}
           >
-            <span className={classes.Number}>{dayNumber}</span>
-
-            <ButtonIcon
-              btntype="AddCircleOutlineIcon"
-              onChange={this.onFileChange}
-            ></ButtonIcon>
+            <div className={classes.Container}>
+              <span className={classes.Number}>{dayNumber}</span>
+              <ButtonIcon
+                btntype="AddCircleOutlineIcon"
+                onChange={this.onFileChange}
+              />
+              <ButtonIcon btntype="EditIcon" />
+              <ButtonIcon btntype="DeleteIcon" />
+            </div>
           </div>
         );
         day = dateFns.addDays(day, 1);
@@ -93,7 +97,6 @@ class Calendar extends Component {
   }
 
   render() {
-    let form = new FormData();
     return (
       <div className={classes.Calendar}>
         <Months

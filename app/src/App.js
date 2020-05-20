@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import WelcomPage from "./containers/WelcomPage/WelcomPage";
 import Authentication from "./containers/Authentication/Authentication";
+import Logged from "./hoc/Layout/Logged";
 import Calendar from "./containers/Calendar/Calendar";
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
             render={(props) => <Authentication {...props} />}
           />
           <Route exact path="/" component={WelcomPage} />
-          <Route exact path="/calendar" component={Calendar} />
+          <Logged>
+            <Route path="/logged/calendar" component={Calendar} />
+          </Logged>
         </Switch>
       </div>
     </Router>
