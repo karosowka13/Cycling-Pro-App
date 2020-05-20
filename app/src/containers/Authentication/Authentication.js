@@ -157,6 +157,7 @@ class Authentication extends Component {
           errorMessage = <p>{this.props.error.message}</p>;
       }
     }
+
     return (
       <div className={classes.Form}>
         <div>
@@ -171,7 +172,7 @@ class Authentication extends Component {
   }
 }
 
-const mapStateToPtops = (state) => {
+const mapStateToProps = (state) => {
   return { loading: state.auth.loading, error: state.auth.error };
 };
 
@@ -181,4 +182,4 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(actions.auth(email, password, isSignUp)),
   };
 };
-export default connect(mapStateToPtops, mapDispatchToProps)(Authentication);
+export default connect(mapStateToProps, mapDispatchToProps)(Authentication);

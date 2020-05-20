@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as dateFns from "date-fns";
-import axios from "axios";
-import { SportsLib } from "@sports-alliance/sports-lib";
+import { connect } from "react-redux";
+import * as actions from "../../store/actions/index";
 import ButtonIcon from "../../components/UI/ButtonIcon/ButtonIcon";
 import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
@@ -11,46 +11,17 @@ class Calendar extends Component {
   state = {
     currentMonth: new Date(),
     selectedDate: new Date(),
-    uploading: false,
+    loading: false,
     sucessfullUploaded: false,
     trainingLog: [],
   };
 
   onFileChange = (event) => {
     const updateStates = { ...this.state };
-    updateStates.uploading = true;
+    updateStates.loading = true;
     this.setState({ state: updateStates });
     const file = event.target.files[0];
-    let arrayBuffer = [];
-    var fr = new FileReader();
-    fr.onload = function () {
-      const data = fr.result;
-      arrayBuffer = new Int8Array(data);
-      SportsLib.importFromFit(arrayBuffer).then((event) => {
-        // const trainingData = new FormData();
-
-        // event.forEach((file, i) => {
-        //   trainingData.append(i, file);
-        // });
-
-        let trainingLog = event.stats;
-        let trainingLogObj = {};
-        for (let [key, value] of trainingLog) {
-          trainingLogObj[key] = value;
-        }
-        console.log(trainingLogObj, trainingLog);
-
-        // let trainingLogJSON = [...trainingLog.keys()];
-        axios
-          .post(
-            "https://cycling-pro-app.firebaseio.com/trainingLog.json",
-            trainingLogObj
-          )
-          .then((response) => console.log(response))
-          .catch((error) => console.log(error));
-      });
-    };
-    fr.readAsArrayBuffer(file);
+    this.props.traininglogData(file);
   };
 
   nextMonth = () => {
@@ -122,6 +93,7 @@ class Calendar extends Component {
   }
 
   render() {
+    let form = new FormData();
     return (
       <div className={classes.Calendar}>
         <Months
@@ -136,4 +108,18 @@ class Calendar extends Component {
   }
 }
 
-export default Calendar;
+const mapStateToProps = (state) => {
+  return {
+    loading: state.loadTraininglog.loading,
+    error: state.loadTraininglog.error,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    traininglogData: (trainingLog) =>
+      dispatch(actions.loadTraininglog(trainingLog)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
