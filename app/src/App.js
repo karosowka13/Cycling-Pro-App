@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "./App.css";
 import WelcomPage from "./containers/WelcomPage/WelcomPage";
 import Authentication from "./containers/Authentication/Authentication";
-import Calendar from "./components/Calendar/Calendar";
+import Calendar from "./containers/Calendar/Calendar";
 
 function App() {
   return (

@@ -7,7 +7,14 @@ const buttonIcon = (props) => {
   let icon = null;
   switch (props.btntype) {
     case "AddCircleOutlineIcon":
-      icon = <AddCircleOutlineIcon />;
+      icon = (
+        <div className={classes.ButtonIcon}>
+          <label htmlFor="single">
+            <AddCircleOutlineIcon />
+          </label>
+          <input type="file" id="single" onChange={props.onChange} />
+        </div>
+      );
       break;
     case "EditIcon":
       icon = <EditIcon />;
@@ -15,11 +22,7 @@ const buttonIcon = (props) => {
     default:
       icon = null;
   }
-  return (
-    <div className={classes.ButtonIcon} onClick={props.clicked}>
-      {icon}
-    </div>
-  );
+  return icon;
 };
 
 export default buttonIcon;

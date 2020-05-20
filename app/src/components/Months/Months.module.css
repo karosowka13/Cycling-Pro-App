@@ -1,0 +1,53 @@
+.Header {
+  display: block;
+  width: 100%;
+  padding: 1.75em 0;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 115%;
+  padding: 1.5em 0;
+  border-bottom: 1px solid #eee;
+}
+
+.Previous {
+  flex-grow: 1;
+  flex-basis: 0;
+  margin-left: 1em;
+  justify-content: flex-start;
+  text-align: left;
+  color: #1a8fff;
+  cursor: pointer;
+  transition: 0.25s ease-out;
+}
+
+.Month {
+  flex-grow: 1;
+  flex-basis: 0;
+  justify-content: center;
+  text-align: center;
+  font-size: 25px;
+  font-weight: bold;
+}
+.Next {
+  flex-grow: 1;
+  flex-basis: 0;
+  margin-right: 1em;
+  justify-content: flex-end;
+  text-align: right;
+  color: #1a8fff;
+  cursor: pointer;
+  transition: 0.25s ease-out;
+}
+
+.Next:hover,
+.Previous:hover {
+  color: #1a90ffc7;
+}

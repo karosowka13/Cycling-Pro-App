@@ -1,0 +1,68 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  font-size: 1em;
+  font-weight: 300;
+  line-height: 1.5;
+  color: rgb(39, 37, 37);
+  background: #f9f9f9;
+  position: relative;
+}
+
+.Cell {
+  flex-grow: 1;
+  flex-basis: 0;
+  max-width: 100%;
+  position: relative;
+  height: 5em;
+  border-right: 1px solid #eee;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fff;
+}
+
+.Cell:hover {
+  background: #f9f9f9;
+  transition: 0.5s ease-out;
+  flex-grow: 0;
+  flex-basis: calc(100% / 7);
+  width: calc(100% / 7);
+  transition: 0.25s ease-out;
+}
+
+.Disabled {
+  color: gray;
+  pointer-events: none;
+}
+
+.Selected {
+  border-left: 10px solid transparent;
+  border-image: linear-gradient(45deg, #1a8fff 0%, #53cbf1 40%);
+  border-image-slice: 1;
+  flex-grow: 0;
+  flex-basis: calc(100% / 7);
+  width: calc(100% / 7);
+  transition: 0.25s ease-out;
+}
+
+.Number {
+  position: absolute;
+  font-size: 82.5%;
+  line-height: 1;
+  top: 0.75em;
+  right: 0.75em;
+  font-weight: 700;
+  transition: 0.25s ease-out;
+}
+
+.DaysRow {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
