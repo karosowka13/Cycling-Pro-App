@@ -10,7 +10,6 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 115%;
@@ -56,7 +55,11 @@
 @media (max-width: 650px) {
   .Header {
     position: fixed;
-    top: 56;
+    top: 50;
     z-index: 200;
+  }
+  .Header > * {
+    font-size: 18px;
+    height: 40px;
   }
 }

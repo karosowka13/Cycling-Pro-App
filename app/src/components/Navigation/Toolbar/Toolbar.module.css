@@ -26,6 +26,9 @@
 
 @media (max-width: 499px) {
   /*check if we are on mobile devices */
+  .Toolbar {
+    height: 50px;
+  }
   .DesktopOnly {
     display: none;
   }

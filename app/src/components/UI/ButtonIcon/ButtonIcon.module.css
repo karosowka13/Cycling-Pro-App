@@ -23,4 +23,7 @@
   .ButtonIcon {
     transition: none;
   }
+  .Arrow {
+    font-size: 20;
+  }
 }
