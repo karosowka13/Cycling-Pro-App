@@ -11,13 +11,26 @@ body {
   background: #f9f9f9;
   position: relative;
 }
+.AllDaysContainer {
+  overflow-y: scroll;
+  height: 55vh;
+}
+
+.DaysRow {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
 
 .Cell {
   flex-grow: 1;
   flex-basis: 0;
   max-width: 100%;
   position: relative;
-  height: 5em;
+  height: 10em;
   border-right: 1px solid #eee;
   overflow: hidden;
   cursor: pointer;
@@ -49,6 +62,9 @@ body {
   transition: 0.25s ease-out;
 }
 
+.Today {
+  color: #1a8fff;
+}
 .Disabled {
   color: gray;
   pointer-events: none;
@@ -77,19 +93,12 @@ body {
   grid-area: number;
 }
 
-.DaysRow {
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  width: 100%;
-}
-
 @media (max-width: 650px) {
-  .AddDaysContainer {
+  .AllDaysContainer {
     display: flex;
     flex-direction: column;
+    height: auto;
+    overflow-y: initial;
   }
   .DaysRow {
     flex-direction: column;

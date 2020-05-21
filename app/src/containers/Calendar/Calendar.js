@@ -5,6 +5,7 @@ import * as actions from "../../store/actions/index";
 import ButtonIcon from "../../components/UI/ButtonIcon/ButtonIcon";
 import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
+import Stats from "../Stats/Stats";
 import classes from "./Calendar.module.css";
 
 class Calendar extends Component {
@@ -60,11 +61,13 @@ class Calendar extends Component {
         let dayNumber = dateFns.format(day, dateFormat);
         const cloneDay = day;
         const cellClasses = [classes.Cell];
-
         if (!dateFns.isSameMonth(day, monthStart)) {
           cellClasses.push(classes.Disabled);
         } else if (dateFns.isSameDay(day, selectedDate)) {
           cellClasses.push(classes.Selected);
+        }
+        if (dateFns.isSameDay(day, this.state.today)) {
+          cellClasses.push(classes.Today);
         }
 
         days.push(
@@ -74,7 +77,7 @@ class Calendar extends Component {
             onClick={() => this.onDateClick(cloneDay)}
           >
             <div className={classes.Container}>
-              <span className={classes.Number}>{dayNumber}</span>
+              <div className={classes.Number}>{dayNumber}</div>
               <ButtonIcon
                 btntype="AddCircleOutlineIcon"
                 onChange={this.onFileChange}
@@ -106,6 +109,7 @@ class Calendar extends Component {
         />
         <Weekdays currentMonth={this.state.currentMonth} />
         {this.renderCells()}
+        <Stats />
       </div>
     );
   }

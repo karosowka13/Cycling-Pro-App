@@ -1,0 +1,28 @@
+.Container {
+  display: grid;
+  grid-template-columns: 1fr 11r 1fr;
+  justify-items: start;
+  height: 15vh;
+}
+
+.Captions {
+  align-items: left;
+  text-align: left;
+  grid-column: 1;
+  padding: 0 10px 10px 20px;
+}
+
+.Week {
+  grid-column: 2;
+}
+
+.Month {
+  grid-column: 3;
+  padding: 0 20px 10px 0;
+}
+@media (max-width: 650px) {
+  .Container {
+    display: none;
+  }
+}
+/* gird-auto-flow */

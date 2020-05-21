@@ -1,5 +1,5 @@
 import React from "react";
-import cyclingLogo from "../../assets/images/cyclingLogo.png";
+import cyclingLogo from "../../assets/images/LogoSmall.png";
 import classes from "./Logo.module.css";
 const logo = (props) => (
   <div className={classes.Logo} style={{ height: props.height }}>

@@ -5,18 +5,13 @@
   flex-flow: column;
   justify-content: space-around;
   align-items: center;
-  padding: 10px 0;
   box-sizing: border-box;
   cursor: pointer;
+  color: white;
+  font-size: 30px;
 }
 
-.Menu div {
-  width: 90%;
-  height: 1px;
-  background-color: white;
-}
-
-@media (min-width: 500px) {
+@media (min-width: 650px) {
   .Menu {
     display: none;
   }

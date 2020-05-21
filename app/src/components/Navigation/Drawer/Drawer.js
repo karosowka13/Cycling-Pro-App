@@ -3,10 +3,10 @@ import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Backdrop from "../../UI/Backdrop/Backdrop";
 import classes from "./Drawer.module.css";
-const sideDrawer = (props) => {
-  let attachedClasses = [classes.SideDrawer, classes.Close];
+const Drawer = (props) => {
+  let attachedClasses = [classes.Drawer, classes.Close];
   if (props.open) {
-    attachedClasses = [classes.SideDrawer, classes.Open];
+    attachedClasses = [classes.Drawer, classes.Open];
   }
   return (
     <React.Fragment>
@@ -23,4 +23,4 @@ const sideDrawer = (props) => {
   );
 };
 
-export default sideDrawer;
+export default Drawer;

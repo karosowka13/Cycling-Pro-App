@@ -1,31 +1,37 @@
-import React, { useState } from "react";
+import React, { Component } from "react";
 import classes from "./Logged.module.css";
 import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
 import Drawer from "../../components/Navigation/Drawer/Drawer";
 
-const Logged = (props) => {
-  const [showDrawer, setShowDrawer] = useState(false);
-
-  const drawerClosedHandler = () => {
-    setShowDrawer(false);
-  };
-  const drawerOpenHandler = () => {
-    setShowDrawer(true);
+class Logged extends Component {
+  state = {
+    showDrawer: false,
   };
 
-  const drawerMenuHandler = () => {
-    this.setState((prevState) => {
-      return { showDrawer: !prevState.showDrawer };
-    });
+  drawerClosedHandler = () => {
+    this.setState({ showDrawer: false });
+  };
+  drawerOpenHandler = () => {
+    this.setState({ showDrawer: true });
   };
 
-  return (
-    <React.Fragment>
-      <Toolbar menuClicked={drawerMenuHandler} />
-      <Drawer open={showDrawer} closed={drawerClosedHandler} />
-      <main className={classes.Content}>{props.children}</main>
-    </React.Fragment>
-  );
-};
+  drawerMenuHandler = () => {
+    this.setState((prevState) => ({
+      showDrawer: !prevState.showDrawer,
+    }));
+  };
+  render() {
+    return (
+      <React.Fragment>
+        <Toolbar menuClicked={this.drawerMenuHandler} />
+        <Drawer
+          open={this.state.showDrawer}
+          closed={this.drawerClosedHandler}
+        />
+        <main className={classes.Content}>{this.props.children}</main>
+      </React.Fragment>
+    );
+  }
+}
 
 export default Logged;

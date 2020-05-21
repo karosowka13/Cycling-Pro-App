@@ -10,14 +10,17 @@ const months = (props) => {
   return (
     <div className={classes.Header}>
       <div className={classes.Previous}>
-        <ArrowBackIosIcon style={{ fontSize: 40 }} onClick={props.prevMonth} />
+        <ArrowBackIosIcon
+          style={{ fontSize: "inherit" }}
+          onClick={props.prevMonth}
+        />
       </div>
       <div className={classes.Month}>
         {dateFns.format(props.currentMonth, dateFormat)}
       </div>
       <div className={classes.Next}>
         <ArrowForwardIosIcon
-          style={{ fontSize: 40 }}
+          style={{ fontSize: "inherit" }}
           onClick={props.nextMonth}
         />
       </div>
