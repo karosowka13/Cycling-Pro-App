@@ -22,7 +22,7 @@ export const traininglogFail = (error) => {
   };
 };
 
-export const loadTraininglog = (trainingLog) => {
+export const loadTraininglog = (trainingLog, userId) => {
   return (dispatch, callback) => {
     dispatch(traininglogStart());
     let trainingLogData = trainingLog;
@@ -42,7 +42,8 @@ export const loadTraininglog = (trainingLog) => {
       callback(trainingLogObj);
     };
     fr.readAsArrayBuffer(trainingLogData);
-    axios
+    let user = { userId: userId };
+    Object.assign(trainingLogObj, user)
       .post(
         "https://cycling-pro-app.firebaseio.com/trainingLog.json",
         trainingLogObj

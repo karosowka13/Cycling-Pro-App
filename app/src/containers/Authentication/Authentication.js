@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import * as actions from "../../store/actions/index";
 
@@ -8,6 +9,7 @@ import validate from "../../components/Validation/Input/Validate";
 import TextInput from "../../components/UI/TextInput/TextInput";
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Spinner/Spinner";
+
 import classes from "./Authentication.module.css";
 
 class Authentication extends Component {
@@ -157,9 +159,13 @@ class Authentication extends Component {
           errorMessage = <p>{this.props.error.message}</p>;
       }
     }
-
+    let authRedirect = null;
+    if (this.props.isAuth) {
+      authRedirect = <Redirect to="/logged/calendar" />;
+    }
     return (
       <div className={classes.Form}>
+        {authRedirect}
         <div>
           <header>
             <h1>{formName}</h1>
@@ -173,7 +179,11 @@ class Authentication extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return { loading: state.auth.loading, error: state.auth.error };
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    isAuth: state.auth.token !== null,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

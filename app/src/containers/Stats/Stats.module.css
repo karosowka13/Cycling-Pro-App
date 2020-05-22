@@ -1,6 +1,6 @@
 .Container {
   display: grid;
-  grid-template-columns: 1fr 11r 1fr;
+  grid-template-columns: 3 repeat(1fr);
   justify-items: start;
   height: 15vh;
 }
@@ -10,6 +10,9 @@
   text-align: left;
   grid-column: 1;
   padding: 0 10px 10px 20px;
+}
+.Captions p {
+  display: grid;
 }
 
 .Week {

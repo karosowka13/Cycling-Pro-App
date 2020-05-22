@@ -6,7 +6,9 @@ import ButtonIcon from "../../components/UI/ButtonIcon/ButtonIcon";
 import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
 import Stats from "../Stats/Stats";
+import Spinner from "../../components/UI/Spinner/Spinner";
 import classes from "./Calendar.module.css";
+import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
 
 class Calendar extends Component {
   state = {
@@ -23,7 +25,7 @@ class Calendar extends Component {
     updateStates.loading = true;
     this.setState({ state: updateStates });
     const file = event.target.files[0];
-    this.props.traininglogData(file);
+    this.props.traininglogData(file, this.props.userId);
   };
 
   nextMonth = () => {
@@ -107,6 +109,7 @@ class Calendar extends Component {
           prevMonth={this.prevMonth}
           nextMonth={this.nextMonth}
         />
+        <RideDataDisplay />
         <Weekdays currentMonth={this.state.currentMonth} />
         {this.renderCells()}
         <Stats />
@@ -119,13 +122,14 @@ const mapStateToProps = (state) => {
   return {
     loading: state.loadTraininglog.loading,
     error: state.loadTraininglog.error,
+    userId: state.auth.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    traininglogData: (trainingLog) =>
-      dispatch(actions.loadTraininglog(trainingLog)),
+    traininglogData: (trainingLog, userId) =>
+      dispatch(actions.loadTraininglog(trainingLog, userId)),
   };
 };
 
