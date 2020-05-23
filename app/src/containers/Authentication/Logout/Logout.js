@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 
@@ -8,7 +8,7 @@ class Logout extends Component {
     this.props.onLogout();
   }
   render() {
-    return <Redirect t="/" />;
+    return <Redirect to="/" />;
   }
 }
 

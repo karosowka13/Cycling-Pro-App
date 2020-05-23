@@ -9,6 +9,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import authReducer from "./store/reducers/auth";
 import traininglogReducer from "./store/reducers/traininglog";
+import { BrowserRouter } from "react-router-dom";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -25,7 +26,9 @@ const store = createStore(
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

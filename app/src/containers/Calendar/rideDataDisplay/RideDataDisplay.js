@@ -9,14 +9,12 @@ class RideDataDisplay extends Component {
   state = {
     rideData: null,
     error: false,
-    userId: this.props.userId,
-    token: this.props.token,
   };
 
   render() {
     let rideDataMessage = null;
     if (this.props.loading) {
-      rideData = (
+      rideDataMessage = (
         <Backdrop>
           <div className={classes.BackgroundWindow}>
             <Spinner />
@@ -25,23 +23,26 @@ class RideDataDisplay extends Component {
       );
       const queryParams =
         "?auth=" +
-        token +
+        this.props.token +
         "&oderBy=" +
         `"userId"` +
         "&equalTo=" +
-        `"${userId}"`;
+        `"${this.props.userId}"`;
       axios
-        .get("https://cycling-pro-app.firebaseio.com/trainingLog.json")
+        .get(
+          "https://cycling-pro-app.firebaseio.com/trainingLog.json" +
+            queryParams
+        )
         .then((response) => {
-          this.state.rideData = response.data;
+          this.setState = { rideData: response.data };
         })
         .catch((err) => {
           console.log(err);
-          this.state.error = err;
+          this.setState = { error: err };
         });
     }
     if (this.state.rideData) {
-      rideData = (
+      rideDataMessage = (
         <Backdrop>
           <div className={classes.BackgroundWindow}>
             <p>{this.state.rideData}</p>
@@ -49,14 +50,19 @@ class RideDataDisplay extends Component {
         </Backdrop>
       );
     } else if (this.state.error) {
-      rideData = <p>Error</p>;
+      rideDataMessage = <p>Error</p>;
     }
     return rideDataMessage;
   }
 }
 
 const mapStateToProps = (state) => {
-  return { loading: state.auth.loading, error: state.auth.error };
+  return {
+    loading: state.auth.loading,
+    error: state.auth.error,
+    token: state.auth.token,
+    userId: state.auth.userId,
+  };
 };
 
 export default connect(mapStateToProps, null)(RideDataDisplay);

@@ -35,6 +35,17 @@ class Authentication extends Component {
     },
   };
 
+  componentDidMount() {
+    if (this.props.match.params.type === "login") {
+      this.setState({ isSignUp: false });
+    } else this.setState({ isSignUp: true });
+    if (
+      this.props.authRedirectPath !== "/logged/calendar" &&
+      this.props.isAuth
+    ) {
+      this.props.onSetAuthRedirectPath();
+    }
+  }
   submitHandler = (event) => {
     event.preventDefault(); //prevent reload of the page
     this.setState({ loading: true });
@@ -77,11 +88,6 @@ class Authentication extends Component {
     });
   };
 
-  componentDidMount() {
-    if (this.props.match.params.type === "login") {
-      this.setState({ isSignUp: false });
-    } else this.setState({ isSignUp: true });
-  }
   render() {
     let formName = this.props.match.params.type;
     switch (formName) {
@@ -107,20 +113,24 @@ class Authentication extends Component {
         label={formElement.id}
         value={formElement.config.value}
         placeholder={formElement.config.placeholder}
-        touched={formElement.config.touched}
-        valid={formElement.config.valid}
+        touched={formElement.config.touched ? 1 : 0}
+        valid={formElement.config.valid ? 1 : 0}
         onChange={(event) => this.changeHandler(event, formElement.id)}
       />
     ));
     form.push(
-      <Button disabled={!this.state.dataIsValid} clicked={this.submitHandler}>
+      <Button
+        key={formName}
+        disabled={!this.state.dataIsValid}
+        clicked={this.submitHandler}
+      >
         {formName}
       </Button>
     );
 
     if (!this.state.isSignUp) {
       form.push(
-        <div className={classes.RememberForgotBox}>
+        <div key={"remember"} className={classes.RememberForgotBox}>
           <input type="checkbox" />
           <label>Remember Me</label>
           <Link className={classes.ForgotLink} to="/recoverpassword">
@@ -161,7 +171,7 @@ class Authentication extends Component {
     }
     let authRedirect = null;
     if (this.props.isAuth) {
-      authRedirect = <Redirect to="/logged/calendar" />;
+      authRedirect = <Redirect to="/calendar" />;
     }
     return (
       <div className={classes.Form}>
@@ -183,6 +193,7 @@ const mapStateToProps = (state) => {
     loading: state.auth.loading,
     error: state.auth.error,
     isAuth: state.auth.token !== null,
+    authRedirectPath: state.auth.authRedirectPath,
   };
 };
 
@@ -190,6 +201,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     onAuth: (email, password, isSignUp) =>
       dispatch(actions.auth(email, password, isSignUp)),
+    onSetAuthRedirectPath: () =>
+      dispatch(actions.setAuthRedirectPath("/calendar")),
   };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Authentication);

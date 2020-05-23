@@ -1,11 +1,5 @@
 import React, { Component } from "react";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  withRouter,
-  Redirect,
-} from "react-router-dom";
+import { Switch, Route, withRouter, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import * as actions from "./store/actions/index";
@@ -25,31 +19,32 @@ class App extends Component {
     let secureRoutes = (
       <Switch>
         <Route
-          exact
           path="/authentication/:type"
           render={(props) => <Authentication {...props} />}
         />
-        <Route exact path="/" component={WelcomPage} />
+        <Route path="/logout" component={Logout} />
+        <Route path="/" exact component={WelcomPage} />
         <Redirect to="/" />
       </Switch>
     );
     if (this.props.isAuth) {
       secureRoutes = (
-        <Switch>
-          <Logged>
-            <Route path="/logged/calendar" component={Calendar} />
-          </Logged>
-          <Route path="/logout" component={Logout} />
-          <Redirect to="/logged/calendar" />
-        </Switch>
+        <Logged>
+          <Switch>
+            <Route
+              path="/authentication/:type"
+              render={(props) => <Authentication {...props} />}
+            />
+            <Route path="/calendar" component={Calendar} />
+            <Route path="/logout" component={Logout} />
+            <Route path="/" exact component={Calendar} />
+            <Redirect to="/" />
+          </Switch>
+        </Logged>
       );
     }
 
-    return (
-      <Router>
-        <div className="App">{secureRoutes}</div>
-      </Router>
-    );
+    return <div className="App">{secureRoutes}</div>;
   }
 }
 
