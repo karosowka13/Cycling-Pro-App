@@ -23,35 +23,38 @@ export const traininglogFail = (error) => {
 };
 
 export const loadTraininglog = (trainingLog, userId) => {
-  return (dispatch, callback) => {
+  return (dispatch) => {
     dispatch(traininglogStart());
-    let trainingLogData = trainingLog;
-    let arrayBuffer = [];
-    var fr = new FileReader();
-    const trainingLogObj = {};
-    fr.onload = () => {
-      const data = fr.result;
-      arrayBuffer = new Int8Array(data);
-      SportsLib.importFromFit(arrayBuffer).then((event) => {
-        let trainingLog = event.stats;
-        for (let [key, value] of trainingLog) {
-          trainingLogObj[key] = value;
-        }
-        return trainingLogObj;
-      });
-      callback(trainingLogObj);
-    };
-    fr.readAsArrayBuffer(trainingLogData);
-    let user = { userId: userId };
-    Object.assign(trainingLogObj, user)
-      .post(
-        "https://cycling-pro-app.firebaseio.com/trainingLog.json",
-        trainingLogObj
-      )
+
+    // let trainingLogData = trainingLog;
+    // let arrayBuffer = [];
+    // var fr = new FileReader();
+    // const trainingLogObj = {};
+    // fr.onload = () => {
+    //   const data = fr.result;
+    //   arrayBuffer = new Int8Array(data);
+    //   SportsLib.importFromFit(arrayBuffer).then((event) => {
+    //     let trainingLog = event.stats;
+    //     for (let [key, value] of trainingLog) {
+    //       trainingLogObj[key] = value;
+    //     }
+    //     return trainingLogObj;
+    //   });
+    //   callback(trainingLogObj);
+    // };
+    // fr.readAsArrayBuffer(trainingLogData);
+    const log = new FormData();
+    // log.append("file", trainingLog);
+    log.append("file", trainingLog);
+    console.log(log, trainingLog.name);
+    axios
+      .post("http://localhost:8000/upload", log)
       .then((response) => {
+        console.log(response);
         dispatch(traininglogSuccess(response.data.stats));
       })
       .catch((err) => {
+        console.log(err);
         dispatch(
           traininglogFail(err.response.data.error || "Unexpected error")
         );
