@@ -1,12 +1,12 @@
-const multer = require("multer");
-const helpers = require("../helpers/helpers");
+import multer from ("multer")
+import { fileFilter } from "../helpers/validation";
 const FitParser = require("../node_modules/fit-file-parser/dist/fit-parser")
   .default.default;
 const EasyFit = require("../node_modules/parse-fit/dist/easy-fit").default;
 const SportsLib = require("../node_modules/@sports-alliance/sports-lib/lib/index")
   .SportsLib;
 
-const rawTrainingData = (req, res, next) => {
+export const rawTrainingData = (req, res, next) => {
   let storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, "./public");
@@ -18,7 +18,7 @@ const rawTrainingData = (req, res, next) => {
 
   const upload = multer({
     storage: storage,
-    fileFilter: helpers.fileFilter,
+    fileFilter: fileFilter,
   }).single("file");
 
   upload(req, res, (err) => {
@@ -95,7 +95,7 @@ const rawTrainingData = (req, res, next) => {
 
 // const fit = require("fit");
 
-const convertToDB = (req, res, next) => {
+export const convertToDB = (req, res, next) => {
   const fitFileBuffer = fs.readFileSync("../public/fitfile.fit");
 
   fit.parse(fitFileBuffer, (err, data) => {
@@ -108,6 +108,3 @@ const convertToDB = (req, res, next) => {
   });
   next();
 };
-
-exports.convertToDB = convertToDB;
-exports.rawTrainingData = rawTrainingData;

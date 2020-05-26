@@ -1,0 +1,4 @@
+docker run -p 5555:80     -e "PGADMIN_DEFAULT_EMAIL=user@domain.com"     -e "PGADMIN_DEFAULT_PASSWORD=SuperSecret"     -d dpage/pgadmin4
+
+docker run -p 5432:5432 -e "POSTGRES_USER=postgres" -e "POSTGRES_PASSWORD=postgres" -d postgres:11
+a6684eb0c12aeffc66e9d331722e1aa0395c2b3a0fd15c1dbead47edc4227c37

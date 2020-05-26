@@ -1,27 +1,28 @@
-const express = require("express");
-const cors = require("cors");
-const trainingData = require("./controllers/traningDataController");
-const bodyParser = require("body-parser");
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import athletesRoute from "./routes/athlets";
+import trainingDataRoute from "./routes/trainingData";
+import dotenv from "dotenv";
+
 const app = express();
-require("dotenv").config();
-const db = require("./helpers/queries");
+dotenv.config();
 
 app.use(cors());
-//app.use(formData.parse());
 app.use(bodyParser.raw());
-
-app.use(express.static(__dirname + "/public"));
+// Add middleware for parsing JSON and urlencoded data and populating `req.body`
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 app.get("/", function (req, res) {
   return res.send("Hello Server");
 });
 
-app.post("/upload", trainingData.rawTrainingData);
+//get training data from device
+app.use("/api/v1", trainingDataRoute);
+//create athlete
+app.use("/api/v1", athletesRoute);
 
 app.listen(8000, function () {
   console.log("App running on port 8000");
 });
-
-app.get("/userid", db.getAthletId);
-app.delete("/userid/:id", db.deleteAthlete);
-app.post("/userid", db.createAthlete);
