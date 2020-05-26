@@ -1,5 +1,5 @@
 import modelQuery from "../models/modelQuery";
-import { errorMessage, successMessage, status } from "..helpers/status";
+import { errorMessage, successMessage, status } from "../helpers/status";
 import { isNumber } from "../helpers/validation";
 
 export const createMetrics = async (req, res) => {

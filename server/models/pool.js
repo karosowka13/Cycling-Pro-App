@@ -4,15 +4,14 @@ dotenv.config();
 
 const databaseConfig = { connectionString: process.env.DATABASE_URL };
 const pool = new Pool({
-  databaseConfig,
+  user: "postgres",
+  host: "172.17.0.1",
+  database: "Athletes",
+  password: "postgres",
+  port: "5432",
 });
 pool.on("connect", () => {
   console.log("connected to the Database");
 });
-// user: "postgres",
-// host: "172.17.0.5",
-// database: "Athlets",
-// password: "postgres",
-// port: "5432",
 
 export default pool;

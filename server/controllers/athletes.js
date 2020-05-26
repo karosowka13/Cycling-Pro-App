@@ -1,16 +1,17 @@
 import modelQuery from "../models/modelQuery";
-import { errorMessage, successMessage, status } from "..helpers/status";
+import { errorMessage, successMessage, status } from "../helpers/status";
 import { isEmpty } from "../helpers/validation";
 
 export const createAthlete = async (req, res) => {
-  const athlete_id = req.body;
+  console.log(req.body.athlete_id);
+  const athlete_id = req.body.athlete_id;
   if (isEmpty(athlete_id)) {
     errorMessage.error = "Athlete id cannot be empty";
     return res.status(status.bad).send(errorMessage);
   }
   const creatAthletQuery =
     "INSERT INTO athletes (athlete_id) VALUES ($1) returning *";
-  const values = athlete_id;
+  const values = [athlete_id];
   try {
     const { rows } = await modelQuery.query(creatAthletQuery, values);
     const dbResponse = rows[0];
@@ -23,14 +24,14 @@ export const createAthlete = async (req, res) => {
 };
 
 export const deleteAthlete = async (req, res) => {
-  const athlete_id = req.body;
+  const athlete_id = req.body.athlete_id;
   if (isEmpty(athlete_id)) {
     errorMessage.error = "No athlete id to delete";
     return res.status(status.bad).send(errorMessage);
   }
   const deleteAthletQuery =
     "DELETE FROM athletes WHERE athlete_id=($1) returning *";
-  const values = athlete_id;
+  const values = [athlete_id];
   try {
     const { rows } = await modelQuery.query(deleteAthletQuery, values);
     const dbResponse = rows[0];

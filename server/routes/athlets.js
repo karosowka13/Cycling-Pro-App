@@ -1,7 +1,8 @@
 import express from "express";
 
-import { createAthlete } from "../controllers/athletes";
+import { createAthlete, deleteAthlete } from "../controllers/athletes";
 
 var router = express.Router();
-router.post("/athlet", createAthlete);
+router.post("/athletes", createAthlete);
+router.post("/athletes_id", deleteAthlete);
 export default router;

@@ -1,4 +1,4 @@
-import multer from ("multer")
+import multer from "multer";
 import { fileFilter } from "../helpers/validation";
 const FitParser = require("../node_modules/fit-file-parser/dist/fit-parser")
   .default.default;

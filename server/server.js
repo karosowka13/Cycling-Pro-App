@@ -18,10 +18,11 @@ app.get("/", function (req, res) {
   return res.send("Hello Server");
 });
 
-//get training data from device
-app.use("/api/v1", trainingDataRoute);
 //create athlete
 app.use("/api/v1", athletesRoute);
+
+//get training data from device
+app.use("/api/v1", trainingDataRoute);
 
 app.listen(8000, function () {
   console.log("App running on port 8000");
