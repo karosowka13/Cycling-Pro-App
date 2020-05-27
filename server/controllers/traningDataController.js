@@ -1,27 +1,15 @@
 import multer from "multer";
 import { fileFilter } from "../helpers/validation";
 const FitParser = require("../node_modules/fit-file-parser/dist/fit-parser")
-  .default.default;
-const EasyFit = require("../node_modules/parse-fit/dist/easy-fit").default;
-const SportsLib = require("../node_modules/@sports-alliance/sports-lib/lib/index")
-  .SportsLib;
+  .default;
 
 export const rawTrainingData = (req, res, next) => {
-  let storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, "./public");
-    },
-    filename: function (req, file, cb) {
-      cb(null, Date.now() + "-" + file.originalname);
-    },
-  });
-
+  const storage = multer.memoryStorage();
   const upload = multer({
     storage: storage,
     fileFilter: fileFilter,
   }).single("file");
-
-  upload(req, res, (err) => {
+  let trainingJSONData = upload(req, res, (err) => {
     if (req.fileValidationError) {
       return res.end(res.writeHead(415, req.fileValidationError));
     } else if (!req.file) {
@@ -33,78 +21,36 @@ export const rawTrainingData = (req, res, next) => {
       return res.status(500).json(err);
       // An unknown error occurred when uploading.
     }
-    return console.log(req.file), res.status(200).send(req.file);
+    delete req.file.fieldname;
+    let training_data_JSON = encodeToJSON(req.file);
+    res.locals.data = training_data_JSON;
+    console.log("before", training_data_JSON.time, "after_return_toREQ");
+    return req.file.buffer, res.status(200).send(req.file), next();
     // Everything went fine.
   });
-  next();
+  console.log(trainingJSONData, "data to send");
+  console.log(res.locals.data, "response");
+  return res.locals.data;
 };
 
-// const convertToDB = (req, res, next) => {
-//   // Require the module
-
-//   // Read a .FIT file
-//   fs.readFile("../public/fitfile.fit", function (err, content) {
-//     // Create a EasyFit instance (options argument is optional)
-//     var easyFit = new EasyFit({
-//       force: true,
-//       speedUnit: "km/h",
-//       lengthUnit: "km",
-//       temperatureUnit: "kelvin",
-//       elapsedRecordField: true,
-//       mode: "cascade",
-//     });
-
-//     // Parse your file
-//     easyFit.parse(content, function (error, data) {
-//       // Handle result of parse method
-//       if (error) {
-//         console.log(error);
-//       } else {
-//         console.log(JSON.stringify(data));
-//       }
-//     });
-//   });
-//   next();
-// };
-
-// const convertToDB = (req, res, next) => {
-//   fs.readFile("../public/fitfile.fit", function (err, content) {
-//     // Create a FitParser instance (options argument is optional)
-//     var fitParser = new FitParser({
-//       force: true,
-//       speedUnit: "km/h",
-//       lengthUnit: "km",
-//       temperatureUnit: "celsius",
-//       elapsedRecordField: true,
-//       mode: "both",
-//     });
-
-//     // Parse your file
-//     fitParser.parse(content, function (error, data) {
-//       // Handle result of parse method
-//       if (error) {
-//         console.log(error);
-//       } else {
-//         console.log(JSON.stringify(data));
-//         res.status(200).send(data);
-//       }
-//     });
-//   });
-//   next();
-// };
-
-// const fit = require("fit");
-
-export const convertToDB = (req, res, next) => {
-  const fitFileBuffer = fs.readFileSync("../public/fitfile.fit");
-
-  fit.parse(fitFileBuffer, (err, data) => {
-    if (err) {
-      console.log(error);
-    } else {
-      console.log(data);
-      res.status(200).send(data);
-    }
+const encodeToJSON = (req) => {
+  // Create a FitParser instance (options argument is optional)
+  const fitParser = new FitParser({
+    force: true,
+    speedUnit: "km/h",
+    lengthUnit: "km",
+    temperatureUnit: "celsius",
+    elapsedRecordField: true,
+    mode: "both",
   });
-  next();
+  let trainingParse = null;
+  // Parse your file
+  fitParser.parse(req.buffer, function (error, data) {
+    // Handle result of parse method
+    if (error) {
+      console.log(error);
+    }
+    trainingParse = JSON.stringify(data);
+  });
+  return trainingParse;
 };

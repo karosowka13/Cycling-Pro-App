@@ -1,0 +1,196 @@
+import mongoose from "mongoose";
+
+const trainingSchema = new mongoose.Schema({
+  file_id: {
+    type: "object",
+    properties: {
+      time_created: { type: "string" },
+      manufacturer: { type: "number" },
+      product: { type: "number" },
+      number: { type: "number" },
+    },
+  },
+  file_creator: {
+    type: "object",
+    properties: { software_version: { type: "number" } },
+  },
+  device_settings: {
+    type: "object",
+    properties: {
+      utc_offset: { type: "number" },
+      time_offset: { type: "number" },
+      active_time_zone: { type: "number" },
+      time_zone_offset: { type: "number" },
+    },
+  },
+  user_profile: {
+    type: "object",
+    properties: {
+      friendly_name: { type: "string" },
+      weight: { type: "number" },
+      gender: { type: "string" },
+      age: { type: "number" },
+      height: { type: "number" },
+      language: { type: "string" },
+      elev_setting: { type: "string" },
+      weight_setting: { type: "string" },
+      resting_heart_rate: { type: "number" },
+      default_max_biking_heart_rate: { type: "number" },
+      default_max_heart_rate: { type: "number" },
+      hr_setting: { type: "string" },
+      speed_setting: { type: "string" },
+      dist_setting: { type: "string" },
+      power_setting: { type: "string" },
+      position_setting: { type: "string" },
+      temperature_setting: { type: "string" },
+    },
+  },
+  sport: {
+    type: "object",
+    properties: {
+      name: { type: "string" },
+      sport: { type: "string" },
+      sub_sport: { type: "string" },
+    },
+  },
+  zones_target: {
+    type: "object",
+    properties: {
+      functional_threshold_power: { type: "number" },
+      max_heart_rate: { type: "number" },
+      pwr_calc_type: { type: "string" },
+    },
+  },
+  activity: {
+    type: "object",
+    properties: {
+      sessions: { type: "array", items: {} },
+      events: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            timestamp: { type: "string" },
+            data: { type: "number" },
+            event: { type: "string" },
+            event_type: { type: "string" },
+            event_group: { type: "number" },
+          },
+          required: ["timestamp", "data", "event", "event_type", "event_group"],
+        },
+      },
+      hrv: {
+        type: "array",
+        items: {
+          type: "object",
+          properties: {
+            time: { type: "array", items: { type: "number" } },
+          },
+          required: ["time"],
+        },
+      },
+    },
+  },
+  sessions: { type: "array", items: {} },
+  laps: { type: "array", items: {} },
+  records: {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        timestamp: { type: "string" },
+        elapsed_time: { type: "number" },
+        timer_time: { type: "number" },
+        position_lat: { type: "number" },
+        position_long: { type: "number" },
+        distance: { type: "number" },
+        accumulated_power: { type: "number" },
+        altitude: { type: "number" },
+        speed: { type: "number" },
+        power: { type: "number" },
+        heart_rate: { type: "number" },
+        cadence: { type: "number" },
+        temperature: { type: "number" },
+        fractional_cadence: { type: ["number", "null"] },
+      },
+      required: [
+        "timestamp",
+        "elapsed_time",
+        "timer_time",
+        "position_lat",
+        "position_long",
+        "distance",
+        "accumulated_power",
+        "altitude",
+        "speed",
+        "power",
+        "heart_rate",
+        "cadence",
+        "temperature",
+        "fractional_cadence",
+      ],
+    },
+  },
+  events: {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        timestamp: { type: "string" },
+        data: { type: "number" },
+        event: { type: "string" },
+        event_type: { type: "string" },
+        event_group: { type: "number" },
+      },
+      required: ["timestamp", "data", "event", "event_type", "event_group"],
+    },
+  },
+  device_infos: {
+    type: "array",
+    items: {
+      type: "object",
+      properties: {
+        timestamp: { type: "string" },
+        serial_number: { type: "number" },
+        manufacturer: { type: "string" },
+        product: { type: "number" },
+        software_version: { type: "number" },
+        device_index: { type: "number" },
+        source_type: { type: "string" },
+        device_type: { type: ["number", "string"] },
+        cum_operating_time: { type: "number" },
+        hardware_version: { type: "number" },
+        ant_network: { type: "string" },
+        battery_voltage: { type: "number" },
+        battery_status: { type: "string" },
+      },
+      required: [
+        "timestamp",
+        "manufacturer",
+        "product",
+        "software_version",
+        "device_index",
+        "source_type",
+        "serial_number",
+        "device_type",
+        "cum_operating_time",
+        "hardware_version",
+        "ant_network",
+      ],
+    },
+  },
+  developer_data_ids: { type: "array", items: {} },
+  field_descriptions: { type: "array", items: {} },
+  hrv: {
+    type: "array",
+    items: {
+      type: "object",
+      properties: { time: { type: "array", items: { type: "number" } } },
+      required: ["time"],
+    },
+  },
+  dive_gases: { type: "array", items: {} },
+  course_points: { type: "array", items: {} },
+});
+
+module.exports = mongoose.model("Training", trainingSchema);

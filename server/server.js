@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import athletesRoute from "./routes/athlets";
 import trainingDataRoute from "./routes/trainingData";
 import dotenv from "dotenv";
+import mongoose from "mongoose";
+import connectDB from "./config/db.js";
 
 const app = express();
 dotenv.config();
@@ -21,9 +23,12 @@ app.get("/", function (req, res) {
 //create athlete
 app.use("/api/v1", athletesRoute);
 
-//get training data from device
+//trainingdata
 app.use("/api/v1", trainingDataRoute);
 
 app.listen(8000, function () {
   console.log("App running on port 8000");
 });
+
+connectDB();
+app.use(express.json()); //accept json

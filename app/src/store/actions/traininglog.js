@@ -28,7 +28,7 @@ export const loadTraininglog = (trainingLog, userId) => {
     log.append("file", trainingLog);
     console.log(log, trainingLog.name);
     axios
-      .post("http://localhost:8000/upload", log, {
+      .post("http://localhost:8000/api/v1/upload", log, {
         headers: { user: userId },
       })
       .then((response) => {

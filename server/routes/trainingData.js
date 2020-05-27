@@ -1,10 +1,9 @@
 import express from "express";
+import { rawTrainingData } from "../controllers/traningDataController";
+import { createTraining } from "../controllers/trainingLog";
 
-import {
-  rawTrainingData,
-  convertToDB,
-} from "../controllers/traningDataController";
+const router = express.Router();
 
-var router = express.Router();
-router.post("/upload", rawTrainingData);
+router.post("/upload", rawTrainingData, createTraining);
+
 export default router;
