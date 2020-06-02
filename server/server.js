@@ -8,6 +8,7 @@ import connectDB from "./config/db.js";
 import uploadRoute from "./routes/upload";
 import athleteRoute from "./routes/athlete";
 import trainingRoute from "./routes/training";
+import statisticsRoute from "./routes/statistics";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,8 @@ app.use("/api/upload", uploadRoute);
 app.use("/api/athletes", athleteRoute);
 //trainings
 app.use("/api/athletes/:athleteid/trainings", trainingRoute);
+//statistics
+app.use("/api/athletes/:athleteid", statisticsRoute);
 
 app.listen(process.env.PORT, function () {
 	console.log("App running on port 8000");
