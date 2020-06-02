@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-const statisticsSchema = new Schema({
+export const statisticsSchema = new Schema({
   avg_cadence: Number,
   avg_heart_rate: Number,
   avg_power: Number,
@@ -21,14 +21,4 @@ const statisticsSchema = new Schema({
   training_stress_score: Number,
 });
 
-const trainingSchema = new mongoose.Schema(
-  {
-    time_created: Date,
-    name: String,
-    sport: String,
-    statistics: [statisticsSchema],
-    athlete_id: { type: Schema.Types.ObjectId, ref: "Athlete" },
-  },
-  { timestamps: { created_at: "created_at", updated_at: "updated_at" } }
-);
-module.exports = mongoose.model("Training", trainingSchema);
+module.exports = mongoose.model("Statistics", statisticsSchema);
