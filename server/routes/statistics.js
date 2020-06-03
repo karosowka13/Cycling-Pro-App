@@ -5,7 +5,7 @@ import {
 	getYearStatistics,
 	getAllStatistics,
 } from "../controllers/statistics";
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 router.get("/", getAllStatistics); //get all statistics
 router.get("/week", getWeekStatistics); //get week statistics

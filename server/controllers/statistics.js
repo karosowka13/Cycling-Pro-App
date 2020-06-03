@@ -1,29 +1,56 @@
 import Training from "../models/training";
 import Athlete from "../models/athlete";
-import Statistics from "../models/statistics";
-import Records from "../models/records";
+import mongoose, { Query } from "mongoose";
 
 //TOTAL TSS, IF, distance, time, ascent, work
 const query = {
-	intensity_factor,
-	total_ascent,
-	total_calories,
-	totat_descent,
-	total_distance,
-	total_elapsed_time,
-	total_work,
-	training_stress_score,
+	intensity_factor: 1,
+	total_ascent: 1,
+	total_calories: 1,
+	totat_descent: 1,
+	total_distance: 1,
+	total_elapsed_time: 1,
+	total_work: 1,
+	training_stress_score: 1,
+	_id: 0,
 };
+const query2 = {
+	intensity_factor: 1,
+	total_ascent: 1,
+	total_calories: 1,
+	totat_descent: 1,
+	total_distance: 1,
+	total_elapsed_time: 1,
+	total_work: 1,
+	training_stress_score: 1,
+};
+
 const numberOfDaysToLookBack = null;
-const today = new Date(year, month, day);
+const today = new Date();
 
 export const getAllStatistics = async (req, res, next) => {
 	try {
-		const allStatistics = await Training.find({
-			athlete_id: req.params.athleteid,
-		})
-			.select(query)
-			.count(query);
+		const allStatistics = await Training.aggregate([
+			{
+				$match: {
+					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+				},
+			},
+			{ $project: query },
+			{
+				$group: {
+					_id: null,
+					intensity_factor: { $sum: "$intensity_factor" },
+					total_ascent: { $sum: "$total_ascent" },
+					total_calories: { $sum: "$total_calories" },
+					totat_descent: { $sum: "$totat_descent" },
+					total_distance: { $sum: "$total_distance" },
+					total_elapsed_time: { $sum: "$total_elapsed_time" },
+					total_work: { $sum: "$total_work" },
+					training_stress_score: { $sum: "$training_stress_score" },
+				},
+			},
+		]);
 		res.json(allStatistics);
 	} catch (err) {
 		next(err);
