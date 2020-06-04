@@ -24,11 +24,10 @@ export const traininglogFail = (error) => {
 export const loadTraininglog = (trainingLog, userId) => {
 	return (dispatch) => {
 		dispatch(traininglogStart());
-		const log = new FormData();
-		log.append("file", trainingLog);
-		console.log(log, trainingLog.name);
+		const data = new FormData();
+		data.append("file", trainingLog);
 		axios
-			.post("http://localhost:8000/api/upload", log, {
+			.post("http://localhost:8000/api/upload", data, {
 				headers: { user: userId },
 			})
 			.then((response) => {

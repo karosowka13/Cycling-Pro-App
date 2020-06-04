@@ -9,7 +9,7 @@ import {
 } from "../helpers/createDoc";
 import multer from "multer";
 import { fileFilter } from "../helpers/validation";
-
+import mongoose from "mongoose";
 const FitParser = require("../node_modules/fit-file-parser/dist/fit-parser")
 	.default;
 
@@ -57,8 +57,9 @@ export const rawTrainingData = (req, res, next) => {
 
 export const uploadTraining = async (req, res) => {
 	let allData = res.locals.data;
-	let athleteId = { _id: res.locals.athleteId };
+	let athleteId = res.locals.athleteId;
 	let allDataForTraining = {};
+
 	Object.assign(
 		allDataForTraining,
 		allData.file_id,
@@ -70,23 +71,30 @@ export const uploadTraining = async (req, res) => {
 
 	const athlete = createAthlete(allDataForAthlete, athleteId);
 	const training = createTraining(allDataForTraining, athleteId);
-	const records = createRecords(allData, training, athleteId);
+	const records = createRecords(allData, training);
 
 	try {
 		let queryAthlete = { $set: athlete };
 		let options = {
-			useFindAndModify: false,
 			upsert: true,
-			new: true,
 			setDefaultsOnInsert: true,
 		};
-		await Athlete.findByIdAndUpdate(athleteId, queryAthlete, options);
-
+		const newAthlete = await Athlete.findByIdAndUpdate(
+			{ _id: athleteId },
+			queryAthlete,
+			options,
+			function (err, result) {
+				if (err) {
+					res.send(err);
+				} else {
+					result;
+				}
+			}
+		);
 		const newTraining = await training.save();
-
 		await Records.insertMany(records);
-
-		res.send(JSON.stringify(newStatistics));
+		let responseData = { athlete: newAthlete, training: newTraining };
+		res.json(responseData);
 	} catch (err) {
 		res.status(400).send(err);
 	}

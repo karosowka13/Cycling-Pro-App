@@ -1,6 +1,7 @@
 import Training from "../models/training";
 import Athlete from "../models/athlete";
 import Records from "../models/records";
+import mongoose from "mongoose";
 
 export const createAthlete = (allData, athleteId) => {
 	let neededForAthlete = [
@@ -11,15 +12,15 @@ export const createAthlete = (allData, athleteId) => {
 		"default_max_heart_rate",
 		"default_max_biking_heart_rate",
 		"resting_heart_rate",
-		"max_heart_rate",
 		"functional_threshold_power",
+		"max_heart_rate",
 	];
 	let userData = allData;
 	Object.keys(userData)
 		.filter((key) => !neededForAthlete.includes(key))
 		.forEach((key) => delete userData[key]);
 
-	Object.assign(userData, athleteId);
+	Object.assign(userData, { _id: athleteId });
 	const athlete = new Athlete(userData);
 	return athlete;
 };
@@ -60,7 +61,7 @@ export const createTraining = (allData, athleteId) => {
 	return training;
 };
 
-export const createRecords = (allData, training, athleteId) => {
+export const createRecords = (allData, training) => {
 	let recordsData = allData.records;
 	let neededForRecords = [
 		"timestamp",
@@ -82,11 +83,7 @@ export const createRecords = (allData, training, athleteId) => {
 		Object.keys(record)
 			.filter((key) => !neededForRecords.includes(key))
 			.forEach((key) => delete record[key]);
-		Object.assign(
-			record,
-			{ statistics: training._id },
-			{ athlete_id: athleteId }
-		);
+		Object.assign(record, { training_id: training._id });
 	});
 
 	return recordsData;
