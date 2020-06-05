@@ -27,7 +27,7 @@ export const loadTraininglog = (trainingLog, userId) => {
 		const data = new FormData();
 		data.append("file", trainingLog);
 		axios
-			.post("http://localhost:8000/api/upload", data, {
+			.post(process.env.REACT_APP_SERVER + "/api/upload", data, {
 				headers: { user: userId },
 			})
 			.then((response) => {

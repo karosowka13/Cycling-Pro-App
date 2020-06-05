@@ -1,0 +1,9 @@
+**/node_modules
+**/public
+**/npm-debug.log
+
+**/build/
+*/.git/
+.dockerignore
+**/*.gitignore
+README.md

@@ -1,47 +1,41 @@
 version: "3"
 
 services:
-  # Backend
+  # Frontend
   frontend:
     image: karosowa/thesis:latest
     stdin_open: true
     build:
       context: .
     ports:
-      - "3000:3000"
+      - "80:3000"
 
-  # DB for backend
-  postgres:
-    image: postgres:11
-    hostname: postgres
-    environment:
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      PGDATA: /var/lib/postgresql/data/pgdata
+  #Backend
+  backend:
+    image: karosowka-server
     ports:
-      - "5432:5432"
-    restart: always
+      - "3000:3000"
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - .:/app
     networks:
       - my-network
 
-  pgadmin:
-    image: dpage/pgadmin4
-    depends_on:
-      - postgres
-    ports:
-      - "5555:80"
+  # DB for backend
+  mongo:
+    image: mongo:4.2.7-bionic
     environment:
-      PGADMIN_DEFAULT_EMAIL: user@domain.com
-      PGADMIN_DEFAULT_PASSWORD: SuperSecret
-    restart: unless-stopped
+      ME_CONFIG_MONGODB_ADMINUSERNAME: example
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+    ports:
+      - "27017:27017"
+    restart: always
+    volumes:
+      - mongodb:/data/db
     networks:
       - my-network
 
 volumes:
-  pgdata:
+  mongodb:
 
 networks:
   my-network:
