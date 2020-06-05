@@ -2,9 +2,10 @@ import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
-	trainingLog: null,
 	loading: false,
 	error: null,
+	trainings: {},
+	success: false,
 };
 
 const traininglogStart = (state, action) => {
@@ -13,14 +14,30 @@ const traininglogStart = (state, action) => {
 
 const traininglogSuccess = (state, action) => {
 	return updateObject(state, {
-		trainingLog: action.trainingLogData,
+		trainings: Object.assign(state.trainings, action.trainings),
 		error: null,
 		loading: false,
+		success: true,
 	});
 };
 
 const traininglogFail = (state, action) => {
 	return updateObject(state, { error: action.error, loading: false });
+};
+
+const fetchTrainingsStart = (state, action) => {
+	return updateObject(state, { loading: true });
+};
+
+const fetchTrainingsSuccess = (state, action) => {
+	return updateObject(state, {
+		trainings: action.trainings,
+		loading: false,
+	});
+};
+
+const fetchTrainingsFail = (state, action) => {
+	return updateObject(state, { loading: false });
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +48,12 @@ const reducer = (state = initialState, action) => {
 			return traininglogSuccess(state, action);
 		case actionTypes.TRAININGLOG_FAIL:
 			return traininglogFail(state, action);
+		case actionTypes.FETCH_TRAININGS_START:
+			return fetchTrainingsStart(state, action);
+		case actionTypes.FETCH_TRAININGS_SUCCESS:
+			return fetchTrainingsSuccess(state, action);
+		case actionTypes.FETCH_TRAININGS_FAIL:
+			return fetchTrainingsFail(state, action);
 		default:
 			return state;
 	}

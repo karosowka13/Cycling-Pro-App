@@ -1,45 +1,34 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
-import DynamicForm from "../../../components/UI/DynamicForm/dynamicForm";
-import Backdrop from "../../../components/UI/Backdrop/Backdrop";
+import DynamicForm from "../../../components/DynamicForm/DynamicForm";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import classes from "./RideDataDisplay.module.css";
 
 class RideDataDisplay extends Component {
-	state = { display: false };
-
-	cancelHandler = () => {
-		this.setState({ display: false });
-	};
-
-	submitHandler = () => {
-		this.setState({ display: false });
-	};
-
-	showHandler = () => {
-		this.setState({ display: true });
-	};
-
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			nextProps.children !== this.props.children ||
+			nextProps.loading !== this.props.loading
+		);
+	}
 	render() {
 		let content = null;
 		if (this.props.loading) {
 			content = <Spinner />;
-		} else if (this.props.trainingData && !this.props.loading) {
+		} else if (this.props.success && !this.props.loading) {
+			//get the last object
+			let trainingData = this.props.trainingData;
 			content = (
 				<DynamicForm
-					dataObject={this.props.trainingData}
-					submitHandler={this.submitHandler}
-					cancelHandler={this.cancelHandler}
+					dataObject={trainingData}
+					submitHandler={this.props.confirmHandler}
+					cancelHandler={this.props.confirmHandler}
 				/>
 			);
 		} else if (this.props.error) {
-			content = <p>Error</p>;
+			content = <h1>Error</h1>;
 		}
-		return (
-			<Backdrop show={this.state.display}>
-				<div className={classes.BackgroundWindow}>{content}</div>
-			</Backdrop>
-		);
+		return <Fragment>{content}</Fragment>;
 	}
 }
 
@@ -47,7 +36,8 @@ const mapStateToProps = (state) => {
 	return {
 		loading: state.loadTraininglog.loading,
 		error: state.loadTraininglog.error,
-		trainingData: state.loadTraininglog.trainingLog,
+		trainingData: state.loadTraininglog.trainings,
+		success: state.loadTraininglog.success,
 	};
 };
 

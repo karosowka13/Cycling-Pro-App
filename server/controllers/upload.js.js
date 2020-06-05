@@ -79,7 +79,7 @@ export const uploadTraining = async (req, res) => {
 			upsert: true,
 			setDefaultsOnInsert: true,
 		};
-		const newAthlete = await Athlete.findByIdAndUpdate(
+		await Athlete.findByIdAndUpdate(
 			{ _id: athleteId },
 			queryAthlete,
 			options,
@@ -93,8 +93,7 @@ export const uploadTraining = async (req, res) => {
 		);
 		const newTraining = await training.save();
 		await Records.insertMany(records);
-		let responseData = { athlete: newAthlete, training: newTraining };
-		res.json(responseData);
+		res.json(newTraining);
 	} catch (err) {
 		res.status(400).send(err);
 	}

@@ -10,7 +10,7 @@ export const traininglogStart = () => {
 export const traininglogSuccess = (trainingLog) => {
 	return {
 		type: actionTypes.TRAININGLOG_SUCCESS,
-		trainingLog: trainingLog,
+		trainings: trainingLog,
 	};
 };
 
@@ -36,9 +36,49 @@ export const loadTraininglog = (trainingLog, userId) => {
 			})
 			.catch((err) => {
 				console.log(err);
-				dispatch(
-					traininglogFail(err.response.data.error || "Unexpected error")
-				);
+				dispatch(traininglogFail(err.response.data || "Unexpected error"));
+			});
+	};
+};
+
+export const fetchTrainingsSuccess = (trainings) => {
+	return {
+		type: actionTypes.FETCH_TRAININGS_SUCCESS,
+		trainings: trainings,
+	};
+};
+
+export const fetchTrainingsFail = (error) => {
+	return {
+		type: actionTypes.FETCH_TRAININGS_FAIL,
+		error: error,
+	};
+};
+
+export const fetchTrainingsStart = () => {
+	return {
+		type: actionTypes.FETCH_TRAININGS_START,
+	};
+};
+
+export const fetchTrainings = (from, to, userId) => {
+	return (dispatch) => {
+		dispatch(fetchTrainingsStart());
+		const queryParams = "/athletes/" + userId + "/trainings/" + from + "/" + to;
+		axios
+			.get(process.env.REACT_APP_SERVER + queryParams)
+			.then((res) => {
+				const fetchedTrainings = [];
+				for (let key in res.data) {
+					fetchTrainings.push({
+						...res.data[key],
+						id: key,
+					});
+				}
+				dispatch(fetchTrainingsSuccess(fetchedTrainings));
+			})
+			.catch((err) => {
+				dispatch(fetchTrainingsFail(err));
 			});
 	};
 };

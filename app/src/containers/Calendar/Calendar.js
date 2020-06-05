@@ -5,26 +5,29 @@ import * as actions from "../../store/actions/index";
 import ButtonIcon from "../../components/UI/ButtonIcon/ButtonIcon";
 import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
+import Modal from "../../components/UI/Modal/Modal";
+import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
 import Stats from "../Stats/Stats";
 import classes from "./Calendar.module.css";
-import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
 
 class Calendar extends Component {
 	state = {
 		today: new Date(),
 		currentMonth: new Date(),
 		selectedDate: new Date(),
-		loading: false,
-		sucessfullUploaded: false,
-		trainingLog: {},
+		additionalCart: false,
 	};
 
 	onFileChange = (event) => {
 		const updateStates = { ...this.state };
-		updateStates.loading = true;
-		this.setState({ state: updateStates });
+		updateStates.additionalCart = true;
+		this.setState({ additionalCart: true });
 		const file = event.target.files[0];
 		this.props.traininglogData(file, this.props.userId);
+	};
+
+	hideCartHandler = () => {
+		this.setState({ additionalCart: false });
 	};
 
 	nextMonth = () => {
@@ -44,6 +47,7 @@ class Calendar extends Component {
 			selectedDate: day,
 		});
 	};
+
 	renderCells() {
 		const { currentMonth, selectedDate } = this.state;
 		const monthStart = dateFns.startOfMonth(currentMonth);
@@ -111,9 +115,14 @@ class Calendar extends Component {
 					prevMonth={this.prevMonth}
 					nextMonth={this.nextMonth}
 				/>
-				<RideDataDisplay display={this.state.loading} />
 				<Weekdays currentMonth={this.state.currentMonth} />
 				{this.renderCells()}
+				<Modal
+					show={this.state.additionalCart}
+					modalClosed={this.hideCartHandler}
+				>
+					<RideDataDisplay confirmHandler={this.hideCartHandler} />
+				</Modal>
 				<Stats />
 			</div>
 		);
