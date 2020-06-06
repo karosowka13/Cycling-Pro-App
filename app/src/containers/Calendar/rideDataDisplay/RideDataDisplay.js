@@ -20,6 +20,7 @@ class RideDataDisplay extends Component {
 			let trainingData = this.props.trainingData;
 			content = (
 				<DynamicForm
+					readOnly={true}
 					dataObject={trainingData}
 					submitHandler={this.props.confirmHandler}
 					cancelHandler={this.props.confirmHandler}

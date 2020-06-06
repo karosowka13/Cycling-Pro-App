@@ -7,24 +7,26 @@ import { training } from "../Helpers/Training";
 const dynamicForm = (props) => {
 	let convertedData = training(props.dataObject);
 	let form = [];
-
 	convertedData.forEach((stat) => {
 		form.push(
 			<TextInput
+				readOnly={props.readOnly}
 				key={stat.name}
 				type={stat.name}
 				label={stat.name}
 				value={stat.value}
 				placeholder={stat.name}
+				touched={props.displayonly ? 1 : 0}
+				valid={!props.displayonly ? 1 : 0}
 			/>
 		);
 	});
 	form.push(
-		<Button key="submit" clicked={props.submitHandler}>
-			OK
+		<Button key="submit" clicked={props.submitHandler} btnType="Small">
+			Done
 		</Button>,
-		<Button key="cencel" clicked={props.cencelHandler}>
-			Cancel
+		<Button key="submit" clicked={props.showChartsHandler} btnType="Small">
+			Show charts
 		</Button>
 	);
 	return (
