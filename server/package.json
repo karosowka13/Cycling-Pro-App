@@ -27,6 +27,7 @@
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
+    "braces": "^3.0.2",
     "generate-schema": "^2.6.0",
     "nodemon": "^2.0.4"
   }

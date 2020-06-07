@@ -7,7 +7,7 @@ const textInput = (props) => {
 	if (props.touched && !props.valid) {
 		inputClasses.push(classes.FormDataError);
 	}
-	console.log(props.readOnly, "in textinput");
+
 	if (props.readOnly) {
 		input.push(classes.displayOnly);
 	}

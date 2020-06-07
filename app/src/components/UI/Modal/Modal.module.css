@@ -3,18 +3,22 @@
   z-index: 500;
   background-color: white;
   width: 70%;
-  border: 1px solid #ccc;
-  box-shadow: 1px 1px 1px black;
+  min-height: 350px;
+  max-height: 70%;
+  border-radius: 4px;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
   padding: 16px;
   left: 15%;
-  top: 30%;
+  top: 15%;
   box-sizing: border-box;
   transition: all 0.3s ease-out;
+  overflow-y: auto;
 }
 
 @media (min-width: 600px) {
   .Modal {
-    width: 500px;
-    left: calc(50% - 250px);
+    top: 20%;
+    --min-width: 300px;
+    --width: auto;
   }
 }
