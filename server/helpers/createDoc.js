@@ -54,7 +54,12 @@ export const createTraining = (allData, athleteId) => {
 	let trainingData = allData;
 	Object.keys(trainingData)
 		.filter((key) => !neededForTraining.includes(key))
-		.forEach((key) => delete trainingData[key]);
+		.forEach((key) => {
+			delete trainingData[key];
+			if (key == "total_work") {
+				trainingData[key] = trainingData[key] * 1000;
+			}
+		});
 
 	Object.assign(trainingData, { athlete_id: athleteId });
 	const training = new Training(trainingData);
@@ -80,10 +85,30 @@ export const createRecords = (allData) => {
 	];
 
 	recordsData.forEach((record) => {
+		record.altitude = record.altitude * 1000;
 		Object.keys(record)
 			.filter((key) => !neededForRecords.includes(key))
 			.forEach((key) => delete record[key]);
 	});
+	Object.assign(recordsData[0], { power: recordsData[0].accumulated_power });
+	for (let i = 1; i < recordsData.length; i++) {
+		{
+			if (
+				!isNaN(recordsData[i].accumulated_power) &&
+				!isNaN(
+					recordsData[i - 1].accumulated_power &&
+						recordsData[i].accumulated_power
+				)
+			) {
+				Object.assign(recordsData[i], {
+					power: Math.abs(
+						recordsData[i].accumulated_power -
+							recordsData[i - 1].accumulated_power
+					),
+				});
+			}
+		}
+	}
 
 	return recordsData;
 };

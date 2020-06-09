@@ -17,8 +17,9 @@ class Chart extends Component {
 		let cadence = [];
 		let heartrate = [];
 		let temperature = [];
+
 		for (let record of data) {
-			power.push({ x: record.elapsed_time, y: record.accumulated_power });
+			power.push({ x: record.elapsed_time, y: record.power });
 			altitude.push({ x: record.elapsed_time, y: record.altitude });
 			speed.push({ x: record.elapsed_time, y: record.speed });
 			cadence.push({ x: record.elapsed_time, y: record.cadence });
@@ -30,10 +31,36 @@ class Chart extends Component {
 			theme: "light2", // "light1", "light2", "dark1", "dark2"
 			animationEnabled: true,
 			zoomEnabled: true,
+			axisY: [
+				{ gridThickness: 0 },
+				{ minimum: 0 },
+				{
+					title: "3st Axis Y Title",
+				},
+				{
+					title: "1st Axis Y Title",
+				},
+				{
+					title: "2nd Axis Y Title",
+				},
+			],
+			axis2Y: [
+				{ gridThickness: 0 },
+				{
+					title: "3st Axis Y Title",
+				},
+				{
+					title: "3st Axis Y Title",
+				},
+				{
+					title: "4nd Axis Y Title",
+				},
+			],
 			axisX: {
 				labelFormatter: function (e) {
 					return formatTime(e.value);
 				},
+				minimum: 0,
 			},
 			legend: {
 				verticalAlign: "top",
@@ -56,7 +83,7 @@ class Chart extends Component {
 					name: "Altitude",
 					showInLegend: true,
 					type: "area",
-					color: "rgba(40,175,101,0.6)",
+					color: "rgba(55,175,101,0.6)",
 					markerSize: 0,
 					dataPoints: altitude,
 				},
@@ -79,7 +106,7 @@ class Chart extends Component {
 				{
 					name: "Heart rate",
 					showInLegend: true,
-					color: "rgba(40,175,101,0.46)",
+					color: "rgba(24,175,101,0.46)",
 					type: "area",
 					markerSize: 0,
 					dataPoints: heartrate,
@@ -87,7 +114,7 @@ class Chart extends Component {
 				{
 					name: "Temperature",
 					showInLegend: true,
-					color: "rgba(40,175,101,0.40)",
+					color: "rgba(70,175,101,0.40)",
 
 					markerSize: 0,
 					dataPoints: temperature,

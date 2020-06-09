@@ -16,6 +16,7 @@ const recordsSchema = new Schema({
 			heart_rate: Number,
 			cadence: Number,
 			temperature: Number,
+			power: Number,
 		},
 	],
 });
