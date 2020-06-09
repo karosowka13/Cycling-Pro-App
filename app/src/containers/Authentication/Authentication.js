@@ -174,6 +174,7 @@ class Authentication extends Component {
 		if (this.props.isAuth) {
 			authRedirect = <Redirect to="/calendar" />;
 		}
+
 		return (
 			<div className={classes.Form}>
 				{authRedirect}

@@ -61,7 +61,7 @@ export const createTraining = (allData, athleteId) => {
 	return training;
 };
 
-export const createRecords = (allData, training) => {
+export const createRecords = (allData) => {
 	let recordsData = allData.records;
 	let neededForRecords = [
 		"timestamp",
@@ -83,7 +83,6 @@ export const createRecords = (allData, training) => {
 		Object.keys(record)
 			.filter((key) => !neededForRecords.includes(key))
 			.forEach((key) => delete record[key]);
-		Object.assign(record, { training_id: training._id });
 	});
 
 	return recordsData;

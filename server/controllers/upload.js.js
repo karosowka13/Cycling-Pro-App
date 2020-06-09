@@ -71,23 +71,26 @@ export const uploadTraining = async (req, res) => {
 
 	const athlete = createAthlete(allDataForAthlete, athleteId);
 	const training = createTraining(allDataForTraining, athleteId);
-	const records = createRecords(allData, training);
-
+	const allRecords = createRecords(allData);
 	try {
-		// let queryAthlete = { $set: athlete };
-		// let options = {
-		// 	upsert: true,
-		// 	setDefaultsOnInsert: true,
-		// };
-		await Athlete.find({ _id: athleteId }, function (err, result) {
-			if (err) {
-				res.send(err);
-			} else if (result !== null && err === null) {
-				athlete.save();
-			}
-		});
+		let queryAthlete = { $set: athlete };
+		let options = {
+			useFindAndModify: false,
+			upsert: true,
+			new: true,
+			setDefaultsOnInsert: true,
+		};
+		await Athlete.findByIdAndUpdate(athleteId, queryAthlete, options);
 		const newTraining = await training.save();
-		await Records.insertMany(records);
+
+		const record = new Records({ training_id: training._id });
+
+		await record.save();
+		const sevedRecords = await Records.updateOne(
+			{ training_id: training._id },
+			{ $push: { details: { $each: allRecords, $sort: -1 } } }
+		);
+
 		res.json(newTraining);
 	} catch (err) {
 		res.status(400).send(err);

@@ -6,6 +6,7 @@ import {
 	deleteTraining,
 	updateTraining,
 	getTrainingsInRange,
+	getRecords,
 } from "../controllers/training";
 const router = express.Router({ mergeParams: true });
 

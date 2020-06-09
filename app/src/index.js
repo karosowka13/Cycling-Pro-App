@@ -9,29 +9,31 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import authReducer from "./store/reducers/auth";
 import traininglogReducer from "./store/reducers/traininglog";
+import chartReducer from "./store/reducers/chart";
 import { BrowserRouter } from "react-router-dom";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
-  auth: authReducer,
-  loadTraininglog: traininglogReducer,
+	auth: authReducer,
+	loadTraininglog: traininglogReducer,
+	chart: chartReducer,
 });
 
 const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(thunk))
+	rootReducer,
+	composeEnhancers(applyMiddleware(thunk))
 );
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+	<React.StrictMode>
+		<Provider store={store}>
+			<BrowserRouter>
+				<App />
+			</BrowserRouter>
+		</Provider>
+	</React.StrictMode>,
+	document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change

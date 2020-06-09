@@ -65,6 +65,15 @@ export const getTrainingsInRange = async (req, res, next) => {
 	}
 };
 
+export const getRecords = async (req, res, next) => {
+	try {
+		const records = await Records.find({ training_id: req.params.trainingid });
+		res.json(records);
+	} catch (err) {
+		next(err);
+	}
+};
+
 export const deleteTraining = async (req, res, next) => {
 	try {
 		//remove all records from training
