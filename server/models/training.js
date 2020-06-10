@@ -14,16 +14,14 @@ const trainingSchema = new mongoose.Schema({
 	max_power: Number,
 	max_speed: Number,
 	normalized_power: Number,
-	total_timer_time: Number,
+	total_moving_time: Number,
 	total_distance: Number,
-	total_ascent: Number,
+	total_elevation_gain: Number,
 	total_work: Number,
 	total_calories: Number,
 	total_cycles: Number,
 	total_descent: Number,
-
 	total_elapsed_time: Number,
-
 	training_stress_score: Number,
 	athlete_id: { type: String, ref: "Athlete" },
 });
