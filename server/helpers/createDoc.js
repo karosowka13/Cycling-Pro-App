@@ -56,21 +56,20 @@ export const createTraining = (allData, athleteId) => {
 		.filter((key) => !neededForTraining.includes(key))
 		.forEach((key) => {
 			delete trainingData[key];
-			if (key === "total_work") {
-				trainingData[key] = trainingData[key] / 1000;
-			}
-			if (key === "total_timer_time") {
-				key = "total_moving_time";
-			}
-			if (key === "total_ascent") {
-				key = "total_elevation_gain";
-				trainingData[key] = trainingData[key] * 1000;
-			}
 		});
+	Object.keys(trainingData).map((key) => {
+		if (key === "total_work") {
+			trainingData[key] = trainingData[key] / 1000;
+		} else if (key === "total_timer_time") {
+		} else if (key === "total_ascent") {
+			trainingData[key] = trainingData[key] * 1000;
+		}
+	});
+	console.log(trainingData);
 
 	Object.assign(trainingData, { athlete_id: athleteId });
 	const training = new Training(trainingData);
-	console.log(trainingData, training);
+
 	return training;
 };
 

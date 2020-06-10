@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { formatTime } from "../../helpers/Training";
 import CanvasJSReact from "./canvasjs.react";
 
+import classes from "./chart.module.css"
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class Chart extends Component {
@@ -34,49 +35,49 @@ class Chart extends Component {
 			theme: "light2",
 			animationEnabled: true,
 			zoomEnabled: true,
-			width: 700,
+			width: 1000,
 			axisY: [
 				{
+					//heart rate
 					minimum: 0,
-					title: "HR",
 					tickColor: "rgba(196, 24, 47,0.46)",
 					labelFontColor: "rgba(196, 24, 47,0.46)",
 					gridThickness: 0,
 				},
 				{
+					//power
 					minimum: 0,
-					title: "Power",
 					tickColor: "rgba(37, 124, 186,0.7)",
 					labelFontColor: "rgba(37, 124, 186,0.7)",
 					gridThickness: 0,
 				},
 				{
-					title: "Cadence",
+					//cadence
+					minimum: 0,
 					tickColor: "rgba(34, 130, 37,0.50)",
 					labelFontColor: "rgba(34, 130, 37,0.50)",
 					gridThickness: 0,
 				},
 			],
-			axis2Y: [
+			axisY2: [
 				{
-					title: "Temperature",
-					tickColor: "rgba(70,175,101,0.50)",
-					labelFontColor: "rgba(70,175,101,0.50)",
-					gridThickness: 0,
+					//ascent
+					viewportMinimum: 0,
+					lineColor: "rgba(94, 102, 107)",
+					titleFontColor: "rgba(94, 102, 107)",
+					labelFontColor: "rgba(94, 102, 107)",
 				},
 				{
-					minimum: 0,
-					title: "Speed",
-					tickColor: "rgba(227, 224, 48)",
+					//temperature
+					lineColor: "rgba(70,175,101)",
+					titleFontColor: "rgba(70,175,101)",
+					labelFontColor: "rgba(70,175,101)",
+				},
+				{
+					//speed
+					lineColor: "rgba(227, 224, 48)",
+					titleFontColor: "rgba(227, 224, 48)",
 					labelFontColor: "rgba(227, 224, 48)",
-					gridThickness: 0,
-				},
-				{
-					minimum: 0,
-					title: "Altitiude",
-					tickColor: "rgba(94, 102, 107,0.40)",
-					labelFontColor: "rgba(94, 102, 107,0.40)",
-					gridThickness: 0,
 				},
 			],
 			axisX: {
@@ -108,22 +109,54 @@ class Chart extends Component {
 			data: [
 				{
 					showInLegend: true,
+					name: "Heart rate",
+					color: "rgba(196, 24, 47,0.46)",
+					type: "spline",
+					legendMarkerType: "circle",
+					markerSize: 0,
+					dataPoints: heartrate,
+				},
+				{
+					showInLegend: true,
 					name: "Power",
 					axisYIndex: 1,
-					type: "stackedArea",
+					type: "spline",
 					color: "rgba(37, 124, 186,0.7)",
+					legendMarkerType: "circle",
 					markerSize: 0,
 					dataPoints: power,
 				},
 				{
 					showInLegend: true,
+					name: "Cadence",
+					axisYIndex: 2,
+					color: "rgba(34, 130, 37,0.50)",
+					type: "spline",
+					legendMarkerType: "circle",
+					markerSize: 0,
+					dataPoints: cadence,
+				},
+				{
+					showInLegend: true,
 					name: "Altitude",
-					type: "splineArea",
+					type: "area",
 					color: "rgba(94, 102, 107,0.40)",
 					axisYType: "secondary",
-					axisYIndex: 2,
+					legendMarkerType: "cross",
+					legendMarkerType: "circle",
 					markerSize: 0,
 					dataPoints: altitude,
+				},
+				{
+					showInLegend: true,
+					name: "Temperature",
+					type: "spline",
+					color: "rgba(70,175,101,0.50)",
+					axisYType: "secondary",
+					axisYIndex: 2,
+					legendMarkerType: "circle",
+					markerSize: 0,
+					dataPoints: temperature,
 				},
 				{
 					showInLegend: true,
@@ -132,36 +165,9 @@ class Chart extends Component {
 					type: "spline",
 					axisYType: "secondary",
 					axisYIndex: 1,
+					legendMarkerType: "circle",
 					markerSize: 0,
 					dataPoints: speed,
-				},
-				{
-					showInLegend: true,
-					name: "Cadence",
-					axisYIndex: 2,
-					color: "rgba(34, 130, 37,0.50)",
-					type: "stackedArea",
-					markerSize: 0,
-					dataPoints: cadence,
-				},
-				{
-					showInLegend: true,
-					name: "Heart rate",
-					axisYIndex: 0,
-					color: "rgba(196, 24, 47,0.46)",
-					type: "spline",
-					markerSize: 0,
-					dataPoints: heartrate,
-				},
-				{
-					showInLegend: true,
-					name: "Temperature",
-					type: "spline",
-					color: "rgba(70,175,101,0.50)",
-					axisYType: "secondary",
-					axisYIndex: 3,
-					markerSize: 0,
-					dataPoints: temperature,
 				},
 			],
 		};
@@ -169,7 +175,7 @@ class Chart extends Component {
 		return (
 			<div
 				id="chartContainer"
-				style={{ height: 400 + "px", width: 100 + "%", position: "relative" }}
+				className={classes.Chart}
 			>
 				<CanvasJSChart options={options} onRef={(ref) => (this.chart = ref)} />
 			</div>

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Link, Route } from "react-router-dom";
 import * as actions from "../../../store/actions/index";
 
 import Spinner from "../../../components/UI/Spinner/Spinner";
@@ -10,6 +11,7 @@ import Chart from "../../../components/Charts/chart";
 import classes from "./RideDataDisplay.module.css";
 
 class RideDataDisplay extends Component {
+	state = { displaying: null };
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			nextProps.children !== this.props.children ||
@@ -19,8 +21,12 @@ class RideDataDisplay extends Component {
 	}
 
 	submitHandler = () => {};
-	showChartsHandler = () => {
-		this.props.loadChart(this.props.trainingData._id);
+	showStatsHandler = () => {
+		if (this.state.chart) {
+			this.props.loadChart(this.props.trainingData._id);
+		} else if (this.state.training) {
+		} else if (this.state.map) {
+		}
 	};
 	render() {
 		let content = null;
@@ -100,20 +106,50 @@ class RideDataDisplay extends Component {
 				<h3 key={"headermax"}>Maximum</h3>,
 				<div key={"heademaxchild"} className={classes.Maximum}>
 					{maximum}
-				</div>,
-				<div key={"buttons2"} className={classes.Buttons}>
-					<Button key="charts" clicked={this.showChartsHandler} btnType="Small">
-						Charts
-					</Button>
-
-					<Button key="submit" clicked={this.submitHandler} btnType="Small">
-						Done
-					</Button>
 				</div>
 			);
 			content = <div className={classes.Container}>{form}</div>;
 		} else if (this.props.error) {
 			content = <h1>Error</h1>;
+		}
+		if (this.props.successTraining || this.props.successChart) {
+			let buttonName = [];
+			switch (this.state.displaying) {
+				case "chart":
+					buttonName = "Chart";
+				case "map":
+					buttonName.push("Map");
+				case "training":
+					buttonName.push("Training");
+					break;
+				default: {
+					buttonName = <p>Error 404</p>;
+				}
+			}
+			content.push(
+				<div key={"buttons2"} className={classes.Buttons}>
+					<Link to={`${match.url}/${buttonName[0]}`}>
+						<Button
+							key="charts"
+							clicked={this.showStatsHandler}
+							btnType="Small"
+						>
+							{buttonName[0]}
+						</Button>
+					</Link>
+					<Link to={`${match.url}/${buttonName[1]}`}>
+						<Button key="map" clicked={this.showStatsHandler} btnType="Small">
+							{buttonName[1]}
+						</Button>
+					</Link>
+					<Button key="submit" clicked={this.submitHandler} btnType="Small">
+						Done
+					</Button>
+					<Route path={`${match.path}/training`} render={} />
+					<Route path={`${match.path}/chart`} render={} />
+					<Route path={`${match.path}/map`} render={} />
+				</div>
+			);
 		}
 		return <div className={classes.Form}>{content}</div>;
 	}
