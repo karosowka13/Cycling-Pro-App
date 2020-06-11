@@ -1,157 +1,118 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Link, Route } from "react-router-dom";
 import * as actions from "../../../store/actions/index";
 
+import TrainingSummary from "../../../components/DisplayTrainingData/TrainingSummary/TrainingSummary";
 import Spinner from "../../../components/UI/Spinner/Spinner";
-import { training, formatTime } from "../../../helpers/Training";
-import TextInput from "../../../components/UI/TextInput/TextInput";
 import Button from "../../../components/UI/Button/Button";
-import Chart from "../../../components/Charts/chart";
+import Chart from "../../../components/DisplayTrainingData/Charts/chart";
+import Map from "../../../components/DisplayTrainingData/Map/Map";
 import classes from "./RideDataDisplay.module.css";
 
 class RideDataDisplay extends Component {
-	state = { displaying: null };
+	state = { displaying: "Training" };
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			nextProps.children !== this.props.children ||
 			nextProps.loading !== this.props.loading ||
-			this.state.chart !== nextState.chart
+			this.state.displaying !== nextState.displaying
 		);
 	}
+	componentWillUnmount() {
+		this.setState({ displaying: "Training" });
+	}
 
-	submitHandler = () => {};
-	showStatsHandler = () => {
-		if (this.state.chart) {
-			this.props.loadChart(this.props.trainingData._id);
-		} else if (this.state.training) {
-		} else if (this.state.map) {
+	showStatsHandler = (type) => {
+		if (type === "Chart") {
+			if (!this.props.successChart) {
+				this.props.loadChart(this.props.trainingData._id);
+			}
+			this.setState({ displaying: "Chart" });
+		} else if (type === "Training") {
+			this.setState({ displaying: "Training" });
+		} else if (type === "Map") {
+			if (!this.props.successChart) {
+				this.props.loadChart(this.props.trainingData._id);
+			}
+			this.setState({ displaying: "Map" });
 		}
 	};
+
 	render() {
+		let buttons = null;
+		let buttonName = [];
 		let content = null;
-		if (this.props.loading) {
+		if (this.props.loading || this.state.loading) {
 			content = <Spinner />;
-		} else if (this.props.successChart && !this.props.loading) {
+		} else if (
+			this.props.successChart &&
+			!this.props.loading &&
+			this.state.displaying === "Chart"
+		) {
 			content = <Chart records={this.props.chartData} />;
-		} else if (this.props.successTraining && !this.props.loading) {
-			//to do get the last object
-			let convertedData = training(this.props.trainingData);
-			let form = [];
-			let total = [];
-			let average = [];
-			let maximum = [];
-			let date = new Date(convertedData[0].value);
-			date =
-				date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
-			form.push(
-				<h2 key={date}>{date}</h2>,
-				<h2 key={convertedData[0].value}>
-					{convertedData[1].value} {convertedData[2].value}
-				</h2>
-			);
-			convertedData.forEach((stat) => {
-				if (stat.name.match(/\btotal/g)) {
-					stat.name = stat.name.replace(/total/g, "");
-					if (stat.name.match(/\btime/g)) {
-						stat.value = formatTime(stat.value);
-					}
-					total.push(
-						<TextInput
-							readOnly={true}
-							key={stat.name}
-							type={stat.name}
-							label={stat.name}
-							value={stat.value}
-							placeholder={stat.name}
-						/>
-					);
-				} else if (stat.name.match(/\bavg/g)) {
-					stat.name = stat.name.replace(/avg/g, "");
-
-					average.push(
-						<TextInput
-							readOnly={true}
-							key={stat.name}
-							type={stat.name}
-							label={stat.name}
-							value={stat.value}
-							placeholder={stat.name}
-						/>
-					);
-				} else if (stat.name.match(/\bmax/g)) {
-					stat.name = stat.name.replace(/max/g, "");
-
-					maximum.push(
-						<TextInput
-							readOnly={true}
-							key={stat.name}
-							type={stat.name}
-							label={stat.name}
-							value={stat.value}
-							placeholder={stat.name}
-						/>
-					);
-				}
-			});
-			form.push(
-				<h3 key={"headertotal"}>Total</h3>,
-				<div key={"headertotalchild"} className={classes.Total}>
-					{total}
-				</div>,
-				<h3 key={"headeavg"}>Average</h3>,
-				<div key={"headeavgchild"} className={classes.Average}>
-					{average}
-				</div>,
-				<h3 key={"headermax"}>Maximum</h3>,
-				<div key={"heademaxchild"} className={classes.Maximum}>
-					{maximum}
-				</div>
-			);
-			content = <div className={classes.Container}>{form}</div>;
+		} else if (
+			this.props.successTraining &&
+			!this.props.loading &&
+			this.state.displaying === "Training"
+		) {
+			//to do get object from date
+			content = <TrainingSummary trainingData={this.props.trainingData} />;
+		} else if (
+			this.props.successChart &&
+			!this.props.loading &&
+			this.state.displaying === "Map"
+		) {
+			content = <Map coordinates={this.props.chartData} />;
 		} else if (this.props.error) {
 			content = <h1>Error</h1>;
 		}
-		if (this.props.successTraining || this.props.successChart) {
-			let buttonName = [];
-			switch (this.state.displaying) {
-				case "chart":
-					buttonName = "Chart";
-				case "map":
-					buttonName.push("Map");
-				case "training":
-					buttonName.push("Training");
-					break;
-				default: {
-					buttonName = <p>Error 404</p>;
-				}
+		if (
+			(this.props.successTraining || this.props.successChart) &&
+			!this.props.loading
+		) {
+			if (this.state.displaying === "Training") {
+				buttonName.push("Map", "Chart");
+			} else if (this.state.displaying === "Chart") {
+				buttonName.push("Map", "Training");
+			} else if (this.state.displaying === "Map") {
+				buttonName.push("Training", "Chart");
 			}
-			content.push(
+
+			buttons = (
 				<div key={"buttons2"} className={classes.Buttons}>
-					<Link to={`${match.url}/${buttonName[0]}`}>
-						<Button
-							key="charts"
-							clicked={this.showStatsHandler}
-							btnType="Small"
-						>
-							{buttonName[0]}
-						</Button>
-					</Link>
-					<Link to={`${match.url}/${buttonName[1]}`}>
-						<Button key="map" clicked={this.showStatsHandler} btnType="Small">
-							{buttonName[1]}
-						</Button>
-					</Link>
-					<Button key="submit" clicked={this.submitHandler} btnType="Small">
+					<Button
+						key="charts"
+						clicked={() => this.showStatsHandler(buttonName[0])}
+						btnType="Small"
+					>
+						{buttonName[0]}
+					</Button>
+
+					<Button
+						key="map"
+						clicked={() => this.showStatsHandler(buttonName[1])}
+						btnType="Small"
+					>
+						{buttonName[1]}
+					</Button>
+
+					<Button
+						key="submit"
+						clicked={this.props.confirmHandler}
+						btnType="Small"
+					>
 						Done
 					</Button>
-					<Route path={`${match.path}/training`} render={} />
-					<Route path={`${match.path}/chart`} render={} />
-					<Route path={`${match.path}/map`} render={} />
 				</div>
 			);
 		}
-		return <div className={classes.Form}>{content}</div>;
+
+		return (
+			<div className={classes.Form}>
+				{content}
+				{buttons}
+			</div>
+		);
 	}
 }
 

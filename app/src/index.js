@@ -10,6 +10,7 @@ import * as serviceWorker from "./serviceWorker";
 import authReducer from "./store/reducers/auth";
 import traininglogReducer from "./store/reducers/traininglog";
 import chartReducer from "./store/reducers/chart";
+import statisticsReducer from "./store/reducers/statistics";
 import { BrowserRouter } from "react-router-dom";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
 	auth: authReducer,
 	loadTraininglog: traininglogReducer,
 	chart: chartReducer,
+	statistics: statisticsReducer,
 });
 
 const store = createStore(

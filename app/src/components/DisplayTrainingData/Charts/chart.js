@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 
-import { formatTime } from "../../helpers/Training";
+import { formatTime } from "../../../helpers/Training";
 import CanvasJSReact from "./canvasjs.react";
 
-import classes from "./chart.module.css"
+import classes from "./chart.module.css";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class Chart extends Component {
-	constructor(props) {
-		super(props);
-	}
 	render() {
 		let data = this.props.records;
 
@@ -35,28 +32,31 @@ class Chart extends Component {
 			theme: "light2",
 			animationEnabled: true,
 			zoomEnabled: true,
-			width: 1000,
+			width: 600,
 			axisY: [
 				{
 					//heart rate
 					minimum: 0,
-					tickColor: "rgba(196, 24, 47,0.46)",
-					labelFontColor: "rgba(196, 24, 47,0.46)",
+					tickColor: "rgba(196, 24, 47)",
+					labelFontColor: "rgba(196, 24, 47)",
 					gridThickness: 0,
+					margin: 0,
 				},
 				{
 					//power
 					minimum: 0,
-					tickColor: "rgba(37, 124, 186,0.7)",
-					labelFontColor: "rgba(37, 124, 186,0.7)",
+					tickColor: "rgba(37, 124, 186)",
+					labelFontColor: "rgba(37, 124, 186)",
 					gridThickness: 0,
+					margin: 0,
 				},
 				{
 					//cadence
 					minimum: 0,
-					tickColor: "rgba(34, 130, 37,0.50)",
-					labelFontColor: "rgba(34, 130, 37,0.50)",
+					tickColor: "rgba(34, 130, 37)",
+					labelFontColor: "rgba(34, 130, 37)",
 					gridThickness: 0,
+					margin: 0,
 				},
 			],
 			axisY2: [
@@ -66,18 +66,21 @@ class Chart extends Component {
 					lineColor: "rgba(94, 102, 107)",
 					titleFontColor: "rgba(94, 102, 107)",
 					labelFontColor: "rgba(94, 102, 107)",
+					margin: 0,
 				},
 				{
 					//temperature
-					lineColor: "rgba(70,175,101)",
-					titleFontColor: "rgba(70,175,101)",
-					labelFontColor: "rgba(70,175,101)",
+					lineColor: "rgba(86, 15, 145)",
+					titleFontColor: "rgba(86, 15, 145)",
+					labelFontColor: "rgba(86, 15, 145)",
+					margin: 0,
 				},
 				{
 					//speed
 					lineColor: "rgba(227, 224, 48)",
 					titleFontColor: "rgba(227, 224, 48)",
 					labelFontColor: "rgba(227, 224, 48)",
+					margin: 0,
 				},
 			],
 			axisX: {
@@ -142,7 +145,7 @@ class Chart extends Component {
 					type: "area",
 					color: "rgba(94, 102, 107,0.40)",
 					axisYType: "secondary",
-					legendMarkerType: "cross",
+
 					legendMarkerType: "circle",
 					markerSize: 0,
 					dataPoints: altitude,
@@ -151,7 +154,7 @@ class Chart extends Component {
 					showInLegend: true,
 					name: "Temperature",
 					type: "spline",
-					color: "rgba(70,175,101,0.50)",
+					color: "rgba(86, 15, 145,0.90)",
 					axisYType: "secondary",
 					axisYIndex: 2,
 					legendMarkerType: "circle",
@@ -173,10 +176,7 @@ class Chart extends Component {
 		};
 
 		return (
-			<div
-				id="chartContainer"
-				className={classes.Chart}
-			>
+			<div id="chartContainer" className={classes.Chart}>
 				<CanvasJSChart options={options} onRef={(ref) => (this.chart = ref)} />
 			</div>
 		);

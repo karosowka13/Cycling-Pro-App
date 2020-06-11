@@ -12,52 +12,52 @@ import Calendar from "./containers/Calendar/Calendar";
 import Logout from "./containers/Authentication/Logout/Logout";
 
 class App extends Component {
-  componentDidMount() {
-    this.props.onTryAutoSignup();
-  }
-  render() {
-    let secureRoutes = (
-      <Switch>
-        <Route
-          path="/authentication/:type"
-          render={(props) => <Authentication {...props} />}
-        />
-        <Route path="/logout" component={Logout} />
-        <Route path="/" exact component={WelcomPage} />
-        <Redirect to="/" />
-      </Switch>
-    );
-    if (this.props.isAuth) {
-      secureRoutes = (
-        <Logged>
-          <Switch>
-            <Route
-              path="/authentication/:type"
-              render={(props) => <Authentication {...props} />}
-            />
-            <Route path="/calendar" component={Calendar} />
-            <Route path="/logout" component={Logout} />
-            <Route path="/" exact component={Calendar} />
-            <Redirect to="/" />
-          </Switch>
-        </Logged>
-      );
-    }
+	componentDidMount() {
+		this.props.onTryAutoSignup();
+	}
+	render() {
+		let secureRoutes = (
+			<Switch>
+				<Route
+					path="/authentication/:type"
+					render={(props) => <Authentication {...props} />}
+				/>
+				<Route path="/logout" component={Logout} />
+				<Route path="/" exact component={WelcomPage} />
+				<Redirect to="/" />
+			</Switch>
+		);
+		if (this.props.isAuth) {
+			secureRoutes = (
+				<Logged>
+					<Switch>
+						<Route
+							path="/authentication/:type"
+							render={(props) => <Authentication {...props} />}
+						/>
+						<Route path="/calendar" component={Calendar} />
+						<Route path="/logout" component={Logout} />
+						<Route path="/" exact component={Calendar} />
+						<Redirect to="/" />
+					</Switch>
+				</Logged>
+			);
+		}
 
-    return <div className="App">{secureRoutes}</div>;
-  }
+		return <div className="App">{secureRoutes}</div>;
+	}
 }
 
 const mapsStateToProps = (state) => {
-  return {
-    isAuth: state.auth.token !== null,
-  };
+	return {
+		isAuth: state.auth.token !== null,
+	};
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {
-    onTryAutoSignup: () => dispatch(actions.authCheckState()),
-  };
+	return {
+		onTryAutoSignup: () => dispatch(actions.authCheckState()),
+	};
 };
 
 export default withRouter(connect(mapsStateToProps, mapDispatchToProps)(App));

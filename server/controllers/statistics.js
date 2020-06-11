@@ -71,14 +71,7 @@ export const getWeekStatistics = async (req, res, next) => {
 		next(err);
 	}
 };
-//new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000),
-//	$subtract: [new Date().getTime(), 30 * 24 * 60 * 60 * 1000],.setHours(00, 00, 00)
-//	$subtract: [
-// 	{
-// 		$mod: [{ $toLong: new Date() }, 30 * 24 * 60 * 60 * 1000],
-// 	},
-// 	1000 * 60 * 60 * 24,
-// ],
+
 export const getMonthStatistics = async (req, res, next) => {
 	try {
 		const Statistics = await Training.aggregate([
@@ -127,6 +120,54 @@ export const getYearStatistics = async (req, res, next) => {
 				$group: groupBy,
 			},
 		]);
+		res.json(Statistics);
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getOnloadStatistics = async (req, res, next) => {
+	try {
+		const Week = await Training.aggregate([
+			{
+				$match: {
+					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+					time_created: {
+						$gte: new Date(
+							new Date({
+								$subtract: [new Date().getTime(), 7 * 24 * 60 * 60 * 1000],
+							}).setHours(0, 0, 0, 0)
+						),
+						$lte: new Date(),
+					},
+				},
+			},
+			{ $project: query },
+			{
+				$group: groupBy,
+			},
+		]);
+		const Month = await Training.aggregate([
+			{
+				$match: {
+					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+					time_created: {
+						$gte: new Date(
+							new Date({
+								$subtract: [new Date().getTime(), 30 * 24 * 60 * 60 * 1000],
+							}).setHours(0, 0, 0, 0)
+						),
+						$lte: new Date(),
+					},
+				},
+			},
+			{ $project: query },
+			{
+				$group: groupBy,
+			},
+		]);
+		const Statistics = { week: Week, month: Month };
+		console.log(Statistics);
 		res.json(Statistics);
 	} catch (err) {
 		next(err);

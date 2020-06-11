@@ -15,10 +15,25 @@
   overflow-y: auto;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 600px) and (min-height:420px) {
   .Modal {
     top: 20%;
     --min-width: 300px;
     --width: auto;
   }
+}
+
+@media (max-height: 400) and (max-width: 670) {
+  .Modal {
+    top: 5%;
+    width: 90%;
+    height: 90%;
+    min-height: 350px;
+    max-height: 90%;
+  }
+
+  .Modal>* {
+    max-height: 300px;
+  }
+
 }

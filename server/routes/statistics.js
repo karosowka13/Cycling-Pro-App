@@ -4,10 +4,12 @@ import {
 	getMonthStatistics,
 	getYearStatistics,
 	getAllStatistics,
+	getOnloadStatistics,
 } from "../controllers/statistics";
 const router = express.Router({ mergeParams: true });
 
 router.get("/", getAllStatistics); //get all statistics
+router.get("/onload", getOnloadStatistics); //get onload statistics
 router.get("/week", getWeekStatistics); //get week statistics
 router.get("/month", getMonthStatistics); //get month statistics
 router.get("/year", getYearStatistics); //get year statistics
