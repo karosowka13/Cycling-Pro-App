@@ -10,17 +10,21 @@ class Stats extends Component {
 	componentDidMount() {
 		this.props.statisticsData(this.props.userId);
 	}
-
 	render() {
 		let optionsWeek = null;
 		let optionsMonth = null;
 		let week = [];
 		let month = [];
+		let chartMonth = null;
+		let chartWeek = null;
 		if (this.props.success) {
-			for (let record of this.props.stats) {
-				week.push({ y: record.week[1], label: record.week[0] });
-				month.push({ y: record.month[1], label: record.month[0] });
+			for (let record of this.props.stats.month[0]) {
+				month.push({ y: record[1], label: record[0] });
 			}
+			for (let record of this.props.stats.week[0]) {
+				week.push({ y: record[1], label: record[0] });
+			}
+			console.log("week", week, month);
 			optionsWeek = {
 				theme: "light2",
 				width: 300,
@@ -50,6 +54,8 @@ class Stats extends Component {
 					},
 				],
 			};
+			chartMonth = <CanvasJSChart options={optionsMonth} />;
+			chartWeek = <CanvasJSChart options={optionsWeek} />;
 		}
 		return (
 			<div className={classes.Container}>
@@ -59,12 +65,8 @@ class Stats extends Component {
 					<p>Total distance</p>
 					<p>Total TSS</p>
 				</div>
-				<div className={classes.Week}>
-					This week <CanvasJSChart options={optionsWeek} />
-				</div>
-				<div className={classes.Month}>
-					This month <CanvasJSChart options={optionsMonth} />
-				</div>
+				<div className={classes.Week}>This week {chartWeek}</div>
+				<div className={classes.Month}>This month {chartWeek}</div>
 			</div>
 		);
 	}
@@ -72,7 +74,7 @@ class Stats extends Component {
 
 const mapStateToProps = (state) => {
 	return {
-		stats: state.statistics.statisticsData,
+		stats: state.statistics.statisticsData[0],
 		statsSuccess: state.statistics.success,
 		userId: state.auth.userId,
 	};

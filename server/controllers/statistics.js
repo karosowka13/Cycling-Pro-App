@@ -31,7 +31,7 @@ export const getAllStatistics = async (req, res, next) => {
 		const allStatistics = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+					athlete_id: (req.params.athleteid),
 				},
 			},
 			{ $project: query },
@@ -50,7 +50,7 @@ export const getWeekStatistics = async (req, res, next) => {
 		const Statistics = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+					athlete_id: (req.params.athleteid),
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -77,7 +77,7 @@ export const getMonthStatistics = async (req, res, next) => {
 		const Statistics = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+					athlete_id: (req.params.athleteid),
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -104,7 +104,7 @@ export const getYearStatistics = async (req, res, next) => {
 		const Statistics = await Training.aggregate([
 			{
 				$match: {
-					match,
+					athlete_id: (req.params.athleteid),
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -128,10 +128,11 @@ export const getYearStatistics = async (req, res, next) => {
 
 export const getOnloadStatistics = async (req, res, next) => {
 	try {
+
 		const Week = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+					athlete_id: (req.params.athleteid),
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -150,7 +151,7 @@ export const getOnloadStatistics = async (req, res, next) => {
 		const Month = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: mongoose.Types.ObjectId(req.params.athleteid),
+					athlete_id: (req.params.athleteid),
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -167,7 +168,6 @@ export const getOnloadStatistics = async (req, res, next) => {
 			},
 		]);
 		const Statistics = { week: Week, month: Month };
-		console.log(Statistics);
 		res.json(Statistics);
 	} catch (err) {
 		next(err);

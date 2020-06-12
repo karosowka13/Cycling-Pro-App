@@ -24,17 +24,12 @@ export const fetchStatisticsStart = () => {
 export const fetchStatistics = (userId) => {
 	return (dispatch) => {
 		dispatch(fetchStatisticsStart());
-		const queryParams = "/athletes/" + userId + "/statistics/onload";
+		const queryParams = "/api/athletes/" + userId + "/statistics/onload";
 		axios
 			.get(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
 				const fetchedStatistics = [];
-				for (let key in res.data) {
-					fetchStatistics.push({
-						...res.data[key],
-						id: key,
-					});
-				}
+				fetchedStatistics.push(res.data);
 				dispatch(fetchStatisticsSuccess(fetchedStatistics));
 			})
 			.catch((err) => {
