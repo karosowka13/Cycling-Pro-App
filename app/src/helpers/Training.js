@@ -3,7 +3,7 @@ export function training(data) {
 	let dataToArray = Object.keys(data).map((key) => [key, data[key]]);
 	for (let [key, value] of dataToArray) {
 		key = key.replace(/_/g, " ");
-		if (!isNaN(value)) {
+		if (!isNaN(value) && !(value % 1 === 0)) {
 			value = parseFloat(value.toFixed(2));
 		}
 		if (

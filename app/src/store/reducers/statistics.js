@@ -16,6 +16,7 @@ const fetchStatisticsSuccess = (state, action) => {
 	return updateObject(state, {
 		statisticsData: action.statistics,
 		loading: false,
+		success: true,
 	});
 };
 

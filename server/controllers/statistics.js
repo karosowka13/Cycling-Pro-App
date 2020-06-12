@@ -14,6 +14,18 @@ const query = {
 	training_stress_score: 1,
 	_id: 0,
 };
+const querySmall = {
+	total_distance: 1,
+	total_elapsed_time: 1,
+	training_stress_score: 1,
+	_id: 0,
+};
+const groupBySmall = {
+	_id: null,
+	total_distance: { $sum: "$total_distance" },
+	total_elapsed_time: { $sum: "$total_elapsed_time" },
+	training_stress_score: { $sum: "$training_stress_score" },
+};
 const groupBy = {
 	_id: null,
 	intensity_factor: { $sum: "$intensity_factor" },
@@ -31,7 +43,7 @@ export const getAllStatistics = async (req, res, next) => {
 		const allStatistics = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: (req.params.athleteid),
+					athlete_id: req.params.athleteid,
 				},
 			},
 			{ $project: query },
@@ -50,7 +62,7 @@ export const getWeekStatistics = async (req, res, next) => {
 		const Statistics = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: (req.params.athleteid),
+					athlete_id: req.params.athleteid,
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -77,7 +89,7 @@ export const getMonthStatistics = async (req, res, next) => {
 		const Statistics = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: (req.params.athleteid),
+					athlete_id: req.params.athleteid,
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -104,7 +116,7 @@ export const getYearStatistics = async (req, res, next) => {
 		const Statistics = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: (req.params.athleteid),
+					athlete_id: req.params.athleteid,
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -128,11 +140,10 @@ export const getYearStatistics = async (req, res, next) => {
 
 export const getOnloadStatistics = async (req, res, next) => {
 	try {
-
 		const Week = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: (req.params.athleteid),
+					athlete_id: req.params.athleteid,
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -143,15 +154,15 @@ export const getOnloadStatistics = async (req, res, next) => {
 					},
 				},
 			},
-			{ $project: query },
+			{ $project: querySmall },
 			{
-				$group: groupBy,
+				$group: groupBySmall,
 			},
 		]);
 		const Month = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: (req.params.athleteid),
+					athlete_id: req.params.athleteid,
 					time_created: {
 						$gte: new Date(
 							new Date({
@@ -162,9 +173,9 @@ export const getOnloadStatistics = async (req, res, next) => {
 					},
 				},
 			},
-			{ $project: query },
+			{ $project: querySmall },
 			{
-				$group: groupBy,
+				$group: groupBySmall,
 			},
 		]);
 		const Statistics = { week: Week, month: Month };

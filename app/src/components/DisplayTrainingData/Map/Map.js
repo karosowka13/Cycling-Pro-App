@@ -16,7 +16,7 @@ class routeMap extends Component {
 				<Map
 					style={{ height: "300px", width: "500px" }}
 					center={center}
-					zoom={13}
+					zoom={8}
 				>
 					<TileLayer
 						url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

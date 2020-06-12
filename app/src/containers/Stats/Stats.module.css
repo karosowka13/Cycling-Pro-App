@@ -1,31 +1,61 @@
 .Container {
-  display: grid;
-  grid-template-columns: 3 repeat(1fr);
-  justify-items: start;
-  height: 15vh;
+	display: grid;
+	grid-template-columns: 20% 40% 40%;
+	grid-template-rows: 200px;
+	justify-items: start;
+	height: 20vh;
 }
 
 .Captions {
-  align-items: left;
-  text-align: left;
-  grid-column: 1;
-  padding: 0 10px 10px 20px;
+	align-items: left;
+	text-align: left;
+	grid-column: 1;
+	padding: 0 10px 10px 20px;
 }
 .Captions p {
-  display: grid;
+	display: grid;
 }
 
 .Week {
-  grid-column: 2;
+	display: grid;
+	grid-template-columns: 90px 150px;
+	grid-template-rows: repeat(4, 25%);
+	justify-items: start;
+	grid-template-areas:
+		"p chart"
+		"p chart"
+		"p chart"
+		"p chart";
 }
 
+.Week p {
+	grid-area: p;
+}
+.Month p {
+	grid-area: p;
+}
+.Chart {
+	z-index: -5;
+	padding-top: 20px;
+	grid-area: chart;
+	align-self: center;
+}
 .Month {
-  grid-column: 3;
-  padding: 0 20px 10px 0;
+	grid-column: 3;
+	padding: 0 20px 10px 0;
+	display: grid;
+	grid-template-columns: 90px 150px;
+	grid-template-rows: repeat(4, 25%);
+	justify-items: start;
+	grid-template-areas:
+		"p chart"
+		"p chart"
+		"p chart"
+		"p chart";
 }
 @media (max-width: 650px) {
-  .Container {
-    display: none;
-  }
+	.Container {
+		display: none;
+	}
 }
 /* gird-auto-flow */
