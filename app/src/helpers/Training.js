@@ -67,3 +67,11 @@ export function centerGeolocation(coords) {
 		(centralLongitude * 180) / Math.PI,
 	];
 }
+
+export function lastElement(array) {
+	if (array.length > 0) {
+		return array[array.length - 1];
+	} else if (array.length === 0) {
+		return array;
+	} else return 0;
+}

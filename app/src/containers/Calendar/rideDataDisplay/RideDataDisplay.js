@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 
+import { lastElement } from "../../../helpers/Training";
+
 import TrainingSummary from "../../../components/DisplayTrainingData/TrainingSummary/TrainingSummary";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
@@ -55,8 +57,12 @@ class RideDataDisplay extends Component {
 			!this.props.loading &&
 			this.state.displaying === "Training"
 		) {
-			//to do get object from date
-			content = <TrainingSummary trainingData={this.props.trainingData} />;
+			//to do get last object from data
+			//let last = lastElement(this.props.trainingData);
+			let last = lastElement(this.props.trainingData);
+			if (last !== 0 && Object.entries(last).length > 0) {
+				content = <TrainingSummary trainingData={last} />;
+			}
 		} else if (
 			this.props.successChart &&
 			!this.props.loading &&

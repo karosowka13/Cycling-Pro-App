@@ -11,7 +11,10 @@ class Stats extends Component {
 		this.props.statisticsData(this.props.userId);
 	}
 	shouldComponentUpdate(nextProps, nextState) {
-		return nextProps.statsSuccess !== this.props.statsSuccess;
+		return (
+			nextProps.statsSuccess !== this.props.statsSuccess ||
+			nextProps.stats !== this.props.stats
+		);
 	}
 	render() {
 		let optionsWeek = null;
@@ -25,7 +28,7 @@ class Stats extends Component {
 		let chartMonth = null;
 		let chartWeek = null;
 
-		if (this.props.statsSuccess) {
+		if (this.props.statsSuccess && this.props.stats.week.length > 0) {
 			let recordMonth = this.props.stats.month[0];
 			let recordWeek = this.props.stats.week[0];
 			let month = [];
@@ -72,12 +75,11 @@ class Stats extends Component {
 					week.push({ y: newValue, label: newKey });
 				}
 			});
-			console.log("records", recordMonth, month);
 
 			optionsWeek = {
 				theme: "light2",
 				height: 140,
-				width: 240,
+				width: 200,
 				axisY: {
 					lineThicknes: 0,
 					tickLength: 0,
@@ -102,7 +104,7 @@ class Stats extends Component {
 			optionsMonth = {
 				theme: "light2",
 				height: 140,
-				width: 240,
+				width: 200,
 				axisY: {
 					lineThicknes: 0,
 					tickLength: 0,

@@ -27,7 +27,7 @@ export const loadTraininglog = (trainingLog, userId) => {
 		const data = new FormData();
 		data.append("file", trainingLog);
 		axios
-			.post(process.env.REACT_APP_SERVER + "/api/upload", data, {
+			.post(process.env.REACT_APP_SERVER + "/upload", data, {
 				headers: { user: userId },
 			})
 			.then((response) => {
@@ -68,13 +68,7 @@ export const fetchTrainings = (from, to, userId) => {
 		axios
 			.get(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
-				const fetchedTrainings = [];
-				for (let key in res.data) {
-					fetchTrainings.push({
-						...res.data[key],
-						id: key,
-					});
-				}
+				const fetchedTrainings = res.data;
 				dispatch(fetchTrainingsSuccess(fetchedTrainings));
 			})
 			.catch((err) => {

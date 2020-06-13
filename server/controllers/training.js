@@ -26,7 +26,6 @@ export const createNewTraining = async (req, res, next) => {
 };
 
 export const updateTraining = async (req, res, next) => {
-	console.log(req.params, req.body);
 	let options = { upsert: true, new: true, omitUndefined: true, multi: true };
 	try {
 		const training = await Training.findByIdAndUpdate(
@@ -54,10 +53,11 @@ export const getTraining = async (req, res, next) => {
 export const getTrainingsInRange = async (req, res, next) => {
 	let from = new Date(req.params.from);
 	let to = new Date(req.params.to);
+
 	try {
 		const trainingsRange = await Training.find({
 			athlete_id: req.params.athleteid,
-			time_created: { $gte: req.params.from, $lte: req.params.to },
+			time_created: { $gte: from, $lte: to },
 		}).sort({ time_created: 1 }); //the newest first
 		res.json(trainingsRange);
 	} catch (err) {

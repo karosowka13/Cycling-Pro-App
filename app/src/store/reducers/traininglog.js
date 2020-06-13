@@ -4,7 +4,7 @@ import { updateObject } from "../../shared/utility";
 const initialState = {
 	loading: false,
 	error: null,
-	trainings: {},
+	trainings: [],
 	success: false,
 };
 

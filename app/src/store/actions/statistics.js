@@ -24,7 +24,7 @@ export const fetchStatisticsStart = () => {
 export const fetchStatistics = (userId) => {
 	return (dispatch) => {
 		dispatch(fetchStatisticsStart());
-		const queryParams = "/api/athletes/" + userId + "/statistics/onload";
+		const queryParams = "/athletes/" + userId + "/statistics/onload";
 		axios
 			.get(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
