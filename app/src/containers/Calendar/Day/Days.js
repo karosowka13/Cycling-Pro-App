@@ -9,31 +9,26 @@ import classes from "./Days.module.css";
 class Day extends Component {
 	constructor(props) {
 		super(props);
-		this.dayField = React.createRef();
-  }
-
-	state = {
-		today: new Date(),
-	};
+		// This binding is necessary to make `this` work in the callback
+		this.scrollToNode = this.scrollToNode.bind(this);
+		this.state = { today: new Date() };
+	}
 
 	componentDidMount() {
 		this.startFetching();
+		this.scrollToNode(this.scrollDay);
 	}
-
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return (
-	// 		nextProps.month !== this.props.month ||
-	// 		nextProps.day !== this.props.day ||
-	// 		nextProps.trainings !== this.props.trainings ||
-	// 		nextState.show !== this.state.modalShow ||
-	// 		nextProps.children !== this.props.children
-	// 	);
-	// }
 
 	componentDidUpdate(prevProps) {
 		if (this.props.month !== prevProps.month) {
 			this.startFetching();
+		} else if (this.props.day !== prevProps.day) {
+			this.scrollToNode(this.scrollDay);
 		}
+	}
+
+	scrollToNode(node) {
+		node.scrollIntoView({ behavior: "smooth", block: "center" });
 	}
 
 	startFetching = () => {
@@ -78,8 +73,6 @@ class Day extends Component {
 							trainingIcon.push(
 								<DirectionsBikeIcon key={cloneDay} style={{ fontSize: 40 }} />
 							);
-							//cellClasses.push(classes.Activity);
-							console.log("thesame");
 						}
 					});
 				}
@@ -90,7 +83,9 @@ class Day extends Component {
 					cellClasses.push(classes.Disabled);
 				} else if (dateFns.isSameDay(day, selectedDate)) {
 					cellClasses.push(classes.Selected);
-					this.day.current.focus();
+					days.push(
+						<div key={"focus"} ref={(node) => (this.scrollDay = node)}></div>
+					);
 				} else if (dateFns.isSameDay(day, this.state.today)) {
 					cellClasses.push(classes.Today);
 					//console.log("today")
@@ -102,13 +97,12 @@ class Day extends Component {
 							className={cellClasses.join(" ")}
 							key={day}
 							onClick={() => this.props.onDayClick(cloneDay)}
-							ref={this.day}
 						>
 							<div className={classes.Container}>
 								<div className={classes.Number}>{dayNumber}</div>
 								<ButtonIcon
 									btntype="AddCircleOutlineIcon"
-									onChange={this.onFileChange}
+									onChange={this.props.showModal}
 								/>
 								<ButtonIcon
 									btntype="EditIcon"

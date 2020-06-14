@@ -9,6 +9,7 @@
 	flex-direction: row;
 	flex-wrap: wrap;
 	width: 100%;
+	overflow-y: hidden;
 }
 
 .Cell {
@@ -82,6 +83,7 @@
 
 @media (max-width: 650px) {
 	.AllDaysContainer {
+		padding-top: 35px;
 		display: flex;
 		flex-direction: column;
 		height: auto;

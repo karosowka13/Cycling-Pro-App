@@ -25,8 +25,6 @@ class Calendar extends Component {
 	}
 
 	onFileChange = (event) => {
-		const updateStates = { ...this.state };
-		updateStates.modalShow = true;
 		this.setState({ modalShow: true });
 		const file = event.target.files[0];
 		this.props.traininglogData(file, this.props.userId);
@@ -34,6 +32,10 @@ class Calendar extends Component {
 
 	hideCartHandler = () => {
 		this.setState({ modalShow: false });
+	};
+
+	showModalHandler = () => {
+		this.setState({ modalShow: true });
 	};
 
 	getTimeCreated = () => {
@@ -54,7 +56,7 @@ class Calendar extends Component {
 					nextMonth={() => this.props.nextMonth(this.props.month)}
 				/>
 				<Weekdays currentMonth={this.props.month} />
-				<Days12 />
+				<Days showModal={this.onFileChange} />
 				<Modal show={this.state.modalShow} modalClosed={this.hideCartHandler}>
 					<RideDataDisplay confirmHandler={this.hideCartHandler} />
 				</Modal>
@@ -81,6 +83,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(actions.loadTraininglog(trainingLog, userId)),
 		nextMonth: (month) => dispatch(actions.nextMonth(month)),
 		prevMonth: (month) => dispatch(actions.prevMonth(month)),
+		onDayClick: (day) => dispatch(actions.onDateClick(day)),
 	};
 };
 

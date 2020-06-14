@@ -1,11 +1,11 @@
 @media (max-width: 600px) {
-  .Map {
-    transform: rotate(-90deg);
-    transform-origin: left top;
-    width: 100vh;
-    overflow-x: hidden;
-    position: absolute;
-    top: 100%;
-    left: 0;
-  }
+	.Map {
+		transform: rotate(-90deg);
+		transform-origin: left top;
+		width: 100vh;
+		overflow-x: hidden;
+		position: absolute;
+		top: 80vh;
+		left: 15%;
+	}
 }

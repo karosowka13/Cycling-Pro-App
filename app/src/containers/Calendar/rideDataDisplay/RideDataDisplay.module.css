@@ -1,27 +1,23 @@
 .Form {
-  width: 100%;
-  min-height: 350px;
-  display: grid;
-  place-items: center center;
-  place-content: center center;
+	width: 100%;
+	min-height: 350px;
+	display: grid;
+	place-items: center center;
+	place-content: center center;
 }
 
-.Form>* {
-  justify-self: center;
-
+.Form > * {
+	justify-self: center;
 }
 
 .Buttons {
-  padding-top: 15px;
-  align-self: end;
-  width: 100%;
-
+	padding-top: 15px;
+	align-self: end;
+	width: 100%;
 }
 
-@media(max-width: 650px) {
-
-  .Buttons {
-    text-align: center;
-  }
-
+@media (max-width: 650px) {
+	.Buttons {
+		text-align: center;
+	}
 }

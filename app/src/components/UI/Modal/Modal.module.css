@@ -1,39 +1,42 @@
 .Modal {
-  position: fixed;
-  z-index: 500;
-  background-color: white;
-  width: 70%;
-  min-height: 350px;
-  max-height: 70%;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  padding: 16px;
-  left: 15%;
-  top: 15%;
-  box-sizing: border-box;
-  transition: all 0.3s ease-out;
-  overflow-y: auto;
+	position: fixed;
+	z-index: 500;
+	background-color: white;
+	width: 70%;
+	min-height: 350px;
+	max-height: 70%;
+	border-radius: 4px;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+	padding: 16px;
+	left: 15%;
+	top: 15%;
+	box-sizing: border-box;
+	transition: all 0.3s ease-out;
+	overflow-y: auto;
 }
 
-@media (min-width: 600px) and (min-height:420px) {
-  .Modal {
-    top: 20%;
-    --min-width: 300px;
-    --width: auto;
-  }
+@media (min-width: 670px) and (min-height: 420px) {
+	.Modal {
+		top: 20%;
+		--min-width: 300px;
+		--width: auto;
+	}
 }
 
-@media (max-height: 400) and (max-width: 670) {
-  .Modal {
-    top: 5%;
-    width: 90%;
-    height: 90%;
-    min-height: 350px;
-    max-height: 90%;
-  }
+@media (max-width: 745px) and (min-width: 600px) {
+	.Modal {
+		width: 90%;
+		left: 5%;
+	}
+}
 
-  .Modal>* {
-    max-height: 300px;
-  }
-
+@media (max-width: 600px) {
+	.Modal {
+		top: 5%;
+		left: 5%;
+		width: 90%;
+		min-height: 350px;
+		max-height: 90%;
+		height: 90vh;
+	}
 }

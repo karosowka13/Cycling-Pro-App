@@ -41,6 +41,7 @@ class Chart extends Component {
 					labelFontColor: "rgba(196, 24, 47)",
 					gridThickness: 0,
 					margin: 0,
+					labelFontSize: 10,
 				},
 				{
 					//power
@@ -49,6 +50,7 @@ class Chart extends Component {
 					labelFontColor: "rgba(37, 124, 186)",
 					gridThickness: 0,
 					margin: 0,
+					labelFontSize: 10,
 				},
 				{
 					//cadence
@@ -57,6 +59,7 @@ class Chart extends Component {
 					labelFontColor: "rgba(34, 130, 37)",
 					gridThickness: 0,
 					margin: 0,
+					labelFontSize: 10,
 				},
 			],
 			axisY2: [
@@ -67,6 +70,7 @@ class Chart extends Component {
 					titleFontColor: "rgba(94, 102, 107)",
 					labelFontColor: "rgba(94, 102, 107)",
 					margin: 0,
+					labelFontSize: 10,
 				},
 				{
 					//temperature
@@ -74,6 +78,7 @@ class Chart extends Component {
 					titleFontColor: "rgba(86, 15, 145)",
 					labelFontColor: "rgba(86, 15, 145)",
 					margin: 0,
+					labelFontSize: 10,
 				},
 				{
 					//speed
@@ -81,6 +86,7 @@ class Chart extends Component {
 					titleFontColor: "rgba(227, 224, 48)",
 					labelFontColor: "rgba(227, 224, 48)",
 					margin: 0,
+					labelFontSize: 10,
 				},
 			],
 			axisX: {
@@ -112,63 +118,68 @@ class Chart extends Component {
 			data: [
 				{
 					showInLegend: true,
+					legendMarkerType: "circle",
 					name: "Heart rate",
 					color: "rgba(196, 24, 47,0.75)",
 					type: "spline",
-					legendMarkerType: "circle",
+
 					markerSize: 0,
 					dataPoints: heartrate,
 				},
 				{
+					legendMarkerType: "circle",
 					showInLegend: true,
 					name: "Power",
 					axisYIndex: 1,
 					type: "spline",
 					color: "rgba(37, 124, 186,0.9)",
-					legendMarkerType: "circle",
+
 					markerSize: 0,
 					dataPoints: power,
 				},
 				{
 					showInLegend: true,
+					legendMarkerType: "circle",
 					name: "Cadence",
 					axisYIndex: 2,
 					color: "rgba(34, 130, 37,0.7)",
 					type: "spline",
-					legendMarkerType: "circle",
+
 					markerSize: 0,
 					dataPoints: cadence,
 				},
 				{
 					showInLegend: true,
+					legendMarkerType: "circle",
 					name: "Altitude",
 					type: "area",
 					color: "rgba(94, 102, 107,0.40)",
 					axisYType: "secondary",
 
-					legendMarkerType: "circle",
 					markerSize: 0,
 					dataPoints: altitude,
 				},
 				{
 					showInLegend: true,
+					legendMarkerType: "circle",
 					name: "Temperature",
 					type: "spline",
 					color: "rgba(86, 15, 145,0.90)",
 					axisYType: "secondary",
 					axisYIndex: 2,
-					legendMarkerType: "circle",
+
 					markerSize: 0,
 					dataPoints: temperature,
 				},
 				{
 					showInLegend: true,
+					legendMarkerType: "circle",
 					name: "Speed",
 					color: "rgba(227, 224, 7)",
 					type: "spline",
 					axisYType: "secondary",
 					axisYIndex: 1,
-					legendMarkerType: "circle",
+
 					markerSize: 0,
 					dataPoints: speed,
 				},

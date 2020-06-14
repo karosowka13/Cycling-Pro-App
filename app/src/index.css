@@ -3,6 +3,7 @@ body {
 	height: 100%;
 	box-sizing: border-box;
 	font-size: 1em;
+	font-weight: 300;
 	line-height: 1.5;
 	background-color: #1a8fff;
 	position: relative;
