@@ -39,7 +39,7 @@ class Stats extends Component {
 					let newValue = recordMonth[key];
 					if (key === "total_elapsed_time") {
 						newValue = recordMonth[key] / 60;
-						timeM = (newValue / 60).toFixed(2);
+						timeM = (newValue / 60).toFixed(2) + "h";
 						newKey = "duration";
 					}
 					if (key === "training_stress_score") {
@@ -145,14 +145,14 @@ class Stats extends Component {
 				</div>
 				<div className={classes.Week}>
 					<div className={classes.Text}>
-						<p>This week</p> <p>{tssW}</p> <p>{timeW} h</p>{" "}
-						<p>{distanceW} km</p>{" "}
+						<p>This week</p> <p>{tssW} </p> <p>{timeW} h</p>{" "}
+						<p>{distanceW} km</p>
 					</div>
 					{chartWeek}
 				</div>
 				<div className={classes.Month}>
 					<div className={classes.Text}>
-						<p>This month</p> <p>{tssM}</p> <p>{timeM} h</p>
+						<p>This month</p> <p>{tssM} </p> <p>{timeM} h</p>
 						<p>{distanceM} km</p>{" "}
 					</div>
 					{chartMonth}

@@ -6,6 +6,7 @@ const initialState = {
 	error: null,
 	trainings: [],
 	success: false,
+	successFetch: false,
 };
 
 const traininglogStart = (state, action) => {
@@ -33,6 +34,7 @@ const fetchTrainingsSuccess = (state, action) => {
 	return updateObject(state, {
 		trainings: action.trainings,
 		loading: false,
+		successFetch: true,
 	});
 };
 

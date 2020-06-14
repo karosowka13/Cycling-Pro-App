@@ -145,11 +145,9 @@ export const getOnloadStatistics = async (req, res, next) => {
 				$match: {
 					athlete_id: req.params.athleteid,
 					time_created: {
-						$gte: new Date(
-							new Date({
-								$subtract: [new Date().getTime(), 7 * 24 * 60 * 60 * 1000],
-							}).setHours(0, 0, 0, 0)
-						),
+						$gte: new Date({
+							$subtract: [new Date().getTime(), 7 * 24 * 60 * 60 * 1000],
+						}).setHours(0, 0, 0, 0),
 						$lte: new Date(),
 					},
 				},
@@ -164,11 +162,9 @@ export const getOnloadStatistics = async (req, res, next) => {
 				$match: {
 					athlete_id: req.params.athleteid,
 					time_created: {
-						$gte: new Date(
-							new Date({
-								$subtract: [new Date().getTime(), 30 * 24 * 60 * 60 * 1000],
-							}).setHours(0, 0, 0, 0)
-						),
+						$gte: new Date({
+							$subtract: [new Date().getTime(), 30 * 24 * 60 * 60 * 1000],
+						}).setHours(0, 0, 0, 0),
 						$lte: new Date(),
 					},
 				},
