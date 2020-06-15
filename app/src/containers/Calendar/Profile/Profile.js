@@ -33,7 +33,7 @@ class Profile extends Component {
 	submitHandler = (event) => {
 		event.preventDefault();
 		this.props.updateProfile(this.props.userId, this.state.updatedData);
-		this.props.history.push("/main");
+		this.props.history.push({ pathname: "/calendar" });
 	};
 
 	// showModalHandler = () => {
@@ -45,7 +45,7 @@ class Profile extends Component {
 	};
 
 	cancelHandler = () => {
-		this.props.history.push("/main");
+		this.props.history.goBack();
 	};
 
 	changeHandler = (event, info) => {

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Route } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
@@ -7,6 +8,7 @@ import Modal from "../../components/UI/Modal/Modal";
 import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
 import Stats from "../Stats/Stats";
 import Days from "./Day/Days";
+import Profile from "./Profile/Profile";
 import classes from "./Calendar.module.css";
 
 class Calendar extends Component {
@@ -61,6 +63,7 @@ class Calendar extends Component {
 					<RideDataDisplay confirmHandler={this.hideCartHandler} />
 				</Modal>
 				<Stats />
+				<Route path={this.props.match.url + "/profile"} component={Profile} />
 			</div>
 		);
 	}

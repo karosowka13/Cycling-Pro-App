@@ -32,16 +32,14 @@ class App extends Component {
 			secureRoutes = (
 				<Logged>
 					<Switch>
+						<Route path="/calendar" component={Calendar} />
+						<Route path="/logout" component={Logout} />
 						<Route
 							path="/authentication/:type"
 							render={(props) => <Authentication {...props} />}
 						/>
-						<Route path="/calendar" component={Calendar}>
-							<Route exact path="/profile" component={Profile} />
-						</Route>
-						<Route path="/logout" component={Logout} />
 						<Route path="/" exact component={Calendar} />
-						<Redirect to="/" />
+						<Redirect from="*" to="/" />
 					</Switch>
 				</Logged>
 			);

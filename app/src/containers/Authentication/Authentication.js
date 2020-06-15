@@ -39,12 +39,9 @@ class Authentication extends Component {
 		if (this.props.match.params.type === "login") {
 			this.setState({ isSignUp: false });
 		} else this.setState({ isSignUp: true });
-		if (
-			this.props.authRedirectPath !== "/logged/calendar" &&
-			this.props.isAuth
-		) {
-			this.props.onSetAuthRedirectPath();
-		}
+		// if (this.props.authRedirectPath !== "/") {
+		// 	this.props.onSetAuthRedirectPath();
+		// }
 	}
 	submitHandler = (event) => {
 		event.preventDefault(); //prevent reload of the page
