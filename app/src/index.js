@@ -12,6 +12,7 @@ import traininglogReducer from "./store/reducers/traininglog";
 import chartReducer from "./store/reducers/chart";
 import statisticsReducer from "./store/reducers/statistics";
 import dateReducer from "./store/reducers/date";
+import profileReducer from "./store/reducers/profile";
 import { BrowserRouter } from "react-router-dom";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -22,6 +23,7 @@ const rootReducer = combineReducers({
 	chart: chartReducer,
 	statistics: statisticsReducer,
 	date: dateReducer,
+	profile: profileReducer,
 });
 
 const store = createStore(

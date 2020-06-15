@@ -3,18 +3,18 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 import classes from "./NavigationItems.module.css";
 
 const navigationItems = (props) => {
-  return (
-    <ul className={classes.NavigationItems}>
-      <NavigationItem link="/" active>
-        Profile
-      </NavigationItem>
-      {!props.isAuth ? (
-        <NavigationItem link="/authentication/login">Log in</NavigationItem>
-      ) : (
-        <NavigationItem link="/logout">Log out</NavigationItem>
-      )}
-    </ul>
-  );
+	return (
+		<ul className={classes.NavigationItems}>
+			<NavigationItem link="/profile" active>
+				Profile
+			</NavigationItem>
+			{!props.isAuth ? (
+				<NavigationItem link="/authentication/login">Log in</NavigationItem>
+			) : (
+				<NavigationItem link="/logout">Log out</NavigationItem>
+			)}
+		</ul>
+	);
 };
 
 export default navigationItems;

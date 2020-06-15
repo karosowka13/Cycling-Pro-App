@@ -10,6 +10,7 @@ import Authentication from "./containers/Authentication/Authentication";
 import Logged from "./hoc/Layout/Logged";
 import Calendar from "./containers/Calendar/Calendar";
 import Logout from "./containers/Authentication/Logout/Logout";
+import Profile from "./containers/Calendar/Profile/Profile";
 
 class App extends Component {
 	componentDidMount() {
@@ -35,7 +36,9 @@ class App extends Component {
 							path="/authentication/:type"
 							render={(props) => <Authentication {...props} />}
 						/>
-						<Route path="/calendar" component={Calendar} />
+						<Route path="/calendar" component={Calendar}>
+							<Route exact path="/profile" component={Profile} />
+						</Route>
 						<Route path="/logout" component={Logout} />
 						<Route path="/" exact component={Calendar} />
 						<Redirect to="/" />
