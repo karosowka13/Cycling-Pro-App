@@ -10,7 +10,6 @@ import Authentication from "./containers/Authentication/Authentication";
 import Logged from "./hoc/Layout/Logged";
 import Calendar from "./containers/Calendar/Calendar";
 import Logout from "./containers/Authentication/Logout/Logout";
-import Profile from "./containers/Calendar/Profile/Profile";
 
 class App extends Component {
 	componentDidMount() {
@@ -21,6 +20,7 @@ class App extends Component {
 			<Switch>
 				<Route
 					path="/authentication/:type"
+					exact
 					render={(props) => <Authentication {...props} />}
 				/>
 				<Route path="/logout" component={Logout} />
@@ -30,18 +30,19 @@ class App extends Component {
 		);
 		if (this.props.isAuth) {
 			secureRoutes = (
-				<Logged>
+				<React.Fragment>
+					<Logged />
 					<Switch>
-						<Route path="/calendar" component={Calendar} />
-						<Route path="/logout" component={Logout} />
+						<Route exact path="/logout" component={Logout} />
 						<Route
 							path="/authentication/:type"
+							exact
 							render={(props) => <Authentication {...props} />}
 						/>
-						<Route path="/" exact component={Calendar} />
-						<Redirect from="*" to="/" />
+						<Route path="/" component={Calendar}></Route>
+						<Redirect to="/" />
 					</Switch>
-				</Logged>
+				</React.Fragment>
 			);
 		}
 

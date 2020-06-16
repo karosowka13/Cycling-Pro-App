@@ -26,17 +26,17 @@ const fetchProfileFail = (state, action) => {
 	return updateObject(state, { loading: false, error: action.error });
 };
 
-// const updateProfile = (state, action) => {
-// 	return updateObject(state, {
-// 		loading: false,
-// 		updateSuccess: true,
-// 		profileData: action.profileData,
-// 	});
-// };
+const updateProfileSuccess = (state, action) => {
+	return updateObject(state, {
+		loading: false,
+		updateSuccess: true,
+		profileData: action.profileData,
+	});
+};
 
-// const deleteProfile = (state, action) => {
-// 	return updateObject(state, { loading: false, deleteSuccess: true });
-// };
+const deleteProfileSuccess = (state, action) => {
+	return updateObject(state, { loading: false, deleteSuccess: true });
+};
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
@@ -46,10 +46,10 @@ const reducer = (state = initialState, action) => {
 			return fetchProfileSuccess(state, action);
 		case actionTypes.FETCH_PROFILE_FAIL:
 			return fetchProfileFail(state, action);
-		// case actionTypes.DELETE_PROFILE:
-		// 	return deleteProfile(state, action);
-		// case actionTypes.UPDATE_PROFILE:
-		// 	return updateProfile(state, action);
+		case actionTypes.DELETE_PROFILE:
+			return deleteProfileSuccess(state, action);
+		case actionTypes.UPDATE_PROFILE:
+			return updateProfileSuccess(state, action);
 
 		default:
 			return state;

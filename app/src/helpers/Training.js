@@ -8,6 +8,7 @@ export function training(data) {
 		}
 		if (
 			key === " v" ||
+			key === "  v" ||
 			key === " id" ||
 			key === "total cycles" ||
 			key === "total descent"

@@ -9,10 +9,11 @@ import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
 import Chart from "../../../components/DisplayTrainingData/Charts/chart";
 import Map from "../../../components/DisplayTrainingData/Map/Map";
+import Modal from "../../../components/UI/Modal/Modal";
 import classes from "./RideDataDisplay.module.css";
 
 class RideDataDisplay extends Component {
-	state = { displaying: "Training" };
+	state = { displaying: "Training", modalShow: true };
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			nextProps.children !== this.props.children ||
@@ -114,10 +115,15 @@ class RideDataDisplay extends Component {
 		}
 
 		return (
-			<div className={classes.Form}>
-				{content}
-				{buttons}
-			</div>
+			<Modal
+				show={this.state.modalShow}
+				modalClosed={this.props.confirmHandler}
+			>
+				<div className={classes.Form}>
+					{content}
+					{buttons}
+				</div>
+			</Modal>
 		);
 	}
 }

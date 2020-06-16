@@ -21,23 +21,16 @@ export const fetchProfileStart = () => {
 	};
 };
 
-// export const updateProfile = () => {
-// 	return {
-// 		type: actionTypes.UPDATE_PROFILE,
-// 	};
-// };
+export const updateProfileSuccess = () => {
+	return {
+		type: actionTypes.UPDATE_PROFILE,
+	};
+};
 
-// export const deleteProfile = () => {
-// 	return {
-// 		type: actionTypes.DELETE_PROFILE,
-// 	};
-// };
-
-export const logout = () => {
-	localStorage.removeItem("token");
-	localStorage.removeItem("expirationDate");
-	localStorage.removeItem("userId");
-	return { type: actionTypes.AUTH_LOGOUT };
+export const deleteProfileSuccess = () => {
+	return {
+		type: actionTypes.DELETE_PROFILE,
+	};
 };
 
 export const fetchProfile = (userId) => {
@@ -65,7 +58,7 @@ export const updateProfile = (userId, data) => {
 			.then((res) => {
 				const fetchedProfile = [];
 				fetchedProfile.push(res.data);
-				dispatch(fetchProfileSuccess(fetchedProfile));
+				dispatch(updateProfileSuccess(fetchedProfile));
 			})
 			.catch((err) => {
 				dispatch(fetchProfileFail(err));
@@ -79,8 +72,7 @@ export const deleteProfile = (userId) => {
 		axios
 			.delete(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
-				dispatch(deleteProfile());
-				dispatch(logout());
+				dispatch(deleteProfileSuccess());
 			})
 			.catch((err) => {
 				dispatch(fetchProfileFail(err));

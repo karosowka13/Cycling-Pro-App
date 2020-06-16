@@ -39,9 +39,9 @@ class Authentication extends Component {
 		if (this.props.match.params.type === "login") {
 			this.setState({ isSignUp: false });
 		} else this.setState({ isSignUp: true });
-		// if (this.props.authRedirectPath !== "/") {
-		// 	this.props.onSetAuthRedirectPath();
-		// }
+		if (this.props.authRedirectPath !== "/") {
+			this.props.onSetAuthRedirectPath();
+		}
 	}
 	submitHandler = (event) => {
 		event.preventDefault(); //prevent reload of the page
@@ -169,7 +169,7 @@ class Authentication extends Component {
 		}
 		let authRedirect = null;
 		if (this.props.isAuth) {
-			authRedirect = <Redirect to="/calendar" />;
+			authRedirect = <Redirect to="/" />;
 		}
 
 		return (
@@ -200,8 +200,7 @@ const mapDispatchToProps = (dispatch) => {
 	return {
 		onAuth: (email, password, isSignUp) =>
 			dispatch(actions.auth(email, password, isSignUp)),
-		onSetAuthRedirectPath: () =>
-			dispatch(actions.setAuthRedirectPath("/calendar")),
+		onSetAuthRedirectPath: () => dispatch(actions.setAuthRedirectPath("/")),
 	};
 };
 export default connect(mapStateToProps, mapDispatchToProps)(Authentication);

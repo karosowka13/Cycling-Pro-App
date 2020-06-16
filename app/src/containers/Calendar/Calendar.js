@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Route } from "react-router-dom";
+import { Route, withRouter, Switch } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
-import Modal from "../../components/UI/Modal/Modal";
+
 import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
 import Stats from "../Stats/Stats";
 import Days from "./Day/Days";
@@ -27,13 +27,16 @@ class Calendar extends Component {
 	}
 
 	onFileChange = (event) => {
+		event.preventDefault();
 		this.setState({ modalShow: true });
 		const file = event.target.files[0];
 		this.props.traininglogData(file, this.props.userId);
+		this.props.history.push("/trainingStats");
 	};
 
 	hideCartHandler = () => {
-		this.setState({ modalShow: false });
+		//this.setState({ modalShow: false });
+		this.props.history.push({ pathname: "/" });
 	};
 
 	showModalHandler = () => {
@@ -51,20 +54,26 @@ class Calendar extends Component {
 
 	render() {
 		return (
-			<div className={classes.Calendar}>
-				<Months
-					currentMonth={this.props.month}
-					prevMonth={() => this.props.prevMonth(this.props.month)}
-					nextMonth={() => this.props.nextMonth(this.props.month)}
-				/>
-				<Weekdays currentMonth={this.props.month} />
-				<Days showModal={this.onFileChange} />
-				<Modal show={this.state.modalShow} modalClosed={this.hideCartHandler}>
-					<RideDataDisplay confirmHandler={this.hideCartHandler} />
-				</Modal>
-				<Stats />
-				<Route path={this.props.match.url + "/profile"} component={Profile} />
-			</div>
+			<React.Fragment>
+				<div className={classes.Calendar}>
+					<Months
+						currentMonth={this.props.month}
+						prevMonth={() => this.props.prevMonth(this.props.month)}
+						nextMonth={() => this.props.nextMonth(this.props.month)}
+					/>
+					<Weekdays currentMonth={this.props.month} />
+					<Days showModal={this.onFileChange} />
+					<Switch>
+						<Route exact path="/profile">
+							<Profile confirmHandler={this.hideCartHandler} />
+						</Route>
+						<Route path="/trainingStats">
+							<RideDataDisplay confirmHandler={this.hideCartHandler} />
+						</Route>
+					</Switch>
+					<Stats />
+				</div>
+			</React.Fragment>
 		);
 	}
 }
@@ -90,4 +99,6 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Calendar);
+export default withRouter(
+	connect(mapStateToProps, mapDispatchToProps)(Calendar)
+);
