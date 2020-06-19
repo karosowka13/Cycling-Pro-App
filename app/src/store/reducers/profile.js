@@ -40,6 +40,16 @@ const fetchProfileSuccess = (state, action) => {
 	});
 };
 
+const changeProfile = (state, action) => {
+	let name = action.profileData[0];
+	let value = action.profileData[1];
+	let record = {};
+	record[name] = value;
+	const updatedProfile = updateObject(state.profileData, record);
+	console.log(updatedProfile);
+	return updateObject(state, { profileData: updatedProfile });
+};
+
 const fetchProfileFail = (state, action) => {
 	return updateObject(state, { loading: false, error: action.error });
 };
@@ -48,20 +58,11 @@ const updateProfileSuccess = (state, action) => {
 	return updateObject(state, {
 		loading: false,
 		updateSuccess: true,
-		profileData: action.profileData,
 	});
 };
 
 const deleteProfileSuccess = (state, action) => {
 	return updateObject(state, { loading: false, deleteSuccess: true });
-};
-
-const changeProfile = (state, action) => {
-	const updatedProfile = {
-		[action.profileData[0]]: state.profileData[action.profileData[1]],
-	};
-	const updatedProfiles = updateObject(state.profileData, updatedProfile);
-	return updateObject(state, updatedProfiles);
 };
 
 const reducer = (state = initialState, action) => {

@@ -58,7 +58,6 @@ class Profile extends Component {
 
 			form.map((formElement) => {
 				let name = formElement.id.replace(/_/g, " ");
-				console.log(formElement);
 				content.push(
 					<TextInput
 						readOnly={!this.state.edit}

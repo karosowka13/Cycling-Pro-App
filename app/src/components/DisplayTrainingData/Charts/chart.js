@@ -17,7 +17,10 @@ class Chart extends Component {
 		let heartrate = [];
 		let temperature = [];
 
+		let Altitude = [];
 		for (let record of data) {
+			Altitude.push(record.altitude);
+
 			power.push({ x: record.elapsed_time, y: record.power });
 			altitude.push({ x: record.elapsed_time, y: record.altitude });
 			speed.push({ x: record.elapsed_time, y: record.speed });
@@ -25,7 +28,7 @@ class Chart extends Component {
 			heartrate.push({ x: record.elapsed_time, y: record.heart_rate });
 			temperature.push({ x: record.elapsed_time, y: record.temperature });
 		}
-
+		let minAltitude = Math.min(...Altitude);
 		let options = {
 			exportFileName: `Training ${data[0].timestamp}`,
 			exportEnabled: true,
@@ -65,7 +68,7 @@ class Chart extends Component {
 			axisY2: [
 				{
 					//ascent
-					viewportMinimum: 0,
+					viewportMinimum: minAltitude,
 					lineColor: "rgba(94, 102, 107)",
 					titleFontColor: "rgba(94, 102, 107)",
 					labelFontColor: "rgba(94, 102, 107)",

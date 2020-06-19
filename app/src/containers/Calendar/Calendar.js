@@ -52,6 +52,10 @@ class Calendar extends Component {
 		return unique;
 	};
 
+	showRideHandler() {
+		this.props.history.push("/trainingStats");
+	}
+
 	render() {
 		return (
 			<React.Fragment>
@@ -62,7 +66,7 @@ class Calendar extends Component {
 						nextMonth={() => this.props.nextMonth(this.props.month)}
 					/>
 					<Weekdays currentMonth={this.props.month} />
-					<Days showModal={this.onFileChange} />
+					<Days showModal={this.onFileChange} showRide={this.showRideHandler} />
 					<Switch>
 						<Route exact path="/profile">
 							<Profile confirmHandler={this.hideCartHandler} />

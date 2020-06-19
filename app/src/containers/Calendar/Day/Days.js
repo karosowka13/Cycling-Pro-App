@@ -71,7 +71,11 @@ class Day extends Component {
 						trainedDay = dateFns.parseISO(trainedDay);
 						if (dateFns.isSameDay(cloneDay, trainedDay)) {
 							trainingIcon.push(
-								<DirectionsBikeIcon key={cloneDay} style={{ fontSize: 40 }} />
+								<DirectionsBikeIcon
+									key={cloneDay}
+									style={{ fontSize: 40 }}
+									onClick={this.props.showRide}
+								/>
 							);
 						}
 					});

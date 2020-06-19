@@ -66,9 +66,7 @@ export const updateProfile = (userId, data) => {
 		axios
 			.put(process.env.REACT_APP_SERVER + queryParams, data)
 			.then((res) => {
-				const fetchedProfile = [];
-				fetchedProfile.push(res.data);
-				dispatch(updateProfileSuccess(fetchedProfile));
+				dispatch(updateProfileSuccess);
 			})
 			.catch((err) => {
 				dispatch(fetchProfileFail(err));

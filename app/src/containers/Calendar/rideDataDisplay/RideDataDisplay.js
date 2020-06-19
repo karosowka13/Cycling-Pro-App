@@ -58,11 +58,16 @@ class RideDataDisplay extends Component {
 			!this.props.loading &&
 			this.state.displaying === "Training"
 		) {
-			//to do get last object from data
-			//let last = lastElement(this.props.trainingData);
-			let last = lastElement(this.props.trainingData);
-			if (last !== 0 && Object.entries(last).length > 0) {
-				content = <TrainingSummary trainingData={last} />;
+			//to do get training
+			let training = [];
+			for (let i of this.props.trainingData) {
+				if (i.time_created.getDay() === this.props.day.getDay()) {
+					training = i;
+				}
+			}
+
+			{
+				content = <TrainingSummary trainingData={training} />;
 			}
 		} else if (
 			this.props.successChart &&
@@ -136,6 +141,7 @@ const mapStateToProps = (state) => {
 		successTraining: state.loadTraininglog.success,
 		chartData: state.chart.records,
 		successChart: state.chart.success,
+		day: state.date.day,
 	};
 };
 
