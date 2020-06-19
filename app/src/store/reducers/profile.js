@@ -1,6 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
-import { updateProfile } from "../actions";
 
 const initialState = {
 	loading: false,

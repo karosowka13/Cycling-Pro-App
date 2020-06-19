@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 
-import { lastElement } from "../../../helpers/Training";
-
 import TrainingSummary from "../../../components/DisplayTrainingData/TrainingSummary/TrainingSummary";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
@@ -25,17 +23,17 @@ class RideDataDisplay extends Component {
 		this.setState({ displaying: "Training" });
 	}
 
-	showStatsHandler = (type) => {
+	showStatsHandler = (type, training) => {
 		if (type === "Chart") {
 			if (!this.props.successChart) {
-				this.props.loadChart(this.props.trainingData._id);
+				this.props.loadChart(training._id);
 			}
 			this.setState({ displaying: "Chart" });
 		} else if (type === "Training") {
 			this.setState({ displaying: "Training" });
 		} else if (type === "Map") {
 			if (!this.props.successChart) {
-				this.props.loadChart(this.props.trainingData._id);
+				this.props.loadChart(training._id);
 			}
 			this.setState({ displaying: "Map" });
 		}
@@ -45,6 +43,8 @@ class RideDataDisplay extends Component {
 		let buttons = null;
 		let buttonName = [];
 		let content = null;
+		let training = [];
+		let displayButtons = false;
 		if (this.props.loading || this.state.loading) {
 			content = <Spinner />;
 		} else if (
@@ -54,21 +54,19 @@ class RideDataDisplay extends Component {
 		) {
 			content = <Chart records={this.props.chartData} />;
 		} else if (
-			this.props.successTraining &&
+			(this.props.successTraining || this.props.trainingData) &&
 			!this.props.loading &&
 			this.state.displaying === "Training"
 		) {
-			//to do get training
-			let training = [];
+			//to do get right day training
+
 			for (let i of this.props.trainingData) {
-				if (i.time_created.getDay() === this.props.day.getDay()) {
+				if (new Date(i.time_created).getDay() === this.props.day.getDay()) {
 					training = i;
+					displayButtons = true;
 				}
 			}
-
-			{
-				content = <TrainingSummary trainingData={training} />;
-			}
+			content = <TrainingSummary trainingData={training} />;
 		} else if (
 			this.props.successChart &&
 			!this.props.loading &&
@@ -78,8 +76,11 @@ class RideDataDisplay extends Component {
 		} else if (this.props.error) {
 			content = <h1>Error</h1>;
 		}
+
 		if (
-			(this.props.successTraining || this.props.successChart) &&
+			(this.props.successTraining ||
+				this.props.successChart ||
+				displayButtons) &&
 			!this.props.loading
 		) {
 			if (this.state.displaying === "Training") {
@@ -94,7 +95,7 @@ class RideDataDisplay extends Component {
 				<div key={"buttons2"} className={classes.Buttons}>
 					<Button
 						key="charts"
-						clicked={() => this.showStatsHandler(buttonName[0])}
+						clicked={() => this.showStatsHandler(buttonName[0], training)}
 						btnType="Small"
 					>
 						{buttonName[0]}
@@ -102,7 +103,7 @@ class RideDataDisplay extends Component {
 
 					<Button
 						key="map"
-						clicked={() => this.showStatsHandler(buttonName[1])}
+						clicked={() => this.showStatsHandler(buttonName[1], training)}
 						btnType="Small"
 					>
 						{buttonName[1]}

@@ -35,7 +35,6 @@ class Calendar extends Component {
 	};
 
 	hideCartHandler = () => {
-		//this.setState({ modalShow: false });
 		this.props.history.push({ pathname: "/" });
 	};
 
@@ -66,7 +65,10 @@ class Calendar extends Component {
 						nextMonth={() => this.props.nextMonth(this.props.month)}
 					/>
 					<Weekdays currentMonth={this.props.month} />
-					<Days showModal={this.onFileChange} showRide={this.showRideHandler} />
+					<Days
+						showModal={this.onFileChange}
+						showRide={this.showRideHandler.bind(this)}
+					/>
 					<Switch>
 						<Route exact path="/profile">
 							<Profile confirmHandler={this.hideCartHandler} />

@@ -32,8 +32,11 @@ class Day extends Component {
 	}
 
 	startFetching = () => {
-		let from = dateFns.startOfWeek(dateFns.startOfMonth(this.props.month));
-		let to = dateFns.endOfWeek(dateFns.endOfMonth(from));
+		let from = dateFns.startOfWeek(dateFns.startOfMonth(this.props.month), {
+			weekStartsOn: 1,
+		});
+		let end = dateFns.endOfMonth(from);
+		let to = dateFns.endOfWeek(end, { weekStartsOn: 1 });
 		from = dateFns.formatISO(from, { representation: "date" });
 		to = dateFns.formatISO(to, { representation: "date" });
 		this.props.fetchTrainings(from, to, this.props.userId);
@@ -73,7 +76,7 @@ class Day extends Component {
 							trainingIcon.push(
 								<DirectionsBikeIcon
 									key={cloneDay}
-									style={{ fontSize: 40 }}
+									style={{ fontSize: 40, cursor: "pointer" }}
 									onClick={this.props.showRide}
 								/>
 							);
