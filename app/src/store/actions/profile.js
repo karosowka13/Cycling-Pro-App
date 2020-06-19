@@ -40,13 +40,23 @@ export const fetchProfile = (userId) => {
 		axios
 			.get(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
-				const fetchedProfile = [];
-				fetchedProfile.push(res.data);
+				const fetchedProfile = res.data;
 				dispatch(fetchProfileSuccess(fetchedProfile));
 			})
 			.catch((err) => {
 				dispatch(fetchProfileFail(err));
 			});
+	};
+};
+
+export const changeProfileHandler = (event, data) => {
+	let name = data;
+	name = name.replace(/ /g, "_");
+	const value = event.target.value;
+	let profileData = [name, value];
+	return {
+		type: actionTypes.CHANGE_PROFILE,
+		profileData: profileData,
 	};
 };
 
