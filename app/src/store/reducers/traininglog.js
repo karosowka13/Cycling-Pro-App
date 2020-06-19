@@ -42,6 +42,16 @@ const fetchTrainingsFail = (state, action) => {
 	return updateObject(state, { loading: false });
 };
 
+const deleteTrainingSucess = (state, action) => {
+	let updatedTraining = [];
+	for (let i in state.trainings) {
+		if (i._id === action.trainingId)
+			updatedTraining = state.trainings.splice(i, 1);
+	}
+	console.log(updatedTraining);
+	return updateObject(state, { trainings: updatedTraining });
+};
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.TRAININGLOG_START:
@@ -56,6 +66,8 @@ const reducer = (state = initialState, action) => {
 			return fetchTrainingsSuccess(state, action);
 		case actionTypes.FETCH_TRAININGS_FAIL:
 			return fetchTrainingsFail(state, action);
+		case actionTypes.DELETE_TRAINING:
+			return deleteTrainingSucess(state, action);
 		default:
 			return state;
 	}

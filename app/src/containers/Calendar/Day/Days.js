@@ -60,7 +60,7 @@ class Day extends Component {
 		const endDate = dateFns.endOfWeek(monthEnd, { weekEndsOn: 1 });
 		const dateFormat = "d";
 		const rows = [];
-
+		let trainingId = null;
 		let days = [];
 		let day = startDate;
 		let trainedDays = this.getTimeCreated();
@@ -95,7 +95,6 @@ class Day extends Component {
 					);
 				} else if (dateFns.isSameDay(day, this.state.today)) {
 					cellClasses.push(classes.Today);
-					//console.log("today")
 				}
 
 				if (cloneDay)
@@ -117,7 +116,10 @@ class Day extends Component {
 								/>
 								<ButtonIcon
 									btntype="DeleteIcon"
-									onClick={this.deleteTraining}
+									onClick={this.props.deleteTraining(
+										this.props.userId,
+										trainingId
+									)}
 								/>
 								<div className={classes.Activity}>{trainingIcon}</div>
 							</div>
@@ -147,6 +149,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
 	return {
+		deleteTraining: (userId, trainingId) =>
+			dispatch(actions.deleteTraining(userId, trainingId)),
 		onDayClick: (day) => dispatch(actions.onDateClick(day)),
 		fetchTrainings: (from, to, userId) =>
 			dispatch(actions.fetchTrainings(from, to, userId)),

@@ -16,15 +16,16 @@ class Calendar extends Component {
 		modalShow: false,
 	};
 
-	shouldComponentUpdate(nextProps, nextState) {
-		return (
-			nextProps.month !== this.props.month ||
-			nextProps.day !== this.props.day ||
-			nextProps.trainings !== this.props.trainings ||
-			nextState.show !== this.state.modalShow ||
-			nextProps.children !== this.props.children
-		);
-	}
+	// shouldComponentUpdate(nextProps, nextState) {
+	// 	return (
+	// 		nextProps.month !== this.props.month ||
+	// 		nextProps.day !== this.props.day ||
+	// 		nextProps.trainings !== this.props.trainings ||
+	// 		nextState.show !== this.state.modalShow ||
+	// 		nextProps.children !== this.props.children ||
+	// 		nextState.trainings !== this.props.trainings
+	// 	);
+	// }
 
 	onFileChange = (event) => {
 		event.preventDefault();

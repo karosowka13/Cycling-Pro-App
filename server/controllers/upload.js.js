@@ -86,7 +86,7 @@ export const uploadTraining = async (req, res) => {
 		const record = new Records({ training_id: training._id });
 
 		await record.save();
-		const sevedRecords = await Records.updateOne(
+		await Records.updateOne(
 			{ training_id: training._id },
 			{ $push: { details: { $each: allRecords, $sort: -1 } } }
 		);

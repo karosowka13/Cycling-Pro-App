@@ -16,7 +16,6 @@ export const getAllTrainings = async (req, res, next) => {
 
 export const createNewTraining = async (req, res, next) => {
 	const training = createTraining(req.body, req.params.athleteid);
-
 	try {
 		const newTraining = await training.save();
 		res.json(newTraining);
@@ -67,7 +66,10 @@ export const getTrainingsInRange = async (req, res, next) => {
 
 export const getRecords = async (req, res, next) => {
 	try {
-		const records = await Records.find({ training_id: req.params.trainingid });
+		const records = await Records.findOne({
+			training_id: req.params.trainingid,
+		}).populate("details");
+		console.log(records);
 		res.json(records);
 	} catch (err) {
 		next(err);
@@ -85,7 +87,7 @@ export const deleteTraining = async (req, res, next) => {
 		).exec();
 		//remove training data
 		let training = await Training.deleteMany({ _id: req.params.trainingid });
-		res.json(training);
+		res.json(req.params.trainingid);
 	} catch (err) {
 		next(err);
 	}

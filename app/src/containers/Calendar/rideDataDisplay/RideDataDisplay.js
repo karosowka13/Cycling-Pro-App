@@ -25,16 +25,12 @@ class RideDataDisplay extends Component {
 
 	showStatsHandler = (type, training) => {
 		if (type === "Chart") {
-			if (!this.props.successChart) {
-				this.props.loadChart(training._id);
-			}
+			this.props.loadChart(training._id);
 			this.setState({ displaying: "Chart" });
 		} else if (type === "Training") {
 			this.setState({ displaying: "Training" });
 		} else if (type === "Map") {
-			if (!this.props.successChart) {
-				this.props.loadChart(training._id);
-			}
+			this.props.loadChart(training._id);
 			this.setState({ displaying: "Map" });
 		}
 	};

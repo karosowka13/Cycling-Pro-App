@@ -21,6 +21,13 @@ export const traininglogFail = (error) => {
 	};
 };
 
+export const deleteTrainingSuccess = (trainingId) => {
+	return {
+		type: actionTypes.DELETE_TRAINING,
+		trainingId: trainingId,
+	};
+};
+
 export const loadTraininglog = (trainingLog, userId) => {
 	return (dispatch) => {
 		dispatch(traininglogStart());
@@ -70,6 +77,20 @@ export const fetchTrainings = (from, to, userId) => {
 			.then((res) => {
 				const fetchedTrainings = res.data;
 				dispatch(fetchTrainingsSuccess(fetchedTrainings));
+			})
+			.catch((err) => {
+				dispatch(fetchTrainingsFail(err));
+			});
+	};
+};
+
+export const deleteTraining = (userId, trainingId) => {
+	return (dispatch) => {
+		const queryParams = "/athletes/" + userId + "/trainings/" + trainingId;
+		axios
+			.delete(process.env.REACT_APP_SERVER + queryParams)
+			.then((res) => {
+				dispatch(deleteTrainingSuccess(trainingId));
 			})
 			.catch((err) => {
 				dispatch(fetchTrainingsFail(err));

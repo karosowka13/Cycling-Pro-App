@@ -22,12 +22,12 @@ export const createChartFail = (error) => {
 };
 
 export const loadChartData = (trainingId) => {
+	console.log(trainingId);
 	return (dispatch) => {
 		dispatch(createChartStart());
 		axios
 			.get(process.env.REACT_APP_SERVER + "/records/" + trainingId)
 			.then((response) => {
-				console.log(response);
 				dispatch(createChartSuccess(response.data[0].details));
 			})
 			.catch((err) => {
