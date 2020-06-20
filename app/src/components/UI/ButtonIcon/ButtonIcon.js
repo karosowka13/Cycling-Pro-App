@@ -4,7 +4,7 @@ import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-const buttonIcon = (props) => {
+const buttonIcon = React.forwardRef((props, ref) => {
 	let icon = null;
 	switch (props.btntype) {
 		case "AddCircleOutlineIcon":
@@ -13,7 +13,7 @@ const buttonIcon = (props) => {
 					<label htmlFor="single">
 						<AddCircleOutlineIcon />
 					</label>
-					<input type="file" id="single" onChange={props.onChange} />
+					<input type="file" id="single" ref={ref} onChange={props.onChange} />
 				</React.Fragment>
 			);
 			break;
@@ -27,6 +27,6 @@ const buttonIcon = (props) => {
 			icon = null;
 	}
 	return <div className={classes.ButtonIcon}>{icon}</div>;
-};
+});
 
 export default buttonIcon;

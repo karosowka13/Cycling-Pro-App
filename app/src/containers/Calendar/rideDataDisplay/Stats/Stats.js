@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../store/actions/index";
+import * as actions from "../../../../store/actions/index";
 import classes from "./Stats.module.css";
 
-import CanvasJSReact from "../../components/DisplayTrainingData/Charts/canvasjs.react";
+import CanvasJSReact from "../../../../components/DisplayTrainingData/Charts/canvasjs.react";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class Stats extends Component {

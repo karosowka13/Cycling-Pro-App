@@ -6,31 +6,28 @@ import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
 
 import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
-import Stats from "../Stats/Stats";
+import Stats from "./rideDataDisplay/Stats/Stats";
 import Days from "./Day/Days";
 import Profile from "./Profile/Profile";
 import classes from "./Calendar.module.css";
 
 class Calendar extends Component {
-	state = {
-		modalShow: false,
-		onUploadDay: null,
-	};
+	constructor(props) {
+		super(props);
+	}
 
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			nextProps.month !== this.props.month ||
 			nextProps.day !== this.props.day ||
 			nextProps.trainings !== this.props.trainings ||
-			nextState.show !== this.state.modalShow ||
-			nextProps.children !== this.props.children ||
-			nextState.trainings !== this.props.trainings
+			nextProps.children !== this.props.children
 		);
 	}
 
 	onFileChange = (event) => {
 		event.preventDefault();
-		this.setState({ modalShow: true });
+		//this.props.onDayClick(this.props.pastDay);
 		const file = event.target.files[0];
 		this.props.traininglogData(file, this.props.userId);
 		this.props.history.push("/trainingStats");
@@ -38,10 +35,6 @@ class Calendar extends Component {
 
 	hideCartHandler = () => {
 		this.props.history.push({ pathname: "/" });
-	};
-
-	showModalHandler = () => {
-		this.setState({ modalShow: true });
 	};
 
 	getTimeCreated = () => {
@@ -68,7 +61,7 @@ class Calendar extends Component {
 					/>
 					<Weekdays currentMonth={this.props.month} />
 					<Days
-						showModal={this.onFileChange.bind(this)} //to refer to this when upload second time
+						showModal={this.onFileChange} //to refer to this when upload second time
 						showRide={this.showRideHandler.bind(this)}
 					/>
 					<Switch>
@@ -91,9 +84,9 @@ const mapStateToProps = (state) => {
 		loading: state.loadTraininglog.loading,
 		error: state.loadTraininglog.error,
 		userId: state.auth.userId,
-		day: state.date.day,
 		month: state.date.month,
 		trainings: state.loadTraininglog.trainings,
+		pastDay: state.date.pastDay,
 	};
 };
 

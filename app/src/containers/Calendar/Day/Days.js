@@ -12,6 +12,7 @@ class Day extends Component {
 		// This binding is necessary to make `this` work in the callback
 		this.scrollToNode = this.scrollToNode.bind(this);
 		this.state = { today: new Date() };
+		this.ref = React.createRef();
 	}
 
 	componentDidMount() {
@@ -102,14 +103,14 @@ class Day extends Component {
 				let dayNumber = dateFns.format(cloneDay, dateFormat);
 				const cellClasses = [classes.Cell];
 
-				if (!dateFns.isSameMonth(day, monthStart)) {
+				if (!dateFns.isSameMonth(cloneDay, monthStart)) {
 					cellClasses.push(classes.Disabled);
-				} else if (dateFns.isSameDay(day, selectedDate)) {
+				} else if (dateFns.isSameDay(cloneDay, selectedDate)) {
 					cellClasses.push(classes.Selected);
 					days.push(
 						<div key={"focus"} ref={(node) => (this.scrollDay = node)}></div>
 					);
-				} else if (dateFns.isSameDay(day, this.state.today)) {
+				} else if (dateFns.isSameDay(cloneDay, this.state.today)) {
 					cellClasses.push(classes.Today);
 				}
 
@@ -117,7 +118,7 @@ class Day extends Component {
 					days.push(
 						<div
 							className={cellClasses.join(" ")}
-							key={day}
+							key={cloneDay}
 							onClick={() => this.props.onDayClick(cloneDay)}
 						>
 							<div className={classes.Container}>
@@ -125,6 +126,7 @@ class Day extends Component {
 								<ButtonIcon
 									btntype="AddCircleOutlineIcon"
 									onChange={this.props.showModal}
+									ref={this.ref}
 								/>
 								<ButtonIcon
 									btntype="EditIcon"
@@ -143,7 +145,7 @@ class Day extends Component {
 				day = dateFns.addDays(day, 1);
 			}
 			rows.push(
-				<div className={classes.DaysRow} key={day}>
+				<div className={classes.DaysRow} key={day.getTime()}>
 					{days}
 				</div>
 			);
@@ -161,6 +163,7 @@ const mapStateToProps = (state) => {
 		month: state.date.month,
 		trainings: state.loadTraininglog.trainings,
 		successUpload: state.loadTraininglog.success,
+		pastDay: state.date.pastDay,
 	};
 };
 

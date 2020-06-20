@@ -22,7 +22,6 @@ export const createChartFail = (error) => {
 };
 
 export const loadChartData = (trainingId) => {
-	console.log(trainingId);
 	return (dispatch) => {
 		dispatch(createChartStart());
 		axios

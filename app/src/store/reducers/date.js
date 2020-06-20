@@ -2,12 +2,13 @@ import * as actionTypes from "../actions/actionTypes";
 import { updateObject } from "../../shared/utility";
 
 const initialState = {
+	pastDay: null,
 	day: new Date(),
 	month: new Date(),
 };
 
 const setDay = (state, action) => {
-	return updateObject(state, { day: action.day });
+	return updateObject(state, { day: action.day, pastDay: state.day });
 };
 
 const setMonth = (state, action) => {

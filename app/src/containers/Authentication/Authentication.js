@@ -173,14 +173,16 @@ class Authentication extends Component {
 		}
 
 		return (
-			<div className={classes.Form}>
-				{authRedirect}
-				<div>
-					<header>
-						<h1>{formName}</h1>
-					</header>
-					{errorMessage}
-					{form}
+			<div className={classes.Background}>
+				<div className={classes.Form}>
+					{authRedirect}
+					<div>
+						<header>
+							<h1>{formName}</h1>
+						</header>
+						{errorMessage}
+						{form}
+					</div>
 				</div>
 			</div>
 		);

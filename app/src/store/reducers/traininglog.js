@@ -47,7 +47,6 @@ const deleteTrainingSucess = (state, action) => {
 	let updatedTraining = [...state.trainings];
 
 	for (let i in updatedTraining) {
-		console.log(updatedTraining[i]);
 		if (updatedTraining[i]._id === action.trainingId) {
 			updatedTraining.splice(i, 1);
 		}
