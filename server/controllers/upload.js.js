@@ -83,11 +83,11 @@ export const uploadTraining = async (req, res) => {
 		await Athlete.findByIdAndUpdate(athleteId, queryAthlete, options);
 		const newTraining = await training.save();
 
-		const record = new Records({ training_id: training._id });
+		const record = new Records({ training_id: newTraining._id });
 
-		await record.save();
+		const newRecord = await record.save();
 		await Records.updateOne(
-			{ training_id: training._id },
+			{ training_id: newTraining._id },
 			{ $push: { details: { $each: allRecords, $sort: -1 } } }
 		);
 

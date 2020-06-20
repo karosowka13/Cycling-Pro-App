@@ -35,7 +35,7 @@
 	grid-area: p;
 }
 .Chart {
-	z-index: -5;
+	z-index: 5;
 	padding-top: 20px;
 	grid-area: chart;
 	align-self: center;

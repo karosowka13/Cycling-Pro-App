@@ -1,6 +1,4 @@
 import Training from "../models/training";
-import Athlete from "../models/athlete";
-import mongoose, { Query } from "mongoose";
 
 //TOTAL TSS, IF, distance, time, ascent, work
 const query = {
@@ -85,17 +83,17 @@ export const getWeekStatistics = async (req, res, next) => {
 };
 
 export const getMonthStatistics = async (req, res, next) => {
+	let from = new Date();
+	let last = new Date(from.getTime() - 30 * 24 * 60 * 60 * 1000);
+	let last30 = new Date(last).setHours(0, 0, 0, 0);
+	console.log(last30);
 	try {
 		const Statistics = await Training.aggregate([
 			{
 				$match: {
 					athlete_id: req.params.athleteid,
 					time_created: {
-						$gte: new Date(
-							new Date({
-								$subtract: [new Date().getTime(), 30 * 24 * 60 * 60 * 1000],
-							}).setHours(0, 0, 0, 0)
-						),
+						$gte: last,
 						$lte: new Date(),
 					},
 				},
@@ -139,15 +137,29 @@ export const getYearStatistics = async (req, res, next) => {
 };
 
 export const getOnloadStatistics = async (req, res, next) => {
+	let from = new Date();
+	let last30 = new Date(from.getTime() - 30 * 24 * 60 * 60 * 1000).setHours(
+		0,
+		0,
+		0,
+		0
+	);
+	last30 = new Date(last30);
+	let last7 = new Date(from.getTime() - 7 * 24 * 60 * 60 * 1000).setHours(
+		0,
+		0,
+		0,
+		0
+	);
+	last7 = new Date(last7);
+
 	try {
 		const Week = await Training.aggregate([
 			{
 				$match: {
 					athlete_id: req.params.athleteid,
 					time_created: {
-						$gte: new Date({
-							$subtract: [new Date().getTime(), 7 * 24 * 60 * 60 * 1000],
-						}).setHours(0, 0, 0, 0),
+						$gte: last30,
 						$lte: new Date(),
 					},
 				},
@@ -162,9 +174,7 @@ export const getOnloadStatistics = async (req, res, next) => {
 				$match: {
 					athlete_id: req.params.athleteid,
 					time_created: {
-						$gte: new Date({
-							$subtract: [new Date().getTime(), 30 * 24 * 60 * 60 * 1000],
-						}).setHours(0, 0, 0, 0),
+						$gte: last30,
 						$lte: new Date(),
 					},
 				},

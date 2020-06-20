@@ -14,18 +14,19 @@ import classes from "./Calendar.module.css";
 class Calendar extends Component {
 	state = {
 		modalShow: false,
+		onUploadDay: null,
 	};
 
-	// shouldComponentUpdate(nextProps, nextState) {
-	// 	return (
-	// 		nextProps.month !== this.props.month ||
-	// 		nextProps.day !== this.props.day ||
-	// 		nextProps.trainings !== this.props.trainings ||
-	// 		nextState.show !== this.state.modalShow ||
-	// 		nextProps.children !== this.props.children ||
-	// 		nextState.trainings !== this.props.trainings
-	// 	);
-	// }
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			nextProps.month !== this.props.month ||
+			nextProps.day !== this.props.day ||
+			nextProps.trainings !== this.props.trainings ||
+			nextState.show !== this.state.modalShow ||
+			nextProps.children !== this.props.children ||
+			nextState.trainings !== this.props.trainings
+		);
+	}
 
 	onFileChange = (event) => {
 		event.preventDefault();
@@ -102,7 +103,6 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(actions.loadTraininglog(trainingLog, userId)),
 		nextMonth: (month) => dispatch(actions.nextMonth(month)),
 		prevMonth: (month) => dispatch(actions.prevMonth(month)),
-		onDayClick: (day) => dispatch(actions.onDateClick(day)),
 	};
 };
 

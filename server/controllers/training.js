@@ -69,7 +69,6 @@ export const getRecords = async (req, res, next) => {
 		const records = await Records.findOne({
 			training_id: req.params.trainingid,
 		}).populate("details");
-		console.log(records);
 		res.json(records);
 	} catch (err) {
 		next(err);
@@ -86,7 +85,7 @@ export const deleteTraining = async (req, res, next) => {
 			{ $pull: { training_id: req.params.trainingi } }
 		).exec();
 		//remove training data
-		let training = await Training.deleteMany({ _id: req.params.trainingid });
+		await Training.deleteMany({ _id: req.params.trainingid });
 		res.json(req.params.trainingid);
 	} catch (err) {
 		next(err);

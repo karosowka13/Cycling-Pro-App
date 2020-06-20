@@ -1,33 +1,34 @@
 .WelcomePage {
-  height: 100vh;
-  width: auto;
-  color: white;
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Open Sans", sans-serif;
-  font-size: 14px;
-  line-height: 1.6em;
+	height: 100vh;
+	width: auto;
+	color: white;
+	flex-direction: row;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-family: "Open Sans", sans-serif;
+	font-size: 14px;
+	line-height: 1.6em;
+	background-color: #1a8fff;
 }
 
 .Form {
-  z-index: 15;
-  position: relative;
-  background: #ffffff;
-  width: 500px;
-  border-radius: 4px;
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-  box-sizing: border-box;
-  margin: 100px auto 10px;
-  overflow: hidden;
-  padding: 60px;
-  box-sizing: border-box;
+	z-index: 15;
+	position: relative;
+	background: #ffffff;
+	width: 500px;
+	border-radius: 4px;
+	box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+	box-sizing: border-box;
+	margin: 100px auto 10px;
+	overflow: hidden;
+	padding: 60px;
+	box-sizing: border-box;
 }
 
 @media (max-width: 500px) {
-  .Form {
-    width: 90%;
-    padding: 30px;
-  }
+	.Form {
+		width: 90%;
+		padding: 30px;
+	}
 }

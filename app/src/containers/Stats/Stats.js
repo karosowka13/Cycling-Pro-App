@@ -13,7 +13,8 @@ class Stats extends Component {
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			nextProps.statsSuccess !== this.props.statsSuccess ||
-			nextProps.stats !== this.props.stats
+			nextProps.stats !== this.props.stats ||
+			this.props.successUpload !== nextProps.successUpload
 		);
 	}
 	render() {
@@ -39,7 +40,7 @@ class Stats extends Component {
 					let newValue = recordMonth[key];
 					if (key === "total_elapsed_time") {
 						newValue = recordMonth[key] / 60;
-						timeM = (newValue / 60).toFixed(2) + "h";
+						timeM = (newValue / 60).toFixed(2) + " h";
 						newKey = "duration";
 					}
 					if (key === "training_stress_score") {
@@ -48,7 +49,7 @@ class Stats extends Component {
 					}
 					if (key === "total_distance") {
 						newKey = "distance";
-						distanceM = recordMonth[key].toFixed(2);
+						distanceM = recordMonth[key].toFixed(2) + " km";
 					}
 					newValue = parseFloat(newValue.toFixed(0));
 					month.push({ y: newValue, label: newKey });
@@ -60,7 +61,7 @@ class Stats extends Component {
 					let newValue = recordWeek[key];
 					if (key === "total_elapsed_time") {
 						newValue = recordWeek[key] / 60;
-						timeW = (newValue / 60).toFixed(2);
+						timeW = (newValue / 60).toFixed(2) + " h";
 						newKey = "duration";
 					}
 					if (key === "training_stress_score") {
@@ -69,7 +70,7 @@ class Stats extends Component {
 					}
 					if (key === "total_distance") {
 						newKey = "km";
-						distanceW = recordMonth[key].toFixed(2);
+						distanceW = recordMonth[key].toFixed(2) + " km";
 					}
 					newValue = parseFloat(newValue.toFixed(0));
 					week.push({ y: newValue, label: newKey });
@@ -145,15 +146,15 @@ class Stats extends Component {
 				</div>
 				<div className={classes.Week}>
 					<div className={classes.Text}>
-						<p>This week</p> <p>{tssW} </p> <p>{timeW} h</p>{" "}
-						<p>{distanceW} km</p>
+						<p>Last 7 days</p> <p>{tssW} </p> <p>{timeW} </p>{" "}
+						<p>{distanceW} </p>
 					</div>
 					{chartWeek}
 				</div>
 				<div className={classes.Month}>
 					<div className={classes.Text}>
-						<p>This month</p> <p>{tssM} </p> <p>{timeM} h</p>
-						<p>{distanceM} km</p>{" "}
+						<p>Last 30 days</p> <p>{tssM} </p> <p>{timeM} </p>
+						<p>{distanceM} </p>{" "}
 					</div>
 					{chartMonth}
 				</div>
@@ -167,6 +168,7 @@ const mapStateToProps = (state) => {
 		stats: state.statistics.statisticsData[0],
 		statsSuccess: state.statistics.success,
 		userId: state.auth.userId,
+		successUpload: state.loadTraininglog.success,
 	};
 };
 

@@ -41,6 +41,17 @@ class RideDataDisplay extends Component {
 		let content = null;
 		let training = [];
 		let displayButtons = false;
+
+		if (this.props.trainingData) {
+			//get displayed training
+			for (let i of this.props.trainingData) {
+				if (new Date(i.time_created).getDay() === this.props.day.getDay()) {
+					training = i;
+					displayButtons = true;
+				}
+			}
+		}
+
 		if (this.props.loading || this.state.loading) {
 			content = <Spinner />;
 		} else if (
@@ -55,13 +66,6 @@ class RideDataDisplay extends Component {
 			this.state.displaying === "Training"
 		) {
 			//to do get right day training
-
-			for (let i of this.props.trainingData) {
-				if (new Date(i.time_created).getDay() === this.props.day.getDay()) {
-					training = i;
-					displayButtons = true;
-				}
-			}
 			content = <TrainingSummary trainingData={training} />;
 		} else if (
 			this.props.successChart &&

@@ -20,9 +20,13 @@ class Day extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (this.props.month !== prevProps.month) {
+		if (
+			this.props.month !== prevProps.month ||
+			this.props.successUpload !== prevProps.successUpload
+		) {
 			this.startFetching();
-		} else if (this.props.day !== prevProps.day) {
+		}
+		if (this.props.day !== prevProps.day) {
 			this.scrollToNode(this.scrollDay);
 		}
 	}
@@ -60,10 +64,21 @@ class Day extends Component {
 		const endDate = dateFns.endOfWeek(monthEnd, { weekEndsOn: 1 });
 		const dateFormat = "d";
 		const rows = [];
-		let trainingId = null;
 		let days = [];
 		let day = startDate;
 		let trainedDays = this.getTimeCreated();
+
+		let trainingId = null;
+		this.props.trainings.map((training) => {
+			if (
+				dateFns.isSameDay(
+					this.props.day,
+					dateFns.parseISO(training.time_created)
+				)
+			) {
+				trainingId = training._id;
+			}
+		});
 
 		while (day <= endDate) {
 			for (let i = 0; i < 7; i++) {
@@ -116,10 +131,9 @@ class Day extends Component {
 								/>
 								<ButtonIcon
 									btntype="DeleteIcon"
-									onClick={this.props.deleteTraining(
-										this.props.userId,
-										trainingId
-									)}
+									onClick={() =>
+										this.props.deleteTraining(this.props.userId, trainingId)
+									}
 								/>
 								<div className={classes.Activity}>{trainingIcon}</div>
 							</div>
@@ -134,6 +148,7 @@ class Day extends Component {
 			);
 			days = [];
 		}
+
 		return <div className={classes.AllDaysContainer}>{rows}</div>;
 	}
 }
@@ -144,6 +159,7 @@ const mapStateToProps = (state) => {
 		day: state.date.day,
 		month: state.date.month,
 		trainings: state.loadTraininglog.trainings,
+		successUpload: state.loadTraininglog.success,
 	};
 };
 

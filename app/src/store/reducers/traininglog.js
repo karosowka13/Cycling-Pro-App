@@ -43,12 +43,15 @@ const fetchTrainingsFail = (state, action) => {
 };
 
 const deleteTrainingSucess = (state, action) => {
-	let updatedTraining = [];
-	for (let i in state.trainings) {
-		if (i._id === action.trainingId)
-			updatedTraining = state.trainings.splice(i, 1);
+	let updatedTraining = [...state.trainings];
+
+	for (let i in updatedTraining) {
+		console.log(updatedTraining[i]);
+		if (updatedTraining[i]._id === action.trainingId) {
+			updatedTraining.splice(i, 1);
+		}
 	}
-	console.log(updatedTraining);
+
 	return updateObject(state, { trainings: updatedTraining });
 };
 

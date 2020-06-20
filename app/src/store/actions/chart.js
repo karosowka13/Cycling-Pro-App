@@ -28,7 +28,8 @@ export const loadChartData = (trainingId) => {
 		axios
 			.get(process.env.REACT_APP_SERVER + "/records/" + trainingId)
 			.then((response) => {
-				dispatch(createChartSuccess(response.data[0].details));
+				console.log(response);
+				dispatch(createChartSuccess(response.data.details));
 			})
 			.catch((err) => {
 				console.log(err);

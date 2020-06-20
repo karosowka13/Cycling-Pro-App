@@ -85,6 +85,7 @@ export const fetchTrainings = (from, to, userId) => {
 };
 
 export const deleteTraining = (userId, trainingId) => {
+	console.log(trainingId);
 	return (dispatch) => {
 		const queryParams = "/athletes/" + userId + "/trainings/" + trainingId;
 		axios
