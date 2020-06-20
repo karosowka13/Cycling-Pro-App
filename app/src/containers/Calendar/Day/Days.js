@@ -22,7 +22,8 @@ class Day extends Component {
 	componentDidUpdate(prevProps) {
 		if (
 			this.props.month !== prevProps.month ||
-			this.props.successUpload !== prevProps.successUpload
+			this.props.successUpload !== prevProps.successUpload ||
+			this.props.trainings.length !== prevProps.trainings.length
 		) {
 			this.startFetching();
 		}

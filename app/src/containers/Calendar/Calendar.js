@@ -68,7 +68,7 @@ class Calendar extends Component {
 					/>
 					<Weekdays currentMonth={this.props.month} />
 					<Days
-						showModal={this.onFileChange}
+						showModal={this.onFileChange.bind(this)} //to refer to this when upload second time
 						showRide={this.showRideHandler.bind(this)}
 					/>
 					<Switch>
@@ -103,6 +103,7 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(actions.loadTraininglog(trainingLog, userId)),
 		nextMonth: (month) => dispatch(actions.nextMonth(month)),
 		prevMonth: (month) => dispatch(actions.prevMonth(month)),
+		onDayClick: (day) => dispatch(actions.onDateClick(day)),
 	};
 };
 

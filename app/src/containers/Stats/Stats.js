@@ -10,13 +10,18 @@ class Stats extends Component {
 	componentDidMount() {
 		this.props.statisticsData(this.props.userId);
 	}
-	shouldComponentUpdate(nextProps, nextState) {
-		return (
-			nextProps.statsSuccess !== this.props.statsSuccess ||
-			nextProps.stats !== this.props.stats ||
-			this.props.successUpload !== nextProps.successUpload
-		);
+
+	componentDidUpdate(prevProps) {
+		if (
+			prevProps.statsSuccess !== this.props.statsSuccess ||
+			this.props.successUpload !== prevProps.successUpload ||
+			this.props.successDelete !== prevProps.successDelete ||
+			this.props.trainings.length !== prevProps.trainings.length
+		) {
+			this.props.statisticsData(this.props.userId);
+		}
 	}
+
 	render() {
 		let optionsWeek = null;
 		let optionsMonth = null;
@@ -169,6 +174,8 @@ const mapStateToProps = (state) => {
 		statsSuccess: state.statistics.success,
 		userId: state.auth.userId,
 		successUpload: state.loadTraininglog.success,
+		successDelete: state.loadTraininglog.successDelete,
+		trainings: state.loadTraininglog.trainings,
 	};
 };
 

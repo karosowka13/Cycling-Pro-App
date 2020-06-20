@@ -38,7 +38,6 @@ export const loadTraininglog = (trainingLog, userId) => {
 				headers: { user: userId },
 			})
 			.then((response) => {
-				console.log(response);
 				dispatch(traininglogSuccess(response.data));
 			})
 			.catch((err) => {

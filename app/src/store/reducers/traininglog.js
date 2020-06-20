@@ -7,6 +7,7 @@ const initialState = {
 	trainings: [],
 	success: false,
 	successFetch: false,
+	succesDelete: false,
 };
 
 const traininglogStart = (state, action) => {
@@ -52,7 +53,10 @@ const deleteTrainingSucess = (state, action) => {
 		}
 	}
 
-	return updateObject(state, { trainings: updatedTraining });
+	return updateObject(state, {
+		trainings: updatedTraining,
+		succesDelete: true,
+	});
 };
 
 const reducer = (state = initialState, action) => {
