@@ -27,7 +27,7 @@ class Calendar extends Component {
 
 	onFileChange = (event) => {
 		event.preventDefault();
-		//this.props.onDayClick(this.props.pastDay);
+		this.props.onDayClick(this.props.pastDay);
 		const file = event.target.files[0];
 		this.props.traininglogData(file, this.props.userId);
 		this.props.history.push("/trainingStats");

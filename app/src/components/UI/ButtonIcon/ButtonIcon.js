@@ -13,7 +13,13 @@ const buttonIcon = React.forwardRef((props, ref) => {
 					<label htmlFor="single">
 						<AddCircleOutlineIcon />
 					</label>
-					<input type="file" id="single" ref={ref} onChange={props.onChange} />
+					<input
+						id="single"
+						type="file"
+						ref={ref}
+						onSubmit={(event) => props.onChange(event.target.files)}
+						onClick={(event) => (event.target.value = null)}
+					/>
 				</React.Fragment>
 			);
 			break;
