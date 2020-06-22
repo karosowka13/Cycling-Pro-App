@@ -124,8 +124,10 @@ class Day extends Component {
 							<div className={classes.Container}>
 								<div className={classes.Number}>{dayNumber}</div>
 								<ButtonIcon
+									key={cloneDay.getTime() + 8}
 									btntype="AddCircleOutlineIcon"
 									onChange={this.props.showModal}
+									idValue={cloneDay.getTime() + 7}
 								/>
 								<ButtonIcon
 									btntype="EditIcon"

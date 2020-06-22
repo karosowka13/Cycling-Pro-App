@@ -22,6 +22,29 @@
 	padding-left: 20px;
 }
 
+/* .ButtonIcon {
+	cursor: pointer;
+	display: inline-block;
+	color: #1a8fff;
+	font-size: 82.5%;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	z-index: 1;
+} */
+
+.ButtonIcon input[type="file"] {
+	visibility: hidden;
+	z-index: -10;
+}
+.ButtonIcon {
+	font-size: 40px;
+}
+.ButtonIcon label {
+	cursor: pointer;
+	color: white;
+}
 @media (max-width: 650px) {
 	/*check if we are on mobile devices */
 	.Toolbar {

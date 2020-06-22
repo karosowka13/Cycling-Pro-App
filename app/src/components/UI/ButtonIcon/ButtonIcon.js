@@ -11,12 +11,12 @@ const buttonIcon = (props) => {
 		case "AddCircleOutlineIcon":
 			icon = (
 				<React.Fragment>
-					<label htmlFor="single">
+					<label htmlFor={props.idValue}>
 						<AddCircleOutlineIcon />
 					</label>
 					<input
 						type="file"
-						id="single"
+						id={props.idValue}
 						onChange={props.onChange}
 						onClick={(event) => (event.target.value = null)}
 					/>
