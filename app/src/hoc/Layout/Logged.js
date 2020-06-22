@@ -10,11 +10,11 @@ class Logged extends Component {
 	};
 
 	onFileChange = (event) => {
-		event.preventDefault();
-		this.props.onDayClick(this.props.pastDay);
-		const file = event.target.files[0];
-		this.props.traininglogData(file, this.props.userId);
-		this.props.history.push("/trainingStats");
+		const files = Array.from(event.target.files);
+		const formData = new FormData();
+		files.forEach((file, i) => {
+			formData.append(i, file);
+		});
 	};
 
 	drawerClosedHandler = () => {

@@ -4,6 +4,7 @@ import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Menu from "../Drawer/Menu/Menu";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 
 const toolbar = (props) => (
 	<header className={classes.Toolbar}>
@@ -14,14 +15,16 @@ const toolbar = (props) => (
 			<Logo />
 		</div>{" "}
 		<div className={classes.ButtonIcon}>
-			<label htmlFor="single">
+			<PictureAsPdfIcon fontSize="inherit" />
+			<label htmlFor="multi">
 				<CloudUploadIcon fontSize="inherit" />
 			</label>
 			<input
 				type="file"
-				id="single"
+				id="multi"
 				onChange={props.onChange}
 				onClick={(event) => (event.target.value = null)}
+				multiple
 			/>
 		</div>
 		<nav className={classes.DesktopOnly}>

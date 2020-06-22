@@ -9,6 +9,7 @@ import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
 import Stats from "./rideDataDisplay/Stats/Stats";
 import Days from "./Day/Days";
 import Profile from "./Profile/Profile";
+import AddTSS from "./AddTSS/AddTSS";
 import classes from "./Calendar.module.css";
 
 class Calendar extends Component {
@@ -33,7 +34,7 @@ class Calendar extends Component {
 		this.props.history.push("/trainingStats");
 	};
 
-	addTSS() {
+	addTSSHandler() {
 		this.props.history.push("/addTSS");
 	}
 
@@ -65,7 +66,7 @@ class Calendar extends Component {
 					/>
 					<Weekdays currentMonth={this.props.month} />
 					<Days
-						addTSS={this.addTSS}
+						addTSS={this.addTSSHandler.bind(this)}
 						showModal={this.onFileChange} //to refer to this when upload second time
 						showRide={this.showRideHandler.bind(this)}
 					/>
@@ -73,8 +74,11 @@ class Calendar extends Component {
 						<Route exact path="/profile">
 							<Profile confirmHandler={this.hideCartHandler} />
 						</Route>
-						<Route path="/trainingStats">
+						<Route exact path="/trainingStats">
 							<RideDataDisplay confirmHandler={this.hideCartHandler} />
+						</Route>
+						<Route exact path="/addTSS">
+							<AddTSS confirmHandler={this.hideCartHandler} />
 						</Route>
 					</Switch>
 					<Stats />
