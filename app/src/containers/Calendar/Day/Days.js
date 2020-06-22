@@ -127,6 +127,7 @@ class Day extends Component {
 									key={cloneDay.getTime() + 8}
 									btntype="AddCircleOutlineIcon"
 									onChange={this.props.showModal}
+									idValue={cloneDay.getTime() + 7}
 								/>
 								<ButtonIcon btntype="EditIcon" onClick={this.props.addTSS} />
 								<ButtonIcon
