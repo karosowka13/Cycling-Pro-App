@@ -1,5 +1,6 @@
 import * as actionTypes from "./actionTypes";
 import axios from "axios";
+import AddTSS from "../../containers/Calendar/AddTSS/AddTSS";
 
 export const fetchStatisticsSuccess = (statistics) => {
 	return {
@@ -41,3 +42,25 @@ export const fetchStatistics = (userId) => {
 			});
 	};
 };
+
+export const fetchTSSSuccess = (TSS) => {
+	return {
+		type: actionTypes.FETCH_TSS_SUCCESS,
+		TSS: TSS,
+	};
+};
+export const addTSSSuccess = (TSS) => {
+	return {
+		type: actionTypes.ADD_TSS_SUCCESS,
+		TSS: TSS,
+	};
+};
+export const removeTSSSuccess = (TSS) => {
+	return {
+		type: actionTypes.REMOVE_TSS_SUCCESS,
+		TSS: TSS,
+	};
+};
+export const addTSS = (TSS, date) => {};
+export const removeTSS = (TSS, date) => {};
+export const fetchTSS = (TSS, date) => {};

@@ -5,14 +5,20 @@ import * as actions from "../../../store/actions/index";
 import ButtonIcon from "../../../components/UI/ButtonIcon/ButtonIcon";
 import Button from "../../../components/UI/Button/Button";
 import Modal from "../../../components/UI/Modal/Modal";
+import TextInput from "../../../components/UI/TextInput";
+
 import classes from "./AddTSS.module.css";
+
 import SchoolIcon from "@material-ui/icons/School";
 import FlightTakeoffIcon from "@material-ui/icons/FlightTakeoff";
 import MenuBookIcon from "@material-ui/icons/MenuBook";
 import LocalBarIcon from "@material-ui/icons/LocalBar";
 import LocalGroceryStoreIcon from "@material-ui/icons/LocalGroceryStore";
-import SportsIcon from "@material-ui/icons/Sports";
+import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import HomeWorkIcon from "@material-ui/icons/HomeWork";
+import HealingIcon from "@material-ui/icons/Healing";
+import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
+import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
@@ -48,7 +54,7 @@ const PrettoSlider = withStyles({
 })(Slider);
 
 class AddTSS extends Component {
-	state = { displaying: "Training", modalShow: true };
+	state = { displaying: "Training", modalShow: true, edit: false };
 	shouldComponentUpdate(nextProps, nextState) {
 		return (
 			nextProps.children !== this.props.children ||
@@ -60,7 +66,17 @@ class AddTSS extends Component {
 		let buttons = null;
 		let form = (
 			<React.Fragment>
-				<SportsIcon />
+				<EmojiEventsIcon />
+				<TextInput
+					readOnly={!this.state.edit}
+					key={name}
+					type="number"
+					label={name}
+					value={formElement.value}
+					onChange={(event) =>
+						this.props.changeTSSHandler(event, formElement.id)
+					}
+				/>
 				<PrettoSlider
 					valueLabelDisplay="auto"
 					aria-label="pretto slider"
