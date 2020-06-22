@@ -31,7 +31,6 @@ export const loadChartData = (trainingId) => {
 				},
 			})
 			.then((response) => {
-				console.log(response);
 				dispatch(createChartSuccess(response.data.details));
 			})
 			.catch((err) => {

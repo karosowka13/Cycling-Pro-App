@@ -126,7 +126,6 @@ class Day extends Component {
 								<ButtonIcon
 									btntype="AddCircleOutlineIcon"
 									onChange={this.props.showModal}
-									ref={this.ref}
 								/>
 								<ButtonIcon
 									btntype="EditIcon"
