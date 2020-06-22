@@ -145,7 +145,7 @@ class Day extends Component {
 				day = dateFns.addDays(day, 1);
 			}
 			rows.push(
-				<div className={classes.DaysRow} key={day.getTime()}>
+				<div className={classes.DaysRow} key={day.getTime() + 1}>
 					{days}
 				</div>
 			);

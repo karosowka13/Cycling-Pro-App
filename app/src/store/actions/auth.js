@@ -45,7 +45,7 @@ export const auth = (email, password, isSignUp) => {
 			password: password,
 			returnSecureToken: true,
 		};
-		let url = process.env.REACT_APP_SIGNIN;
+		let url = process.env.REACT_APP_SIGNUP;
 		if (!isSignUp) {
 			url = process.env.REACT_APP_LOGIN;
 		}
@@ -56,10 +56,10 @@ export const auth = (email, password, isSignUp) => {
 				const expirationDate = new Date(
 					new Date().getTime() + response.data.expiresIn * 1000
 				); //claculate expiration time
-				localStorage.setItem("token", response.data.idToken);
+				localStorage.setItem("token", response.data.token);
 				localStorage.setItem("expirationDate", expirationDate);
 				localStorage.setItem("userId", response.data.localId);
-				dispatch(authSuccess(response.data.idToken, response.data.localId));
+				dispatch(authSuccess(response.data.token, response.data.localId));
 				dispatch(checkAuthTimeout(response.data.expiresIn));
 			})
 			.catch((err) => {

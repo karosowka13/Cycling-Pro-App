@@ -26,7 +26,11 @@ export const fetchStatistics = (userId) => {
 		dispatch(fetchStatisticsStart());
 		const queryParams = "/athletes/" + userId + "/statistics/onload";
 		axios
-			.get(process.env.REACT_APP_SERVER + queryParams)
+			.get(process.env.REACT_APP_SERVER + queryParams, {
+				headers: {
+					token: localStorage.getItem("token"),
+				},
+			})
 			.then((res) => {
 				const fetchedStatistics = [];
 				fetchedStatistics.push(res.data);

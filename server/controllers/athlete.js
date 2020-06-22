@@ -1,19 +1,9 @@
 import Athlete from "../models/athlete";
-import { createAthlete } from "../helpers/createDoc";
+
 export const getAllAthletes = async (req, res, next) => {
 	try {
 		const allAthletes = await Athlete.find();
 		res.json(allAthletes);
-	} catch (err) {
-		next(err);
-	}
-};
-
-export const createNewAthlete = async (req, res, next) => {
-	const athlete = createAthlete(req.body, req.params.athleteid);
-	try {
-		newAthlete = await athlete.save();
-		res.json(newAthlete);
 	} catch (err) {
 		next(err);
 	}

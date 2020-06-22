@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
 const athleteSchema = new mongoose.Schema({
-	_id: String,
 	weight: Number,
 	gender: String,
 	age: Number,
@@ -11,6 +10,14 @@ const athleteSchema = new mongoose.Schema({
 	default_max_heart_rate: Number,
 	functional_threshold_power: Number,
 	max_heart_rate: Number,
+	email: {
+		type: String,
+		required: true,
+	},
+	password: {
+		type: String,
+		required: true,
+	},
 });
 
 module.exports = mongoose.model("Athlete", athleteSchema);

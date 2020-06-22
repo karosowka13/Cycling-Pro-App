@@ -38,7 +38,11 @@ export const fetchProfile = (userId) => {
 		dispatch(fetchProfileStart());
 		const queryParams = "/athletes/" + userId;
 		axios
-			.get(process.env.REACT_APP_SERVER + queryParams)
+			.get(process.env.REACT_APP_SERVER + queryParams, {
+				headers: {
+					token: localStorage.getItem("token"),
+				},
+			})
 			.then((res) => {
 				const fetchedProfile = res.data;
 				dispatch(fetchProfileSuccess(fetchedProfile));
@@ -64,7 +68,12 @@ export const updateProfile = (userId, data) => {
 	return (dispatch) => {
 		const queryParams = "/athletes/" + userId;
 		axios
-			.put(process.env.REACT_APP_SERVER + queryParams, data)
+			.put(process.env.REACT_APP_SERVER + queryParams, {
+				headers: {
+					token: localStorage.getItem("token"),
+				},
+				data,
+			})
 			.then((res) => {
 				dispatch(updateProfileSuccess);
 			})
@@ -78,7 +87,11 @@ export const deleteProfile = (userId) => {
 	return (dispatch) => {
 		const queryParams = "/athletes/" + userId;
 		axios
-			.delete(process.env.REACT_APP_SERVER + queryParams)
+			.delete(process.env.REACT_APP_SERVER + queryParams, {
+				headers: {
+					token: localStorage.getItem("token"),
+				},
+			})
 			.then((res) => {
 				dispatch(deleteProfileSuccess());
 			})
