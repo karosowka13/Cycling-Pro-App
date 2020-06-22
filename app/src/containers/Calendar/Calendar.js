@@ -33,6 +33,10 @@ class Calendar extends Component {
 		this.props.history.push("/trainingStats");
 	};
 
+	addTSS() {
+		this.props.history.push("/addTSS");
+	}
+
 	hideCartHandler = () => {
 		this.props.history.push({ pathname: "/" });
 	};
@@ -61,6 +65,7 @@ class Calendar extends Component {
 					/>
 					<Weekdays currentMonth={this.props.month} />
 					<Days
+						addTSS={this.addTSS}
 						showModal={this.onFileChange} //to refer to this when upload second time
 						showRide={this.showRideHandler.bind(this)}
 					/>

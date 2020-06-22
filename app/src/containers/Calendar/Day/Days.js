@@ -128,10 +128,7 @@ class Day extends Component {
 									btntype="AddCircleOutlineIcon"
 									onChange={this.props.showModal}
 								/>
-								<ButtonIcon
-									btntype="EditIcon"
-									onClick={this.editOrPlanTraining}
-								/>
+								<ButtonIcon btntype="EditIcon" onClick={this.props.addTSS} />
 								<ButtonIcon
 									btntype="DeleteIcon"
 									onClick={() =>
