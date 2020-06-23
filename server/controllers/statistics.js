@@ -52,7 +52,7 @@ const queryTSS = {
 	_id: 0,
 };
 
-const groupByValue = {
+const projectValue = {
 	_id: null,
 	value: {
 		$sum: [
@@ -70,7 +70,7 @@ const groupByValue = {
 		],
 	},
 };
-const groupByTime = {
+const projectTime = {
 	_id: null,
 	time: {
 		$sum: [
@@ -88,6 +88,36 @@ const groupByTime = {
 		],
 	},
 };
+
+const groupByValue = {
+	_id: null,
+	"study.value": { $sum: "$study.value" },
+	"exam.value": { $sum: "$exam.value" },
+	"race.value": { $sum: "$race.value" },
+	"housework.value": { $sum: "$housework.value" },
+	"party.value": { $sum: "$party.value" },
+	"journey.value": { $sum: "$journey.value" },
+	"shopping.value": { $sum: "$shopping.value" },
+	"sickness.value": { $sum: "$sickness.value" },
+	"workout.value": { $sum: "$workout.value" },
+	"concerns.value": { $sum: "$concerns.value" },
+	"others.value": { $sum: "$others.value" },
+};
+const groupByTime = {
+	_id: null,
+	"study.time": { $sum: "$study.time" },
+	"exam.time": { $sum: "$exam.time" },
+	"race.time": { $sum: "$race.time" },
+	"housework.time": { $sum: "$housework.time" },
+	"party.time": { $sum: "$party.time" },
+	"journey.time": { $sum: "$journey.time" },
+	"shopping.time": { $sum: "$shopping.time" },
+	"sickness.time": { $sum: "$sickness.time" },
+	"workout.time": { $sum: "$workout.time" },
+	"concerns.time": { $sum: "$concerns.time" },
+	"others.time": { $sum: "$others.time" },
+};
+
 export const getAllStatistics = async (req, res, next) => {
 	try {
 		const allStatistics = await Training.aggregate([
@@ -248,6 +278,7 @@ export const getOnloadStatistics = async (req, res, next) => {
 			{
 				$group: { groupByTime, groupByValue },
 			},
+			{ $project: projectValue, projectTime },
 		]);
 		console.log(TSSMonth);
 
