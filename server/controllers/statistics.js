@@ -37,6 +37,57 @@ const groupBy = {
 	training_stress_score: { $sum: "$training_stress_score" },
 };
 
+const queryTSS = {
+	study: 1,
+	exam: 1,
+	race: 1,
+	housework: 1,
+	party: 1,
+	journey: 1,
+	shopping: 1,
+	sickness: 1,
+	workout: 1,
+	concerns: 1,
+	others: 1,
+	_id: 0,
+};
+
+const groupByValue = {
+	_id: null,
+	value: {
+		$sum: [
+			"$study.value",
+			"$exam.value",
+			"$race.value",
+			"$housework.value",
+			"$party.value",
+			"$journey.value",
+			"$shopping.value",
+			"$sickness.value",
+			"$workout.value",
+			"$concerns.value",
+			"$others.value",
+		],
+	},
+};
+const groupByTime = {
+	_id: null,
+	time: {
+		$sum: [
+			"$study.time",
+			"$exam.time",
+			"$race.time",
+			"$housework.time",
+			"$party.time",
+			"$journey.time",
+			"$shopping.time",
+			"$sickness.time",
+			"$workout.time",
+			"$concerns.time",
+			"$others.time",
+		],
+	},
+};
 export const getAllStatistics = async (req, res, next) => {
 	try {
 		const allStatistics = await Training.aggregate([
@@ -160,7 +211,7 @@ export const getOnloadStatistics = async (req, res, next) => {
 				$match: {
 					athlete_id: req.params.athleteid,
 					time_created: {
-						$gte: last30,
+						$gte: last7,
 						$lte: new Date(),
 					},
 				},
@@ -185,6 +236,21 @@ export const getOnloadStatistics = async (req, res, next) => {
 				$group: groupBySmall,
 			},
 		]);
+
+		const TSSMonth = await TSS.aggregate([
+			{
+				$match: {
+					athlete_id: req.params.athleteid,
+					day_assigned: { $gte: last7, $lte: new Date() },
+				},
+			},
+			{ $project: queryTSS },
+			{
+				$group: { groupByTime, groupByValue },
+			},
+		]);
+		console.log(TSSMonth);
+
 		const Statistics = { week: Week, month: Month };
 		res.json(Statistics);
 	} catch (err) {
