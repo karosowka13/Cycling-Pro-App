@@ -95,7 +95,6 @@ const mapStateToProps = (state) => {
 		userId: state.auth.userId,
 		month: state.date.month,
 		trainings: state.loadTraininglog.trainings,
-		pastDay: state.date.pastDay,
 	};
 };
 

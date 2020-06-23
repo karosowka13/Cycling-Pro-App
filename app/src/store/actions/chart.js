@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import axios from "axios";
+import axios from "../../axios-auth";
 
 export const createChartStart = () => {
 	return {
@@ -25,11 +25,7 @@ export const loadChartData = (trainingId) => {
 	return (dispatch) => {
 		dispatch(createChartStart());
 		axios
-			.get(process.env.REACT_APP_SERVER + "/records/" + trainingId, {
-				headers: {
-					token: localStorage.getItem("token"),
-				},
-			})
+			.get(process.env.REACT_APP_SERVER + "/records/" + trainingId)
 			.then((response) => {
 				dispatch(createChartSuccess(response.data.details));
 			})

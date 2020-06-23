@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import axios from "axios";
+import axios from "../../axios-auth";
 
 export const traininglogStart = () => {
 	return {
@@ -35,7 +35,7 @@ export const loadTraininglog = (trainingLog, userId) => {
 		data.append("file", trainingLog);
 		axios
 			.post(process.env.REACT_APP_SERVER + "/upload", data, {
-				headers: { user: userId, token: localStorage.getItem("token") },
+				headers: { user: userId },
 			})
 			.then((response) => {
 				dispatch(traininglogSuccess(response.data));
@@ -72,11 +72,7 @@ export const fetchTrainings = (from, to, userId) => {
 		dispatch(fetchTrainingsStart());
 		const queryParams = "/athletes/" + userId + "/trainings/" + from + "/" + to;
 		axios
-			.get(process.env.REACT_APP_SERVER + queryParams, {
-				headers: {
-					token: localStorage.getItem("token"),
-				},
-			})
+			.get(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
 				const fetchedTrainings = res.data;
 				dispatch(fetchTrainingsSuccess(fetchedTrainings));
@@ -92,11 +88,7 @@ export const deleteTraining = (userId, trainingId) => {
 	return (dispatch) => {
 		const queryParams = "/athletes/" + userId + "/trainings/" + trainingId;
 		axios
-			.delete(process.env.REACT_APP_SERVER + queryParams, {
-				headers: {
-					token: localStorage.getItem("token"),
-				},
-			})
+			.delete(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
 				dispatch(deleteTrainingSuccess(trainingId));
 			})

@@ -1,4 +1,5 @@
 import Training from "../models/training";
+import TSS from "../models/tss";
 
 //TOTAL TSS, IF, distance, time, ascent, work
 const query = {
@@ -186,6 +187,52 @@ export const getOnloadStatistics = async (req, res, next) => {
 		]);
 		const Statistics = { week: Week, month: Month };
 		res.json(Statistics);
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const createTSS = async (req, res, next) => {
+	console.log(req.body, typeof new Date(req.body.day_assigned));
+	try {
+		const tss = await TSS.updateOne(
+			{
+				day_assigned: req.body.day_assigned,
+				athlete_id: req.params.athleteid,
+			},
+			req.body,
+			{
+				upsert: true,
+				setDefaultsOnInsert: true,
+			}
+		);
+		res.json(tss);
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const getTSS = async (req, res, next) => {
+	let day = new Date(req.params.day);
+	let toDay = new Date(day.getTime() + 100800000);
+	try {
+		const tss = await TSS.find({
+			athlete_id: req.params.athleteid,
+			day_assigned: { $gte: day, $lte: toDay },
+		}).sort({ time_created: 1 }); //the newest first
+		res.json(tss);
+	} catch (err) {
+		next(err);
+	}
+};
+
+export const deleteTSS = async (req, res, next) => {
+	try {
+		const tss = await TSS.findById(req.params.id);
+		if (tss) {
+			await tss.remove();
+		}
+		res.json(tss);
 	} catch (err) {
 		next(err);
 	}

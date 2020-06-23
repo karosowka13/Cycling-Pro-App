@@ -7,20 +7,17 @@ const initialState = {
 	statisticsData: {},
 	success: false,
 	TSS: {
-		date: "",
-		race: { value: "", time: "" },
-		study: { value: "", time: "" },
-		exam: { value: "", time: "" },
-		race: { value: "", time: "" },
-		housework: { value: "", time: "" },
-		party: { value: "", time: "" },
-		concerns: { value: "", time: "" },
-		journey: { value: "", time: "" },
-		shopping: { value: "", time: "" },
-		sickness: { value: "", time: "" },
-		workout: { value: "", time: "" },
-		stress: { value: "", time: "" },
-		others: { value: "", time: "" },
+		study: { value: 0, time: "" },
+		exam: { value: 0, time: "" },
+		race: { value: 0, time: "" },
+		housework: { value: 0, time: "" },
+		party: { value: 0, time: "" },
+		journey: { value: 0, time: "" },
+		shopping: { value: 0, time: "" },
+		sickness: { value: 0, time: "" },
+		workout: { value: 0, time: "" },
+		concerns: { value: 0, time: "" },
+		others: { value: 0, time: "" },
 	},
 };
 
@@ -42,18 +39,53 @@ const fetchStatisticsFail = (state, action) => {
 
 const addTSSSuccess = (state, action) => {
 	return updateObject(state, {
-		TSS: TSS,
+		TSS: action.TSS,
 	});
 };
+
 const fetchTSSSuccess = (state, action) => {
 	return updateObject(state, {
-		TSS: TSS,
+		TSS: action.fetchedTSS,
 	});
 };
+
 const removeTSSSuccess = (state, action) => {
+	let updatedTSS = {
+		study: { value: 0, time: "" },
+		exam: { value: 0, time: "" },
+		race: { value: 0, time: "" },
+		housework: { value: 0, time: "" },
+		party: { value: 0, time: "" },
+		concerns: { value: 0, time: "" },
+		journey: { value: 0, time: "" },
+		shopping: { value: 0, time: "" },
+		sickness: { value: 0, time: "" },
+		workout: { value: 0, time: "" },
+		others: { value: 0, time: "" },
+	};
 	return updateObject(state, {
-		TSS: TSS,
+		TSS: updatedTSS,
 	});
+};
+
+const changeTSSValue = (state, action) => {
+	let name = action.TSSData[0];
+	let value = action.TSSData[1];
+	let record = {};
+	let updatedTSS = null;
+	record[name] = { value: value, time: state.TSS[name].time };
+	updatedTSS = updateObject(state.TSS, record);
+	return updateObject(state, { TSS: updatedTSS });
+};
+
+const changeTSSTime = (state, action) => {
+	let name = action.TSSData[0];
+	let time = action.TSSData[1];
+	let record = {};
+	let updatedTSS = null;
+	record[name] = { value: state.TSS[name].value, time: time };
+	updatedTSS = updateObject(state.TSS, record);
+	return updateObject(state, { TSS: updatedTSS });
 };
 
 const reducer = (state = initialState, action) => {
@@ -70,6 +102,10 @@ const reducer = (state = initialState, action) => {
 			return addTSSSuccess(state, action);
 		case actionTypes.REMOVE_TSS_SUCCESS:
 			return removeTSSSuccess(state, action);
+		case actionTypes.CHANGE_TSS_VALUE:
+			return changeTSSValue(state, action);
+		case actionTypes.CHANGE_TSS_TIME:
+			return changeTSSTime(state, action);
 		default:
 			return state;
 	}

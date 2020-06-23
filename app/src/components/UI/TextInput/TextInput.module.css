@@ -1,109 +1,109 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 
 .Input {
-  color: #4169b1;
-  font-size: 12px;
-  text-decoration: none;
-  display: inline-block;
-  width: auto;
-  margin: 0 0 20px;
-  font-weight: 400;
-  letter-spacing: 0;
-  text-transform: none;
-  display: flex;
-  flex-wrap: wrap;
-  -webkit-box-pack: justify;
-  justify-content: space-between;
+	color: #4169b1;
+	font-size: 12px;
+	text-decoration: none;
+	display: inline-block;
+	width: auto;
+	margin: 0 0 20px;
+	font-weight: 400;
+	letter-spacing: 0;
+	text-transform: none;
+	display: flex;
+	flex-wrap: wrap;
+	-webkit-box-pack: justify;
+	justify-content: space-between;
 }
 
 .Input h1 {
-  padding: 4px 0;
-  color: #4169b1;
-  font-size: 24px;
-  font-weight: 700;
-  display: block;
-  margin: 0 0 10px;
-  color: rgba(0, 0, 0, 0.6);
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 1;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
+	padding: 4px 0;
+	color: #4169b1;
+	font-size: 24px;
+	font-weight: 700;
+	display: block;
+	margin: 0 0 10px;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 12px;
+	font-weight: 500;
+	line-height: 1;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
 }
 
 .FormData {
-  display: -webkit-box;
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 0 10px;
-  outline: none;
-  display: block;
-  background: rgba(0, 0, 0, 0.1);
-  width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-  box-sizing: border-box;
-  padding: 12px 20px;
-  color: rgba(0, 0, 0, 0.6);
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 500;
-  line-height: inherit;
+	display: -webkit-box;
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 0 10px;
+	outline: none;
+	display: block;
+	background: rgba(0, 0, 0, 0.1);
+	width: 100%;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 4px;
+	box-sizing: border-box;
+	padding: 12px 20px;
+	color: rgba(0, 0, 0, 0.6);
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: 500;
+	line-height: inherit;
 }
 
 .FormData:focus {
-  color: rgba(0, 0, 0, 0.8);
+	color: rgba(0, 0, 0, 0.8);
 }
 
 .FormData:hover {
-  border: 1px solid rgba(29, 22, 22, 0.432);
+	border: 1px solid rgba(29, 22, 22, 0.432);
 }
 
 .FormData:last-child {
-  margin: 0;
+	margin: 0;
 }
 
 .FormDataError {
-  border: 1px solid rgba(226, 32, 32, 0.418);
+	border: 1px solid rgba(226, 32, 32, 0.418);
 }
 
 .Input p {
-  color: white;
-  margin: 0;
-  padding: 0;
+	color: white;
+	margin: 0;
+	padding: 0;
 }
 
 .Input .ErrorMessage {
-  color: red;
+	color: red;
 }
 
 .displayOnly .FormData {
-  padding: 0px;
-  width: 50%;
+	padding: 0px;
+	width: 50%;
 }
 
 .displayOnly {
-  text-align: center;
-  pointer-events: none;
-  margin: 0 0 2px;
+	text-align: center;
+	pointer-events: none;
+	margin: 0 0 2px;
 }
 
 .displayOnly h1 {
-  padding: 0px;
-  text-align: left;
-  text-transform: none;
-  font-family: 'Roboto', sans-serif;
-  font-size: 10px;
-  width: 45%;
-  letter-spacing: 0.1em;
+	padding: 0px;
+	text-align: left;
+	text-transform: none;
+	font-family: "Roboto", sans-serif;
+	font-size: 10px;
+	width: 45%;
+	letter-spacing: 0.1em;
 }
 
 .displayOnly input {
-  background-color: white;
-  border-top: 0;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 1px 0 solid rgba(0, 0, 0, 0.1);
+	background-color: white;
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px 0 solid rgba(0, 0, 0, 0.1);
 
-  text-align: right;
+	text-align: right;
 }

@@ -113,33 +113,39 @@ class Day extends Component {
 				} else if (dateFns.isSameDay(cloneDay, this.state.today)) {
 					cellClasses.push(classes.Today);
 				}
-
+				let addTSSButton = null;
 				if (cloneDay)
-					days.push(
-						<div
-							className={cellClasses.join(" ")}
-							key={cloneDay}
-							onClick={() => this.props.onDayClick(cloneDay)}
-						>
-							<div className={classes.Container}>
-								<div className={classes.Number}>{dayNumber}</div>
-								<ButtonIcon
-									key={cloneDay.getTime() + 8}
-									btntype="AddCircleOutlineIcon"
-									onChange={this.props.showModal}
-									idValue={cloneDay.getTime() + 7}
-								/>
-								<ButtonIcon btntype="EditIcon" onClick={this.props.addTSS} />
-								<ButtonIcon
-									btntype="DeleteIcon"
-									onClick={() =>
-										this.props.deleteTraining(this.props.userId, trainingId)
-									}
-								/>
-								<div className={classes.Activity}>{trainingIcon}</div>
-							</div>
+					if (i === 6) {
+						addTSSButton = (
+							<ButtonIcon btntype="EditIcon" onClick={this.props.addTSS} />
+						);
+					}
+				days.push(
+					<div
+						className={cellClasses.join(" ")}
+						key={cloneDay}
+						onClick={() => this.props.onDayClick(cloneDay)}
+					>
+						<div className={classes.Container}>
+							<div className={classes.Number}>{dayNumber}</div>
+							<ButtonIcon
+								key={cloneDay.getTime() + 8}
+								btntype="AddCircleOutlineIcon"
+								onChange={this.props.showModal}
+								idValue={cloneDay.getTime() + 7}
+							/>
+
+							<ButtonIcon
+								btntype="DeleteIcon"
+								onClick={() =>
+									this.props.deleteTraining(this.props.userId, trainingId)
+								}
+							/>
+							{addTSSButton}
+							<div className={classes.Activity}>{trainingIcon}</div>
 						</div>
-					);
+					</div>
+				);
 				day = dateFns.addDays(day, 1);
 			}
 			rows.push(

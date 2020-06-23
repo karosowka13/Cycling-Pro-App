@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import axios from "axios";
+import axios from "../../axios-auth";
 
 export const fetchProfileSuccess = (profileData) => {
 	return {
@@ -38,11 +38,7 @@ export const fetchProfile = (userId) => {
 		dispatch(fetchProfileStart());
 		const queryParams = "/athletes/" + userId;
 		axios
-			.get(process.env.REACT_APP_SERVER + queryParams, {
-				headers: {
-					token: localStorage.getItem("token"),
-				},
-			})
+			.get(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
 				const fetchedProfile = res.data;
 				dispatch(fetchProfileSuccess(fetchedProfile));
@@ -69,9 +65,6 @@ export const updateProfile = (userId, data) => {
 		const queryParams = "/athletes/" + userId;
 		axios
 			.put(process.env.REACT_APP_SERVER + queryParams, {
-				headers: {
-					token: localStorage.getItem("token"),
-				},
 				data,
 			})
 			.then((res) => {
@@ -87,11 +80,7 @@ export const deleteProfile = (userId) => {
 	return (dispatch) => {
 		const queryParams = "/athletes/" + userId;
 		axios
-			.delete(process.env.REACT_APP_SERVER + queryParams, {
-				headers: {
-					token: localStorage.getItem("token"),
-				},
-			})
+			.delete(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
 				dispatch(deleteProfileSuccess());
 			})
