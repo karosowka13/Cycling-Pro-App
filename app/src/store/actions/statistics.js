@@ -59,9 +59,11 @@ export const removeTSSSuccess = (TSS) => {
 };
 export const addTSS = (TSS, userId, day) => {
 	Object.keys(TSS).map((name) => {
-		let a = TSS[name].time.split(":");
-		let timeSec = +a[0] * 60 * 60 + +a[1] * 60 + +a[2];
-		TSS[name].time = timeSec;
+		if (TSS[name].time !== null && TSS[name].time) {
+			let a = TSS[name].time.split(":");
+			let timeSec = +a[0] * 60 * 60 + +a[1] * 60;
+			TSS[name].time = timeSec;
+		}
 	});
 	Object.assign(TSS, { day_assigned: day }, { athlete_id: userId });
 	console.log(TSS);
@@ -105,7 +107,6 @@ export const fetchTSS = (userId, day) => {
 					if (TSS[name].time) {
 						TSS[name].time = formatTime(TSS[name].time);
 					}
-					console.log(TSS[name].time);
 				});
 				if (TSS.length !== 0) {
 					dispatch(addTSSSuccess(TSS));

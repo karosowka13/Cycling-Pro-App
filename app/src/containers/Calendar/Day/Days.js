@@ -99,7 +99,7 @@ class Day extends Component {
 							trainingIcon.push(
 								<DirectionsBikeIcon
 									key={cloneDay}
-									style={{ fontSize: 44, cursor: "pointer" }}
+									style={{ fontSize: "inherit", cursor: "pointer" }}
 									onClick={this.props.showRide}
 								/>
 							);

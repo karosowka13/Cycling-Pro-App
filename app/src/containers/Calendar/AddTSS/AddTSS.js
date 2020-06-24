@@ -6,6 +6,7 @@ import ButtonIcon from "../../../components/UI/ButtonIcon/ButtonIcon";
 import Button from "../../../components/UI/Button/Button";
 import Modal from "../../../components/UI/Modal/Modal";
 import Cleave from "cleave.js/react";
+import validate from "../../../components/Validation/Input/Validate";
 
 import classes from "./AddTSS.module.css";
 
@@ -55,7 +56,13 @@ const PrettoSlider = withStyles({
 })(Slider);
 
 class AddTSS extends Component {
-	state = { modalShow: true, edit: false, showBox: false };
+	state = {
+		modalShow: true,
+		edit: false,
+		showBox: false,
+		valid: true,
+		validationRules: { isHHMM: false },
+	};
 
 	componentDidMount() {
 		this.props.fetchTSS(this.props.userId, this.props.day);
@@ -69,8 +76,24 @@ class AddTSS extends Component {
 	boxToggleHandler = () => this.setState({ showBox: !this.state.showBox });
 
 	submitTSSHandler = () => {
-		this.props.addTSS(this.props.TSS, this.props.userId, this.props.day);
-		this.props.confirmHandler();
+		let valid = [];
+		Object.keys(this.props.TSS).map((name) => {
+			if (
+				this.props.TSS[name].time !== null &&
+				this.props.TSS[name].time !== 0
+			) {
+				valid.push(
+					validate(this.props.TSS[name].time, this.state.validationRules)
+				);
+			}
+		});
+		console.log(valid);
+		if (valid.length === 0 || !valid.includes(false)) {
+			this.props.addTSS(this.props.TSS, this.props.userId, this.props.day);
+			this.props.confirmHandler();
+		} else {
+			alert("Input time in hh:mm format");
+		}
 	};
 
 	removeTSSHandler = () => {
@@ -87,7 +110,12 @@ class AddTSS extends Component {
 
 		let TSSData = this.props.TSS;
 		Object.keys(TSSData).map((name) => {
-			if (name !== "_id" || name !== "day_assigned" || name !== "athlete_id") {
+			if (
+				name !== "_id" &&
+				name !== "day_assigned" &&
+				name !== "athlete_id" &&
+				name !== "__v"
+			) {
 				let icon = null;
 				if (name === "study") {
 					icon = <SchoolIcon />;
@@ -112,22 +140,29 @@ class AddTSS extends Component {
 				} else if (name === "others") {
 					icon = <CheckBoxOutlineBlankIcon />;
 				}
-				let onStartValue = "";
-				if (TSSData[name].value !== 0) {
+				let onStartValue = 0;
+				if (TSSData[name].value !== null && TSSData[name].value !== 0) {
 					onStartValue = TSSData[name].value;
 				}
+				let onStartTime = "";
+				if (TSSData[name].time !== null && TSSData[name].time !== 0) {
+					onStartTime = TSSData[name].time;
+				}
 				form.push(
-					<React.Fragment>
-						<div className={classes.HintDisplay}>{icon}</div>
+					<div key={name.split("", 5)}>
+						<div key={name.split("", 2)} className={classes.HintDisplay}>
+							{icon}
+						</div>
 						<Cleave
 							key={name}
 							className={classes.TimeInput}
-							placeholder="hh:mm:ss"
-							options={{ time: true, timePattern: ["h", "m", "s"] }}
-							value={TSSData[name].time}
+							placeholder="hh:mm"
+							options={{ time: true, timePattern: ["h", "m"] }}
+							value={onStartTime}
 							onChange={(event) => this.props.changeTSSTimeHandler(event, name)}
 						/>
 						<PrettoSlider
+							key={TSSData.id}
 							valueLabelDisplay="auto"
 							aria-label="pretto slider"
 							value={onStartValue}
@@ -135,7 +170,7 @@ class AddTSS extends Component {
 								this.sliderChangeHandler(event, value, name)
 							}
 						/>
-					</React.Fragment>
+					</div>
 				);
 			}
 		});
@@ -151,7 +186,10 @@ class AddTSS extends Component {
 		);
 
 		return (
-			<Modal show={this.state.modalShow} modalClosed={this.confirmHandler}>
+			<Modal
+				show={this.state.modalShow}
+				modalClosed={this.props.confirmHandler}
+			>
 				<div className={classes.Form}>
 					{form}
 					{buttons}

@@ -133,7 +133,6 @@ export const getMonthStatistics = async (req, res, next) => {
 	let from = new Date();
 	let last = new Date(from.getTime() - 30 * 24 * 60 * 60 * 1000);
 	let last30 = new Date(last).setHours(0, 0, 0, 0);
-	console.log(last30);
 	try {
 		const Statistics = await Training.aggregate([
 			{
@@ -306,7 +305,7 @@ export const getOnloadStatistics = async (req, res, next) => {
 };
 
 export const createTSS = async (req, res, next) => {
-	console.log(req.body, new Date(req.body.day_assigned));
+	console.log(req.body);
 	try {
 		const tss = await TSS.updateOne(
 			{

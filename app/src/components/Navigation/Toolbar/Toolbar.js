@@ -14,7 +14,7 @@ const toolbar = (props) => (
 		<div className={classes.Logo}>
 			<Logo />
 		</div>{" "}
-		<div className={classes.ButtonIcon}>
+		{/* <div className={classes.ButtonIcon}>
 			<PictureAsPdfIcon fontSize="inherit" />
 			<label htmlFor="multi">
 				<CloudUploadIcon fontSize="inherit" />
@@ -26,7 +26,7 @@ const toolbar = (props) => (
 				onClick={(event) => (event.target.value = null)}
 				multiple
 			/>
-		</div>
+		</div> */}
 		<nav className={classes.DesktopOnly}>
 			<NavigationItems isAuth={props.isAuth} />
 		</nav>

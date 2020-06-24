@@ -12,7 +12,7 @@ const buttonIcon = (props) => {
 			icon = (
 				<React.Fragment>
 					<label htmlFor={props.idValue}>
-						<AddCircleOutlineIcon />
+						<AddCircleOutlineIcon style={{ fontSize: "inherit" }} />
 					</label>
 					<input
 						type="file"
@@ -24,10 +24,14 @@ const buttonIcon = (props) => {
 			);
 			break;
 		case "EditIcon":
-			icon = <EditIcon onClick={props.onClick} />;
+			icon = (
+				<EditIcon style={{ fontSize: "inherit" }} onClick={props.onClick} />
+			);
 			break;
 		case "DeleteIcon":
-			icon = <DeleteIcon onClick={props.onClick} />;
+			icon = (
+				<DeleteIcon style={{ fontSize: "inherit" }} onClick={props.onClick} />
+			);
 			break;
 		default:
 			icon = null;

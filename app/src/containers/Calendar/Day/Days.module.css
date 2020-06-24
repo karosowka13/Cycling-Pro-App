@@ -72,23 +72,34 @@
 	margin: 1px;
 }
 .Container .Number {
-	font-size: 15px;
+	font-size: 20px;
 	font-weight: 700;
 	transition: 0.25s ease-out;
 	grid-area: number;
 }
+
 .Activity {
 	grid-area: active;
+	font-size: 50px;
 }
 
 .AddMentalTSS {
 	font-size: 25px;
 	grid-area: active;
-	grid-column: 3 / span 4;
+	grid-column: 4 / span 4;
 	grid-row: 3;
 }
 
 @media (max-width: 650px) {
+	.Activity {
+		font-size: 140px;
+		padding-bottom: 20px;
+	}
+
+	.AddMentalTSS,
+	.Container .Number {
+		font-size: 38px;
+	}
 	.AllDaysContainer {
 		padding-top: 35px;
 		display: flex;
@@ -99,6 +110,7 @@
 	.DaysRow {
 		flex-direction: column;
 		flex-flow: column wrap;
+		overflow-x: hidden;
 	}
 	.Cell {
 		flex-basis: 100%;

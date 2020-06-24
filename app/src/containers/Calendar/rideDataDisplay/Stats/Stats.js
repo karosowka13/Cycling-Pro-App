@@ -77,7 +77,7 @@ class Stats extends Component {
 					}
 					if (key === "total_distance") {
 						newKey = "km";
-						distanceW = recordMonth[key].toFixed(2) + " km";
+						distanceW = recordWeek[key].toFixed(2) + " km";
 					}
 					newValue = parseFloat(newValue.toFixed(0));
 					week.push({ y: newValue, label: newKey });

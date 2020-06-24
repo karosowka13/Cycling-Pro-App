@@ -1,27 +1,38 @@
 const validate = (value, rules) => {
-  let isValid = true;
+	let isValid = true;
 
-  for (let rule in rules) {
-    switch (rule) {
-      case "minLength":
-        isValid = isValid && minLengthValidator(value, rules[rule]);
-        break;
+	for (let rule in rules) {
+		switch (rule) {
+			case "minLength":
+				isValid = isValid && minLengthValidator(value, rules[rule]);
+				break;
 
-      case "isRequired":
-        isValid = isValid && requiredValidator(value);
-        break;
+			case "isRequired":
+				isValid = isValid && requiredValidator(value);
+				break;
 
-      case "isEmail":
-        isValid = isValid && emailValidator(value);
+			case "isEmail":
+				isValid = isValid && emailValidator(value);
 
-        break;
+				break;
+			case "isHHMM":
+				isValid = isValid && hhMMValidator(value);
+			default:
+				isValid = true;
+		}
+	}
 
-      default:
-        isValid = true;
-    }
-  }
+	return isValid;
+};
 
-  return isValid;
+/**
+ * minLength Val
+ * @param  value
+ * @return
+ */
+const hhMMValidator = (value) => {
+	const re = /^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/gm;
+	return re.test(value);
 };
 
 /**
@@ -31,7 +42,7 @@ const validate = (value, rules) => {
  * @return
  */
 const minLengthValidator = (value, minLength) => {
-  return value.length >= minLength;
+	return value.length >= minLength;
 };
 
 /**
@@ -41,7 +52,7 @@ const minLengthValidator = (value, minLength) => {
  * @return
  */
 const requiredValidator = (value) => {
-  return value.trim() !== "";
+	return value.trim() !== "";
 };
 
 /**
@@ -51,8 +62,8 @@ const requiredValidator = (value) => {
  * @return
  */
 const emailValidator = (value) => {
-  var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; /* eslint-disable-line */
-  return re.test(String(value).toLowerCase());
+	const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/; /* eslint-disable-line */
+	return re.test(String(value).toLowerCase());
 };
 
 export default validate;
