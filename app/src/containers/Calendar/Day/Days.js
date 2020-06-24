@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import * as dateFns from "date-fns";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
+
 import ButtonIcon from "../../../components/UI/ButtonIcon/ButtonIcon";
 import DirectionsBikeIcon from "@material-ui/icons/DirectionsBike";
+import ChatIcon from "@material-ui/icons/Chat";
+
 import classes from "./Days.module.css";
 
 class Day extends Component {
@@ -93,7 +96,7 @@ class Day extends Component {
 							trainingIcon.push(
 								<DirectionsBikeIcon
 									key={cloneDay}
-									style={{ fontSize: 40, cursor: "pointer" }}
+									style={{ fontSize: 44, cursor: "pointer" }}
 									onClick={this.props.showRide}
 								/>
 							);
@@ -117,7 +120,13 @@ class Day extends Component {
 				if (cloneDay)
 					if (i === 6) {
 						addTSSButton = (
-							<ButtonIcon btntype="EditIcon" onClick={this.props.addTSS} />
+							<div className={classes.AddMentalTSS}>
+								<ChatIcon
+									style={{ fontSize: "inherit", cursor: "pointer" }}
+									btntype="EditIcon"
+									onClick={this.props.addTSS}
+								/>
+							</div>
 						);
 					}
 				days.push(
@@ -141,8 +150,9 @@ class Day extends Component {
 									this.props.deleteTraining(this.props.userId, trainingId)
 								}
 							/>
-							{addTSSButton}
+
 							<div className={classes.Activity}>{trainingIcon}</div>
+							{addTSSButton}
 						</div>
 					</div>
 				);

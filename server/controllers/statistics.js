@@ -52,70 +52,35 @@ const queryTSS = {
 	_id: 0,
 };
 
-const projectValue = {
-	_id: null,
-	value: {
-		$sum: [
-			"$study.value",
-			"$exam.value",
-			"$race.value",
-			"$housework.value",
-			"$party.value",
-			"$journey.value",
-			"$shopping.value",
-			"$sickness.value",
-			"$workout.value",
-			"$concerns.value",
-			"$others.value",
-		],
-	},
+const queryValue = {
+	$sum: [
+		"$study.value",
+		"$exam.value",
+		"$race.value",
+		"$housework.value",
+		"$party.value",
+		"$journey.value",
+		"$shopping.value",
+		"$sickness.value",
+		"$workout.value",
+		"$concerns.value",
+		"$others.value",
+	],
 };
-const projectTime = {
-	_id: null,
-	time: {
-		$sum: [
-			"$study.time",
-			"$exam.time",
-			"$race.time",
-			"$housework.time",
-			"$party.time",
-			"$journey.time",
-			"$shopping.time",
-			"$sickness.time",
-			"$workout.time",
-			"$concerns.time",
-			"$others.time",
-		],
-	},
-};
-
-const groupByValue = {
-	_id: null,
-	"study.value": { $sum: "$study.value" },
-	"exam.value": { $sum: "$exam.value" },
-	"race.value": { $sum: "$race.value" },
-	"housework.value": { $sum: "$housework.value" },
-	"party.value": { $sum: "$party.value" },
-	"journey.value": { $sum: "$journey.value" },
-	"shopping.value": { $sum: "$shopping.value" },
-	"sickness.value": { $sum: "$sickness.value" },
-	"workout.value": { $sum: "$workout.value" },
-	"concerns.value": { $sum: "$concerns.value" },
-	"others.value": { $sum: "$others.value" },
-};
-const groupByTime = {
-	_id: null,
-	"study.time": { $sum: "$study.time" },
-	"exam.time": { $sum: "$exam.time" },
-	"race.time": { $sum: "$race.time" },
-	"housework.time": { $sum: "$housework.time" },
-	"party.time": { $sum: "$party.time" },
-	"journey.time": { $sum: "$journey.time" },
-	"shopping.time": { $sum: "$shopping.time" },
-	"sickness.time": { $sum: "$sickness.time" },
-	"workout.time": { $sum: "$workout.time" },
-	"concerns.time": { $sum: "$concerns.time" },
-	"others.time": { $sum: "$others.time" },
+const queryTime = {
+	$sum: [
+		"$study.time",
+		"$exam.time",
+		"$race.time",
+		"$housework.time",
+		"$party.time",
+		"$journey.time",
+		"$shopping.time",
+		"$sickness.time",
+		"$workout.time",
+		"$concerns.time",
+		"$others.time",
+	],
 };
 
 export const getAllStatistics = async (req, res, next) => {
@@ -271,18 +236,69 @@ export const getOnloadStatistics = async (req, res, next) => {
 			{
 				$match: {
 					athlete_id: req.params.athleteid,
+					day_assigned: { $gte: last30, $lte: new Date() },
+				},
+			},
+
+			{ $project: { time: queryTime, value: queryValue } },
+			{
+				$group: {
+					_id: null,
+					totalTime: { $sum: "$time" },
+					totalValue: { $sum: "$value" },
+				},
+			},
+		]);
+
+		const TSSWeek = await TSS.aggregate([
+			{
+				$match: {
+					athlete_id: req.params.athleteid,
 					day_assigned: { $gte: last7, $lte: new Date() },
 				},
 			},
-			{ $project: queryTSS },
-			{
-				$group: { groupByTime, groupByValue },
-			},
-			{ $project: projectValue, projectTime },
-		]);
-		console.log(TSSMonth);
 
-		const Statistics = { week: Week, month: Month };
+			{ $project: { time: queryTime, value: queryValue } },
+			{
+				$group: {
+					_id: null,
+					totalTime: { $sum: "$time" },
+					totalValue: { $sum: "$value" },
+				},
+			},
+		]);
+		let mentalTSSWeek = 0;
+		let mentalTSSMonth = 0;
+		if (TSSMonth.length > 0) {
+			const timeM = TSSMonth[0].totalTime;
+			const valueM = TSSMonth[0].totalValue;
+			mentalTSSMonth = (timeM * valueM) / (1 * 3600 * 1000);
+		}
+
+		if (TSSWeek.length > 0) {
+			const timeW = TSSWeek[0].totalTime;
+			const valueW = TSSWeek[0].totalValue;
+			mentalTSSWeek = (timeW * valueW) / (1 * 3600 * 1000);
+		}
+
+		let physicalTSSMonth = 0;
+		let physicalTSSWeek = 0;
+		if (Month.length > 0) {
+			physicalTSSMonth = Month[0].training_stress_score;
+		}
+		if (Week.length > 0) {
+			physicalTSSWeek = Week[0].training_stress_score;
+		}
+
+		const totalTSSMonth = mentalTSSMonth + physicalTSSMonth;
+		const totalTSSWeek = mentalTSSWeek + physicalTSSWeek;
+
+		const Statistics = {
+			week: Week,
+			month: Month,
+			totalTSSWeek,
+			totalTSSMonth,
+		};
 		res.json(Statistics);
 	} catch (err) {
 		next(err);
@@ -290,7 +306,7 @@ export const getOnloadStatistics = async (req, res, next) => {
 };
 
 export const createTSS = async (req, res, next) => {
-	console.log(req.body, typeof new Date(req.body.day_assigned));
+	console.log(req.body, new Date(req.body.day_assigned));
 	try {
 		const tss = await TSS.updateOne(
 			{

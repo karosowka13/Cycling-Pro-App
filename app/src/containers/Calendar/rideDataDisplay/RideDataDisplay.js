@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 
+import { lastElement } from "../../../helpers/Training";
+
 import TrainingSummary from "../../../components/DisplayTrainingData/TrainingSummary/TrainingSummary";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
@@ -48,7 +50,7 @@ class RideDataDisplay extends Component {
 				if (new Date(i.time_created).getDay() === this.props.day.getDay()) {
 					training = i;
 					displayButtons = true;
-				}
+				} else training = lastElement(this.props.trainingData);
 			}
 		}
 

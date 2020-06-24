@@ -37,6 +37,8 @@ class Stats extends Component {
 		if (this.props.statsSuccess && this.props.stats.week.length > 0) {
 			let recordMonth = this.props.stats.month[0];
 			let recordWeek = this.props.stats.week[0];
+			let totalTSSMonth = this.props.stats.totalTSSMonth;
+			let totalTSSWeek = this.props.stats.totalTSSWeek;
 			let month = [];
 			let week = [];
 			Object.keys(recordMonth).forEach((key) => {
@@ -49,7 +51,7 @@ class Stats extends Component {
 						newKey = "duration";
 					}
 					if (key === "training_stress_score") {
-						tssM = recordMonth[key].toFixed(2);
+						tssM = totalTSSMonth.toFixed(2);
 						newKey = "TSS";
 					}
 					if (key === "total_distance") {
@@ -71,7 +73,7 @@ class Stats extends Component {
 					}
 					if (key === "training_stress_score") {
 						newKey = "TSS";
-						tssW = recordMonth[key].toFixed(2);
+						tssW = totalTSSWeek.toFixed(2);
 					}
 					if (key === "total_distance") {
 						newKey = "km";
@@ -144,10 +146,10 @@ class Stats extends Component {
 		return (
 			<div className={classes.Container}>
 				<div className={classes.Captions}>
-					<p>Stats</p>
-					<p>Total TSS </p>
-					<p>Total duration </p>
-					<p>Total distance </p>
+					<p>Total stats</p>
+					<p>TSS </p>
+					<p>Time on bike </p>
+					<p>Distance on bike </p>
 				</div>
 				<div className={classes.Week}>
 					<div className={classes.Text}>

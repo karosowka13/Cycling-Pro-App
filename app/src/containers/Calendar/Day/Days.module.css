@@ -81,6 +81,13 @@
 	grid-area: active;
 }
 
+.AddMentalTSS {
+	font-size: 25px;
+	grid-area: active;
+	grid-column: 3 / span 4;
+	grid-row: 3;
+}
+
 @media (max-width: 650px) {
 	.AllDaysContainer {
 		padding-top: 35px;
