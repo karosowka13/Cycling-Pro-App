@@ -31,7 +31,10 @@ class Day extends Component {
 		) {
 			this.startFetching();
 		}
-		if (this.props.day !== prevProps.day) {
+		if (
+			this.props.day !== prevProps.day &&
+			typeof this.props.day !== "undefined"
+		) {
 			this.scrollToNode(this.scrollDay);
 		}
 	}

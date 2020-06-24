@@ -47,9 +47,11 @@ class RideDataDisplay extends Component {
 		if (this.props.trainingData) {
 			//get displayed training
 			for (let i of this.props.trainingData) {
-				if (new Date(i.time_created).getDay() === this.props.day.getDay()) {
-					training = i;
-					displayButtons = true;
+				if (typeof this.props.day !== "undefined") {
+					if (new Date(i.time_created).getDay() === this.props.day.getDay()) {
+						training = i;
+						displayButtons = true;
+					}
 				} else training = lastElement(this.props.trainingData);
 			}
 		}
