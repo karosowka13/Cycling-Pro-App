@@ -1,12 +1,10 @@
 import express from "express";
 import cors from "cors";
-//import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import connectDB from "./config/db.js";
 
-import verifyToken from "./helpers/verifyToken";
-
+import verifyToken from "./controllers/verifyToken";
 import uploadRoute from "./routes/upload";
 import athleteRoute from "./routes/athlete";
 import trainingRoute from "./routes/training";
