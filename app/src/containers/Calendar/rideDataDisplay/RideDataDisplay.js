@@ -4,6 +4,8 @@ import * as actions from "../../../store/actions/index";
 
 import { lastElement } from "../../../helpers/Training";
 
+import axios from "axios";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import TrainingSummary from "../../../components/DisplayTrainingData/TrainingSummary/TrainingSummary";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
@@ -25,14 +27,14 @@ class RideDataDisplay extends Component {
 		this.setState({ displaying: "Training" });
 	}
 
-	showStatsHandler = (type, training) => {
+	showStatsHandler = (type, training, athleteid) => {
 		if (type === "Chart") {
-			this.props.loadChart(training._id);
+			this.props.loadChart(training._id, athleteid);
 			this.setState({ displaying: "Chart" });
 		} else if (type === "Training") {
 			this.setState({ displaying: "Training" });
 		} else if (type === "Map") {
-			this.props.loadChart(training._id);
+			this.props.loadChart(training._id, athleteid);
 			this.setState({ displaying: "Map" });
 		}
 	};
@@ -95,11 +97,18 @@ class RideDataDisplay extends Component {
 				buttonName.push("Training", "Chart");
 			}
 
+			let attachedClasses = [classes.Buttons, classes[this.state.displaying]];
 			buttons = (
-				<div key={"buttons2"} className={classes.Buttons}>
+				<div key={"buttons2"} className={attachedClasses.join(" ")}>
 					<Button
 						key="charts"
-						clicked={() => this.showStatsHandler(buttonName[0], training)}
+						clicked={() =>
+							this.showStatsHandler(
+								buttonName[0],
+								training,
+								this.props.athleteid
+							)
+						}
 						btnType="Small"
 					>
 						{buttonName[0]}
@@ -107,7 +116,13 @@ class RideDataDisplay extends Component {
 
 					<Button
 						key="map"
-						clicked={() => this.showStatsHandler(buttonName[1], training)}
+						clicked={() =>
+							this.showStatsHandler(
+								buttonName[1],
+								training,
+								this.props.athleteid
+							)
+						}
 						btnType="Small"
 					>
 						{buttonName[1]}
@@ -147,13 +162,18 @@ const mapStateToProps = (state) => {
 		chartData: state.chart.records,
 		successChart: state.chart.success,
 		day: state.date.day,
+		athleteid: state.auth.userId,
 	};
 };
 
 const mapDispatchToProps = (dispatch) => {
 	return {
-		loadChart: (trainingId) => dispatch(actions.loadChartData(trainingId)),
+		loadChart: (trainingId, athleteid) =>
+			dispatch(actions.loadChartData(trainingId, athleteid)),
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(RideDataDisplay);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withErrorHandler(RideDataDisplay, axios));

@@ -1,31 +1,38 @@
 .Button {
-  outline: none;
-  width: 100%;
-  border: 0;
-  border-radius: 4px;
-  padding: 12px 20px;
-  color: #ffffff;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: 600;
-  line-height: inherit;
-  text-transform: uppercase;
-  cursor: pointer;
-  margin: 10px 0;
-  background: #1a8fff;
-  transition: 0.5s ease-out;
+	outline: none;
+	width: 100%;
+	border: 0;
+	border-radius: 4px;
+	padding: 12px 20px;
+	color: #ffffff;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: 600;
+	line-height: inherit;
+	text-transform: uppercase;
+	cursor: pointer;
+	margin: 10px 0;
+	background: #1a8fff;
+	transition: 0.5s ease-out;
 }
 
 .Button:hover {
-  background: #1a90ffe8;
+	background: #1a90ffe8;
 }
 
 .Button:disabled {
-  background-color: gray;
+	background-color: gray;
 }
 
 .Small {
-  width: 30%;
-  padding: 5px;
-  margin: 5px 5px;
+	width: 60%;
+	padding: 5px;
+	margin: 5px 5px;
+}
+@media (max-width: 600px) {
+	.Small {
+		width: 100%;
+		padding: 5px;
+		margin: 5px 5px;
+	}
 }

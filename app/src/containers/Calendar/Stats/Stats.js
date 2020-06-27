@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import * as actions from "../../../../store/actions/index";
+import * as actions from "../../../store/actions/index";
 import classes from "./Stats.module.css";
 
-import CanvasJSReact from "../../../../components/DisplayTrainingData/Charts/canvasjs.react";
+import Button from "../../../components/UI/Button/Button";
+import CanvasJSReact from "../../../components/DisplayTrainingData/Charts/canvasjs.react";
 const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class Stats extends Component {
@@ -34,7 +35,8 @@ class Stats extends Component {
 		let chartMonth = null;
 		let chartWeek = null;
 
-		if (this.props.statsSuccess && this.props.stats.week.length > 0) {
+		if (this.props.statsSuccess && this.props.stats.month.length > 0) {
+			console.log(this.props.stats.month);
 			let recordMonth = this.props.stats.month[0];
 			let recordWeek = this.props.stats.week[0];
 			let totalTSSMonth = this.props.stats.totalTSSMonth;
@@ -62,27 +64,29 @@ class Stats extends Component {
 					month.push({ y: newValue, label: newKey });
 				}
 			});
-			Object.keys(recordWeek).forEach((key) => {
-				if (key !== "_id") {
-					let newKey = null;
-					let newValue = recordWeek[key];
-					if (key === "total_elapsed_time") {
-						newValue = recordWeek[key] / 60;
-						timeW = (newValue / 60).toFixed(2) + " h";
-						newKey = "duration";
+			if (this.props.stats.week > 0) {
+				Object.keys(recordWeek).forEach((key) => {
+					if (key !== "_id") {
+						let newKey = null;
+						let newValue = recordWeek[key];
+						if (key === "total_elapsed_time") {
+							newValue = recordWeek[key] / 60;
+							timeW = (newValue / 60).toFixed(2) + " h";
+							newKey = "duration";
+						}
+						if (key === "training_stress_score") {
+							newKey = "TSS";
+							tssW = totalTSSWeek.toFixed(2);
+						}
+						if (key === "total_distance") {
+							newKey = "km";
+							distanceW = recordWeek[key].toFixed(2) + " km";
+						}
+						newValue = parseFloat(newValue.toFixed(0));
+						week.push({ y: newValue, label: newKey });
 					}
-					if (key === "training_stress_score") {
-						newKey = "TSS";
-						tssW = totalTSSWeek.toFixed(2);
-					}
-					if (key === "total_distance") {
-						newKey = "km";
-						distanceW = recordWeek[key].toFixed(2) + " km";
-					}
-					newValue = parseFloat(newValue.toFixed(0));
-					week.push({ y: newValue, label: newKey });
-				}
-			});
+				});
+			}
 
 			optionsWeek = {
 				theme: "light2",
@@ -165,6 +169,9 @@ class Stats extends Component {
 					</div>
 					{chartMonth}
 				</div>
+				<Button key="done" clicked={this.props.confirmHandler} btnType="Small">
+					Done
+				</Button>
 			</div>
 		);
 	}

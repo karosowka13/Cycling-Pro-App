@@ -13,6 +13,11 @@ class routeMap extends Component {
 
 		return (
 			<div className={classes.Map}>
+				<meta
+					name="viewport"
+					content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+				/>
+
 				<Map
 					style={{ height: "300px", width: "500px" }}
 					center={center}

@@ -53,8 +53,25 @@
 		"p chart"
 		"p chart";
 }
+.Container Button {
+	display: none;
+}
+
 @media (max-width: 650px) {
 	.Container {
+		display: none;
+	}
+	.Container {
+		position: relative;
+		top: 40px;
+		width: 90vh;
+	}
+	.Container Button {
+		display: block;
+		width: 90px;
+		float: right;
+	}
+	.Captions {
 		display: none;
 	}
 }

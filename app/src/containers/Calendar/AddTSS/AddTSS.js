@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 
+import axios from "axios";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import ButtonIcon from "../../../components/UI/ButtonIcon/ButtonIcon";
 import Button from "../../../components/UI/Button/Button";
 import Modal from "../../../components/UI/Modal/Modal";
@@ -149,9 +151,9 @@ class AddTSS extends Component {
 					onStartTime = TSSData[name].time;
 				}
 				form.push(
-					<div key={name.split("", 5)}>
+					<React.Fragment>
 						<div key={name.split("", 2)} className={classes.HintDisplay}>
-							{icon}
+							<div className={classes.Icon}>{icon}</div>
 						</div>
 						<Cleave
 							key={name}
@@ -161,24 +163,28 @@ class AddTSS extends Component {
 							value={onStartTime}
 							onChange={(event) => this.props.changeTSSTimeHandler(event, name)}
 						/>
-						<PrettoSlider
-							key={TSSData.id}
-							valueLabelDisplay="auto"
-							aria-label="pretto slider"
-							value={onStartValue}
-							onChange={(event, value) =>
-								this.sliderChangeHandler(event, value, name)
-							}
-						/>
-					</div>
+						<div className={classes.Slider}>
+							<PrettoSlider
+								key={TSSData.id}
+								valueLabelDisplay="auto"
+								aria-label="pretto slider"
+								value={onStartValue}
+								onChange={(event, value) =>
+									this.sliderChangeHandler(event, value, name)
+								}
+							/>
+						</div>
+					</React.Fragment>
 				);
 			}
 		});
 
 		buttons = (
 			<div key={"buttons2"} className={classes.Buttons}>
-				<ButtonIcon btntype="DeleteIcon" onClick={this.removeTSSHandler} />
-				<Button clicked={this.props.confirmHandler}>Cancel</Button>
+				{/* <ButtonIcon btntype="DeleteIcon" onClick={this.removeTSSHandler} /> */}
+				<Button clicked={this.props.confirmHandler} btnType="Small">
+					Cancel
+				</Button>
 				<Button key="submit" clicked={this.submitTSSHandler} btnType="Small">
 					Done
 				</Button>
@@ -219,4 +225,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddTSS);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withErrorHandler(AddTSS, axios));

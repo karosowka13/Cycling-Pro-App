@@ -17,13 +17,14 @@
 }
 
 @media (max-width: 600px) {
-	.Map {
+	.Chart {
 		transform: rotate(-90deg);
 		transform-origin: left top;
-		width: 100vh;
+		width: 500px;
+		height: 300px;
 		overflow-x: hidden;
-		position: absolute;
-		top: 100%;
-		left: 0;
+		position: relative;
+		top: 490px;
+		left: 3%;
 	}
 }

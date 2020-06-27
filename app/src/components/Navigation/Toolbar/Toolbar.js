@@ -3,8 +3,6 @@ import classes from "./Toolbar.module.css";
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Menu from "../Drawer/Menu/Menu";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
-import PictureAsPdfIcon from "@material-ui/icons/PictureAsPdf";
 
 const toolbar = (props) => (
 	<header className={classes.Toolbar}>

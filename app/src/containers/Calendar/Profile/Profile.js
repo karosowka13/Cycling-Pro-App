@@ -58,6 +58,7 @@ class Profile extends Component {
 
 			form.map((formElement) => {
 				let name = formElement.id.replace(/_/g, " ");
+				name = name.replace(/default/g, "");
 				content.push(
 					<TextInput
 						readOnly={!this.state.edit}
@@ -81,16 +82,6 @@ class Profile extends Component {
 					<Button key="cancel" clicked={this.cancelHandler} btnType="Small">
 						Cancel
 					</Button>
-
-					<Button
-						key="edit"
-						clicked={this.editHandler}
-						btnType="Small"
-						disabled={this.state.edit}
-					>
-						Edit
-					</Button>
-
 					<Button key="ok" clicked={this.submitHandler} btnType="Small">
 						OK
 					</Button>
@@ -101,6 +92,7 @@ class Profile extends Component {
 		return (
 			<Modal show={this.state.modalShow} modalClosed={this.submitHandler}>
 				<div className={classes.Form}>
+					<p>Profile</p>
 					{content}
 					{buttons}
 				</div>

@@ -3,6 +3,8 @@ import * as dateFns from "date-fns";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
 
+import axios from "axios";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import ButtonIcon from "../../../components/UI/ButtonIcon/ButtonIcon";
 import DirectionsBikeIcon from "@material-ui/icons/DirectionsBike";
 import ChatIcon from "@material-ui/icons/Chat";
@@ -194,4 +196,7 @@ const mapDispatchToProps = (dispatch) => {
 	};
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Day);
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withErrorHandler(Day, axios));

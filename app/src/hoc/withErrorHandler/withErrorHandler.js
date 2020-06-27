@@ -1,54 +1,69 @@
-import { Component } from "react";
-import axios from "axios";
-import Dialog from "@material-ui/core/Dialog";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogTitle from "@material-ui/core/DialogTitle";
+import React, { Component } from "react";
+
+import Modal from "../../components/UI/Modal/Modal";
 
 const withErrorHandler = (WrappedComponent, axios) => {
-  return class extends Component {
-    state = { error: null };
+	return class extends Component {
+		state = {
+			error: null,
+		};
 
-    componentWillMount() {
-      this.reqInterceptor = axios.interceptors.request.use((req) => {
-        this.setState({ error: null });
-        return req;
-      });
-      this.respInterceptor = axios.interceptors.response.use(
-        (res) => res,
-        (error) => {
-          this.setState({ error: error });
-        }
-      );
-    }
+		componentDidMount() {
+			this.reqInterceptor = axios.interceptors.request.use((req) => {
+				this.setState({ error: null });
+				return req;
+			});
+			this.resInterceptor = axios.interceptors.response.use(
+				(res) => res,
+				(error) => {
+					console.log(error);
+					this.setState({ error: error });
+					return Promise.reject(error.message);
+				}
+			);
+		}
 
-    componentWillUnmount() {
-      axios.interceptors.request.eject(this.reqInterceptor);
-      axios.interceptors.response.eject(this.respInterceptor);
-    }
+		componentDidUpdate() {
+			axios.interceptors.request.eject(this.reqInterceptor);
+			axios.interceptors.response.eject(this.resInterceptor);
+			this.reqInterceptor = axios.interceptors.request.use((req) => {
+				this.setState({ error: null });
+				return req;
+			});
+			this.resInterceptor = axios.interceptors.response.use(
+				(res) => console.log(res),
+				(error) => {
+					console.log(error);
+					this.setState({ error: error });
+					return Promise.reject(error.message);
+				}
+			);
+		}
 
-    errorConfirmedHandler = () => {
-      this.setState({ error: null });
-    };
-    render() {
-      return (
-        <React.Fragment>
-          <Dialog
-            open={this.state.error}
-            onClose={this.error.ConfirmedHandler}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">{"Error"}</DialogTitle>
-            <DialogContent id="alert-dialog-description">
-              {" "}
-              {this.state.error ? this.state.error.message : null}
-            </DialogContent>
-          </Dialog>
-          <WrappedComponent {...this.props} />
-        </React.Fragment>
-      );
-    }
-  };
+		componentWillUnmount() {
+			axios.interceptors.request.eject(this.reqInterceptor);
+			axios.interceptors.response.eject(this.resInterceptor);
+		}
+
+		errorConfirmedHandler = () => {
+			this.setState({ error: null });
+		};
+
+		render() {
+			return (
+				<React.Fragment>
+					<Modal
+						show={this.state.error}
+						modalClosed={this.errorConfirmedHandler}
+						zindex={this.state.error}
+					>
+						{this.state.error ? this.state.error.message : null}
+					</Modal>
+					<WrappedComponent {...this.props} />
+				</React.Fragment>
+			);
+		}
+	};
 };
 
 export default withErrorHandler;

@@ -15,9 +15,48 @@
 	align-self: end;
 	width: 100%;
 }
+.Chart,
+.Training,
+.Map {
+	display: grid;
+	justify-items: center;
+	grid-auto-flow: column;
+}
 
 @media (max-width: 650px) {
+	.Chart {
+		transform: rotate(-90deg);
+		position: relative;
+		top: 35px;
+		display: grid;
+		grid-template-columns: 90px;
+		grid-auto-flow: row;
+		grid-row-gap: 20px;
+		justify-content: stretch;
+	}
+	.Map {
+		transform: rotate(-90deg);
+		position: relative;
+		top: 35px;
+		display: grid;
+		grid-template-columns: 90px;
+		grid-auto-flow: row;
+		grid-row-gap: 20px;
+	}
+
+	.Training {
+		display: grid;
+		grid-template-columns: 90px;
+		grid-auto-flow: column;
+		grid-column-gap: 10px;
+		margin-top: 35px;
+	}
+
 	.Buttons {
 		text-align: center;
+	}
+	.content {
+		place-items: center center;
+		place-content: center center;
 	}
 }

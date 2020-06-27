@@ -21,11 +21,17 @@ export const createChartFail = (error) => {
 	};
 };
 
-export const loadChartData = (trainingId) => {
+export const loadChartData = (trainingId, athleteid) => {
 	return (dispatch) => {
 		dispatch(createChartStart());
 		axios
-			.get(process.env.REACT_APP_SERVER + "/records/" + trainingId)
+			.get(
+				process.env.REACT_APP_SERVER +
+					"/athletes/" +
+					athleteid +
+					"/records/" +
+					trainingId
+			)
 			.then((response) => {
 				dispatch(createChartSuccess(response.data.details));
 			})

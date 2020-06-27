@@ -87,7 +87,7 @@ export const createNewAthlete = async (req, res, next) => {
 		});
 		if (athlete) {
 			return res.status(400).json({
-				msg: "User Already Exists",
+				message: "User Already Exists",
 			});
 		}
 		const newAthlete = new Athlete({ email, password });

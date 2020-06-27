@@ -36,7 +36,7 @@ app.use("/api/athletes/:athleteid/trainings", verifyToken, trainingRoute);
 //statistics
 app.use("/api/athletes/:athleteid/statistics", verifyToken, statisticsRoute);
 //records
-app.use("/api/records", verifyToken, recordsRoute);
+app.use("/api/athletes/:athleteid/records", verifyToken, recordsRoute);
 
 app.listen(process.env.PORT, function () {
 	console.log("App running on port 8000");

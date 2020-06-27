@@ -144,28 +144,7 @@ class Authentication extends Component {
 
 		let errorMessage = null;
 		if (this.props.error) {
-			switch (this.props.error.message) {
-				case "EMAIL_EXISTS":
-					errorMessage = <p>Email already taken</p>;
-					break;
-				case "OPERATION_NOT_ALLOWED":
-					errorMessage = <p>Password is disabled</p>;
-					break;
-				case "TOO_MANY_ATTEMPTS_TRY_LATER":
-					errorMessage = <p>Too many attempts, try later</p>;
-					break;
-				case "EMAIL_NOT_FOUND":
-					errorMessage = <p>Email not found</p>;
-					break;
-				case "INVALID_PASSWORD":
-					errorMessage = <p>Invalid password</p>;
-					break;
-				case "USER_DISABLED":
-					errorMessage = <p>User disabled</p>;
-					break;
-				default:
-					errorMessage = <p>{this.props.error.message}</p>;
-			}
+			errorMessage = <p>{this.props.error}</p>;
 		}
 		let authRedirect = null;
 		if (this.props.isAuth) {

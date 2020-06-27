@@ -1,41 +1,39 @@
-.Container,
-.Wrapper {
-	display: flex;
-	justify-content: center;
-	align-items: center;
+.Form {
+	display: grid;
+	grid-template-columns: 30% 60%;
+	grid-template-rows: repeat(11, 40px);
+	grid-column-gap: 30px;
+	align-items: start;
+	justify-items: start;
 }
 
-.Container {
-	width: 200px;
-	height: 200px;
-	background-color: #ccc;
-	margin: 60px auto 0;
-	display: flex;
+.Icon {
+	grid-column: 1 / 2;
 }
 
-.Wrapper {
-	height: 150px;
-	width: 150px;
-	background-color: #666;
+.Slider {
+	width: 100%;
 }
-
-.InnerBox {
-	width: 80px;
-	height: 80px;
-	padding: 8px;
-	background-color: #222;
-	display: none;
-}
-.Container.Show .InnerBox {
-	display: block;
-}
-
 .TimeInput {
+	grid-column: 1 / 2;
 	background-color: white;
 	border-top: 0;
 	border-left: 0;
 	border-right: 0;
 	border-bottom: 1px 0 solid rgba(0, 0, 0, 0.1);
-
 	text-align: right;
+}
+
+.Buttons {
+	grid-column: 2;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	width: 100%;
+	justify-items: end;
+}
+
+@media (max-width: 650px) {
+	.Buttons {
+		grid-column-gap: 15px;
+	}
 }

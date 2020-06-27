@@ -4,9 +4,10 @@ import { Route, withRouter, Switch } from "react-router-dom";
 import * as actions from "../../store/actions/index";
 import Months from "../../components/Months/Months";
 import Weekdays from "../../components/Weekdays/Weekdays";
+import Modal from "../../components/UI/Modal/Modal";
 
 import RideDataDisplay from "./rideDataDisplay/RideDataDisplay";
-import Stats from "./rideDataDisplay/Stats/Stats";
+import Stats from "./Stats/Stats";
 import Days from "./Day/Days";
 import Profile from "./Profile/Profile";
 import AddTSS from "./AddTSS/AddTSS";
@@ -15,6 +16,7 @@ import classes from "./Calendar.module.css";
 class Calendar extends Component {
 	constructor(props) {
 		super(props);
+		this.state = { modalShow: true };
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
@@ -70,6 +72,9 @@ class Calendar extends Component {
 						showModal={this.onFileChange} //to refer to this when upload second time
 						showRide={this.showRideHandler.bind(this)}
 					/>
+
+					<Stats />
+
 					<Switch>
 						<Route exact path="/profile">
 							<Profile confirmHandler={this.hideCartHandler} />
@@ -80,8 +85,15 @@ class Calendar extends Component {
 						<Route exact path="/addTSS">
 							<AddTSS confirmHandler={this.hideCartHandler} />
 						</Route>
+						<Route exact path="/stats">
+							<Modal
+								show={this.state.modalShow}
+								modalClosed={this.hideCartHandler}
+							>
+								<Stats confirmHandler={this.hideCartHandler} />
+							</Modal>
+						</Route>
 					</Switch>
-					<Stats />
 				</div>
 			</React.Fragment>
 		);
