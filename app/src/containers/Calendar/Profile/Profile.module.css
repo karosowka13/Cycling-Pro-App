@@ -4,10 +4,6 @@
 	grid-auto-flow: column;
 }
 
-.Form p {
-	font-size: larger;
-}
-
 @media (max-width: 650px) {
 	.Buttons {
 		display: grid;

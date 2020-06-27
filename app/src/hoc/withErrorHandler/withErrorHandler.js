@@ -18,7 +18,6 @@ const withErrorHandler = (WrappedComponent, axios) => {
 				(error) => {
 					console.log(error);
 					this.setState({ error: error });
-					return Promise.reject(error.message);
 				}
 			);
 		}

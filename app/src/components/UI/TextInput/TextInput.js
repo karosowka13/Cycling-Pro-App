@@ -12,6 +12,10 @@ const textInput = (props) => {
 		input.push(classes.displayOnly);
 	}
 
+	if (props.filledInput) {
+		input.push(classes.FilledInput);
+	}
+
 	let errorMessage = <p>.</p>;
 	if (!props.valid && props.touched) {
 		errorMessage = (

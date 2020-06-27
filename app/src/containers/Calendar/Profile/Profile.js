@@ -61,7 +61,7 @@ class Profile extends Component {
 				name = name.replace(/default/g, "");
 				content.push(
 					<TextInput
-						readOnly={!this.state.edit}
+						filledInput={!this.state.edit}
 						key={name}
 						type={name}
 						label={name}
@@ -77,7 +77,7 @@ class Profile extends Component {
 			buttons = (
 				<div key={"buttons2"} className={classes.Buttons}>
 					<Button key="delete" clicked={this.deleteHandler} btnType="Small">
-						Delete account
+						Delete
 					</Button>
 					<Button key="cancel" clicked={this.cancelHandler} btnType="Small">
 						Cancel
@@ -92,7 +92,7 @@ class Profile extends Component {
 		return (
 			<Modal show={this.state.modalShow} modalClosed={this.submitHandler}>
 				<div className={classes.Form}>
-					<p>Profile</p>
+					<h2>Profile</h2>
 					{content}
 					{buttons}
 				</div>

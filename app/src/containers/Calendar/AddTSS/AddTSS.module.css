@@ -24,6 +24,16 @@
 	text-align: right;
 }
 
+.Form .TimeInput:focus,
+.Form .TimeInput:hover,
+.Form .TimeInput:active {
+	border-top: 0;
+	border-left: 0;
+	border-right: 0;
+	border-bottom: 1px 0 solid rgba(0, 0, 0, 0.1);
+	border-radius: 0%;
+}
+
 .Buttons {
 	grid-column: 2;
 	display: grid;
