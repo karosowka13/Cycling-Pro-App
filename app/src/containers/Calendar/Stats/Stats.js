@@ -90,7 +90,7 @@ class Stats extends Component {
 
 			optionsWeek = {
 				theme: "light2",
-				height: 140,
+				height: 120,
 				width: 200,
 				axisY: {
 					lineThicknes: 0,
@@ -115,7 +115,7 @@ class Stats extends Component {
 
 			optionsMonth = {
 				theme: "light2",
-				height: 140,
+				height: 120,
 				width: 200,
 				axisY: {
 					lineThicknes: 0,
@@ -150,21 +150,21 @@ class Stats extends Component {
 		return (
 			<div className={classes.Container}>
 				<div className={classes.Captions}>
-					<p>Total stats</p>
+					<h2>Total stats</h2>
 					<p>TSS </p>
 					<p>Time on bike </p>
 					<p>Distance on bike </p>
 				</div>
 				<div className={classes.Week}>
 					<div className={classes.Text}>
-						<p>Last 7 days</p> <p>{tssW} </p> <p>{timeW} </p>{" "}
+						<h2>Last 7 days</h2> <p>{tssW} </p> <p>{timeW} </p>{" "}
 						<p>{distanceW} </p>
 					</div>
 					{chartWeek}
 				</div>
 				<div className={classes.Month}>
 					<div className={classes.Text}>
-						<p>Last 30 days</p> <p>{tssM} </p> <p>{timeM} </p>
+						<h2>Last 30 days</h2> <p>{tssM} </p> <p>{timeM} </p>
 						<p>{distanceM} </p>{" "}
 					</div>
 					{chartMonth}

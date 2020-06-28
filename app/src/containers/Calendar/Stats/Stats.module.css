@@ -57,6 +57,27 @@
 	display: none;
 }
 
+.Container p {
+	padding: 4px 0;
+	color: #4169b1;
+	font-size: 24px;
+	font-weight: 700;
+	display: block;
+	margin: 0 0 10px;
+	color: rgba(0, 0, 0, 0.6);
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	margin-bottom: 8px;
+}
+
+.Container h2 {
+	font-size: 15px;
+	margin-bottom: 8px;
+}
+
 @media (max-width: 650px) {
 	.Container {
 		display: none;
@@ -73,6 +94,12 @@
 	}
 	.Captions {
 		display: none;
+	}
+	.Container p {
+		margin-bottom: 5px;
+	}
+	.Chart {
+		margin-bottom: 9px;
 	}
 }
 /* gird-auto-flow */

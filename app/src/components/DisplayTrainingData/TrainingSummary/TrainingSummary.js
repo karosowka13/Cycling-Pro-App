@@ -7,7 +7,7 @@ const trainingSummary = (props) => {
 
 	if (Object.entries(props.trainingData).length > 0) {
 		let convertedData = training(props.trainingData);
-
+		let suffix = null;
 		let total = [];
 		let average = [];
 		let maximum = [];
@@ -21,6 +21,22 @@ const trainingSummary = (props) => {
 			</h2>
 		);
 		convertedData.forEach((stat) => {
+			if (stat.name.match(/heart_rate/g)) {
+				suffix = "bmp";
+			} else if (stat.name.match(/power/g)) {
+				suffix = "W";
+			} else if (stat.name.match(/speed/g)) {
+				suffix = "km/h";
+			} else if (stat.name.match(/cadence/g)) {
+				suffix = "rpm";
+			} else if (stat.name.match(/work/g)) {
+				suffix = "kJ";
+			} else if (stat.name.match(/calories/g)) {
+				suffix = "kcal";
+			} else if (stat.name.match(/distance/g)) {
+				suffix = "km";
+			}
+
 			if (stat.name.match(/\btotal/g)) {
 				stat.name = stat.name.replace(/total/g, "");
 				if (stat.name.match(/\btime/g)) {
@@ -34,6 +50,7 @@ const trainingSummary = (props) => {
 						label={stat.name}
 						value={stat.value}
 						placeholder={stat.name}
+						suffix={suffix}
 					/>
 				);
 			} else if (stat.name.match(/\bavg/g)) {
@@ -47,6 +64,7 @@ const trainingSummary = (props) => {
 						label={stat.name}
 						value={stat.value}
 						placeholder={stat.name}
+						suffix={suffix}
 					/>
 				);
 			} else if (stat.name.match(/\bmax/g)) {
@@ -60,6 +78,7 @@ const trainingSummary = (props) => {
 						label={stat.name}
 						value={stat.value}
 						placeholder={stat.name}
+						suffix={suffix}
 					/>
 				);
 			}

@@ -45,6 +45,8 @@ class Profile extends Component {
 	render() {
 		let buttons = null;
 		let content = [];
+		let typeInput = "number";
+		let pattern = "[0-9]";
 		if (this.props.loading) {
 			content = <Spinner />;
 		} else if (this.props.profileData) {
@@ -57,20 +59,39 @@ class Profile extends Component {
 			}
 
 			form.map((formElement) => {
-				let name = formElement.id.replace(/_/g, " ");
-				name = name.replace(/default/g, "");
-				content.push(
-					<TextInput
-						filledInput={!this.state.edit}
-						key={name}
-						type={name}
-						label={name}
-						value={formElement.value}
-						onChange={(event) =>
-							this.props.changeProfileHandler(event, formElement.id)
-						}
-					/>
-				);
+				let suffix = null;
+				if (formElement.id === "weight") {
+					suffix = "kg";
+				} else if (formElement.id === "height") {
+					suffix = "cm";
+					formElement.value = formElement.value * 100000;
+				} else if (formElement.id === "default_max_heart_rate") {
+					formElement = null;
+				} else if (formElement.id.match(/heart_rate/g)) {
+					suffix = "bmp";
+				} else if (formElement.id === "gender") {
+					typeInput = "text";
+					pattern = "[A-Za-z]";
+				}
+				if (formElement !== null) {
+					let name = formElement.id.replace(/_/g, " ");
+					name = name.replace(/default/g, "");
+					content.push(
+						<TextInput
+							filledinput={!this.state.edit ? 1 : 0}
+							suffix={suffix}
+							key={name}
+							type={name}
+							label={name}
+							value={formElement.value}
+							onChange={(event) =>
+								this.props.changeProfileHandler(event, formElement.id)
+							}
+							type={typeInput}
+							pattern={pattern}
+						/>
+					);
+				}
 			});
 		}
 		if (this.props.fetchSuccess) {

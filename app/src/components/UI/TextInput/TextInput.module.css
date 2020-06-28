@@ -77,68 +77,74 @@
 	color: red;
 }
 
+.displayOnly {
+	pointer-events: none;
+}
+
+.FilledInput .FormData,
+.Suffix .FormData,
 .displayOnly .FormData {
-	padding: 0px;
 	width: 50%;
 }
 
+.FilledInput,
+.Suffix,
 .displayOnly {
 	text-align: center;
-	pointer-events: none;
 	margin: 0 0 2px;
 }
 
+.Suffix h1,
+.FilledInput h1,
 .displayOnly h1 {
 	padding: 0px;
 	text-align: left;
 	text-transform: none;
 	font-family: "Roboto", sans-serif;
-	font-size: 10px;
+	font-size: 13px;
 	width: 45%;
 	letter-spacing: 0.1em;
 }
 
+.FilledInput input,
 .displayOnly input {
 	background-color: white;
 	border-top: 0;
 	border-left: 0;
 	border-right: 0;
 	border-bottom: 1px 0 solid rgba(0, 0, 0, 0.1);
+	border-radius: 0%;
+	font-size: 14px;
 	text-align: right;
+	padding: 0;
 }
 
-.FilledInput .FormData {
-	padding: 0px;
-	width: 50%;
-}
-
-.FilledInput {
-	text-align: center;
-	margin: 0 0 2px;
-}
-
-.FilledInput h1 {
-	padding: 0px;
-	text-align: left;
-	text-transform: none;
-	font-family: "Roboto", sans-serif;
-	font-size: 10px;
-	width: 45%;
-	letter-spacing: 0.1em;
-}
-
-.FilledInput input {
+.Suffix input {
 	background-color: white;
 	border-top: 0;
 	border-left: 0;
 	border-right: 0;
 	border-bottom: 1px 0 solid rgba(0, 0, 0, 0.1);
 	border-radius: 0%;
+	font-size: 14px;
+	text-align: right;
+	padding: 0;
+	padding-right: 20px;
+}
+
+.Suffix span {
+	margin-left: -20px;
+	font-family: "Roboto", sans-serif;
+	font-size: 14px;
+	color: rgba(0, 0, 0, 0.6);
+	font-weight: 500;
 	text-align: right;
 }
 
 .FilledInput input:focus,
-.FilledInput input:hover {
+.FilledInput input:hover,
+.Suffix input:focus,
+.Suffix input:hover {
 	border-top: 0;
 	border-left: 0;
 	border-right: 0;

@@ -44,6 +44,7 @@
 	.Container {
 		display: flex;
 		flex-direction: column;
+		padding-top: 80px;
 	}
 	.Total,
 	.Average,
@@ -51,8 +52,13 @@
 		align-self: center;
 		align-items: center;
 	}
-	.Container:first-child {
-		padding-top: 15px;
+
+	.Container::after {
+		content: "";
+		margin-bottom: 30px;
+	}
+
+	.Container h2 {
 		margin: 0;
 	}
 }
