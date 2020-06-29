@@ -2,6 +2,8 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
+import helmet from "helmet";
+import compression from "compression";
 import connectDB from "./config/db.js";
 
 import verifyToken from "./controllers/verifyToken";
@@ -20,6 +22,8 @@ app.use(express.raw());
 // Add middleware for parsing JSON and urlencoded data and populating `req.body`
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(compression());
+app.use(helmet());
 
 app.get("/", function (req, res) {
 	return res.send("Hello Server");

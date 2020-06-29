@@ -1,5 +1,5 @@
 #pull a node image from docker hub
-FROM node:14.4.0-alpine3.10
+FROM node:14.4.0-alpine3.10 as appbuild
 
 #set the working dir to /server
 WORKDIR /server 
@@ -7,17 +7,27 @@ WORKDIR /server
 #copy package.json to the container
 COPY package.json package.json 
 
+ENV NODE_ENV="production"
+
 #install package.json modules in container
-RUN npm install 
+RUN npm install --only=production
+COPY server/ .
+RUN npm run build
+RUN ls
 
+FROM node:14.4.0-alpine3.10
+WORKDIR /server 
+COPY package.json package.json 
+RUN npm install
 #copy everything to container /server
-COPY . . 
+COPY --from=appbuild server/dist ./dist
 
-#expose port 3000 to mount it to another port in local machine 
-EXPOSE 3000  
 
-#install nodemon for changes on the fly
-RUN npm install -g nodemon
+#expose port 8000 to mount it to another port in local machine 
+EXPOSE 8000
+
+# #install nodemon for changes on the fly
+# RUN npm install -g nodemon
 
 #start server inside container
 CMD [ "npm", "start" ] 

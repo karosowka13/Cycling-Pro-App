@@ -369,6 +369,7 @@ export const checkTSS = async (req, res, next) => {
 	webPush
 		.sendNotification(subscription, payload)
 		.catch((error) => console.error(error));
+	next();
 };
-next();
+
 export const check3Days = async (req, res, next) => {};
