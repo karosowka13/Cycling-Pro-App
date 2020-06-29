@@ -89,7 +89,7 @@ class AddTSS extends Component {
 				);
 			}
 		});
-		console.log(valid);
+
 		if (valid.length === 0 || !valid.includes(false)) {
 			this.props.addTSS(this.props.TSS, this.props.userId, this.props.day);
 			this.props.confirmHandler();
@@ -152,7 +152,7 @@ class AddTSS extends Component {
 				}
 				form.push(
 					<React.Fragment>
-						<div key={name.split("", 2)} className={classes.HintDisplay}>
+						<div key={name.split("", 4)} className={classes.HintDisplay}>
 							<div className={classes.Icon}>{icon}</div>
 						</div>
 						<Cleave
@@ -165,7 +165,7 @@ class AddTSS extends Component {
 						/>
 						<div className={classes.Slider}>
 							<PrettoSlider
-								key={TSSData.id}
+								key={name.split("", 3)}
 								valueLabelDisplay="auto"
 								aria-label="pretto slider"
 								value={onStartValue}

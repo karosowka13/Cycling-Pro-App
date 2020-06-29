@@ -1,5 +1,12 @@
 import Training from "../models/training";
 import TSS from "../models/tss";
+import webPush from "web-push";
+
+webPush.setVapidDetails(
+	"mailto:test@example.com",
+	process.env.PUBLIC_VAPID_KEY,
+	process.env.PRIVATE_VAPID_KEY
+);
 
 //TOTAL TSS, IF, distance, time, ascent, work
 const query = {
@@ -349,3 +356,19 @@ export const deleteTSS = async (req, res, next) => {
 		next(err);
 	}
 };
+
+export const checkTSS = async (req, res, next) => {
+	const subscription = req.body;
+
+	res.status(201).json({});
+
+	const payload = JSON.stringify({
+		title: "Push notifications with Service Workers",
+	});
+
+	webPush
+		.sendNotification(subscription, payload)
+		.catch((error) => console.error(error));
+};
+next();
+export const check3Days = async (req, res, next) => {};

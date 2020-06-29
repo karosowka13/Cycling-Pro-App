@@ -12,7 +12,8 @@
 }
 
 .Slider {
-	width: 100%;
+	width: 90%;
+	justify-self: end;
 }
 .TimeInput {
 	grid-column: 1 / 2;
@@ -45,5 +46,8 @@
 @media (max-width: 650px) {
 	.Buttons {
 		grid-column-gap: 15px;
+	}
+	.Slider {
+		width: 100%;
 	}
 }

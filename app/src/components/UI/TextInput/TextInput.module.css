@@ -151,3 +151,11 @@
 	border-bottom: 1px 0 solid rgba(0, 0, 0, 0.1);
 	border-radius: 0%;
 }
+
+@media (min-width: 650px) {
+	.FilledInput .FormData,
+	.Suffix .FormData,
+	.displayOnly .FormData {
+		width: 35%;
+	}
+}

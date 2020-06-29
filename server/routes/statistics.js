@@ -1,4 +1,5 @@
 import express from "express";
+
 import {
 	getWeekStatistics,
 	getMonthStatistics,
@@ -8,6 +9,8 @@ import {
 	createTSS,
 	deleteTSS,
 	getTSS,
+	checkTSS,
+	check3Days,
 } from "../controllers/statistics";
 const router = express.Router({ mergeParams: true });
 
@@ -19,5 +22,8 @@ router.get("/year", getYearStatistics); //get year statistics
 router.put("/TSS", createTSS); //create/update TSS data
 router.get("/TSS/:day", getTSS); //get TSS data
 router.delete("/TSS/:id", deleteTSS); //delete TSS data
+
+router.post("/subscribeTSS", checkTSS); //route for push notification TSS
+router.post("/subscribeLastTraining", check3Days); //route for push notification last Training
 
 export default router;
