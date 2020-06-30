@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
+import dotenv from "../dist/node_modules/dotenv";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import compression from "compression";

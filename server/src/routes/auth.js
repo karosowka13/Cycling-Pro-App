@@ -5,7 +5,7 @@ import {
 	checkLogin,
 	checkSignup,
 } from "../controllers/auth";
-import { check } from "express-validator";
+import { check } from "../../dist/node_modules/express-validator";
 
 const router = express.Router();
 

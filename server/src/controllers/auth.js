@@ -1,4 +1,4 @@
-import { validationResult } from "express-validator";
+import { validationResult } from "../../dist/node_modules/express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Athlete from "../models/athlete";
