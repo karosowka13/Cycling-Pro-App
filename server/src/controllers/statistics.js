@@ -2,7 +2,7 @@ import Training from "../models/training";
 import TSS from "../models/tss";
 import webPush from "web-push";
 
-webPush.setVapidDetails(
+const key = webPush.setVapidDetails(
 	"mailto:test@example.com",
 	process.env.PUBLIC_VAPID_KEY,
 	process.env.PRIVATE_VAPID_KEY

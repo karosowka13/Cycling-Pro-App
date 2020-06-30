@@ -3,6 +3,14 @@ FROM node:latest AS build
 COPY app /app
 WORKDIR /app
 
+ENV NODE_ENV  production
+ENV REACT_APP_SERVER https://cycling-server-hrwkzvlbsa-ew.a.run.app/api
+ENV REACT_APP_LOGIN https://cycling-server-hrwkzvlbsa-ew.a.run.app/api/auth/login
+ENV REACT_APP_SIGNUP https://cycling-server-hrwkzvlbsa-ew.a.run.app/api/auth/signup
+
+#no souce code avaliable 
+#ENV GENERATE_SOURCEMAP=false
+
 RUN npm install
 RUN npm run build
 

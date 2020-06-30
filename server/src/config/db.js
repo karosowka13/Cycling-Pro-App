@@ -9,6 +9,7 @@ const connectDB = async () => {
 			useUnifiedTopology: true,
 			useFindAndModify: false,
 		});
+		mongoose.connection.useDb("Cycling-Pro-App");
 
 		console.log("MongoDB is Connected...");
 	} catch (err) {
