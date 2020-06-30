@@ -1,13 +1,8 @@
 {
-  "name": "cycling-sport-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "canvasjs": "^1.8.3",
-    "leaflet": "^1.6.0",
-    "react-leaflet": "^2.7.0"
-  },
-  "scripts": {
-    "dev": "concurrently --kill-others \"cd server && npm run dev\" \"cd app && npm start\" "
-  }
+	"name": "cycling-sport-app",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"dev": "concurrently --kill-others \"cd server && npm run dev\" \"cd app && npm start\" "
+	}
 }
