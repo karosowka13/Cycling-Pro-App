@@ -2,7 +2,8 @@ import Training from "../models/training";
 import TSS from "../models/tss";
 import webPush from "web-push";
 
-const key = webPush.setVapidDetails(
+webpush.setGCMAPIKey(process.env.GOOGLE_API_KEY);
+webPush.setVapidDetails(
 	"mailto:test@example.com",
 	process.env.PUBLIC_VAPID_KEY,
 	process.env.PRIVATE_VAPID_KEY
@@ -359,7 +360,7 @@ export const deleteTSS = async (req, res, next) => {
 
 export const checkTSS = async (req, res, next) => {
 	const subscription = req.body;
-
+	//or req.body.endpoint
 	res.status(201).json({});
 
 	const payload = JSON.stringify({

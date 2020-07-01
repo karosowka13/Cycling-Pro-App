@@ -51,8 +51,25 @@ class Authentication extends Component {
 			this.state.formData.password.value,
 			this.state.isSignUp
 		);
+		this.askPermission();
 	};
+	askPermission() {
+		return new Promise(function (resolve, reject) {
+			const permissionResult = Notification.requestPermission(function (
+				result
+			) {
+				resolve(result);
+			});
 
+			if (permissionResult) {
+				permissionResult.then(resolve, reject);
+			}
+		}).then(function (permissionResult) {
+			if (permissionResult !== "granted") {
+				throw new Error("We weren't granted permission.");
+			}
+		});
+	}
 	changeHandler = (event, formElementName) => {
 		const name = formElementName;
 		const value = event.target.value;

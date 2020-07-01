@@ -139,3 +139,26 @@ if (Notification.permission === "default") {
 }
 
 //const saveSubscriptionInDB(subscription, userId)
+
+//after click redirect to application
+// Notification click event listener
+self.addEventListener("notificationclick", (e) => {
+	// Close the notification popout
+	e.notification.close();
+	// Get all the Window clients
+	e.waitUntil(
+		clients.matchAll({ type: "window" }).then((clientsArr) => {
+			// If a Window tab matching the targeted URL already exists, focus that;
+			const hadWindowToFocus = clientsArr.some((windowClient) =>
+				windowClient.url === "https://cycling-hrwkzvlbsa-ew.a.run.app"
+					? (windowClient.focus(), true)
+					: false
+			);
+			// Otherwise, open a new tab to the applicable URL and focus it.
+			if (!hadWindowToFocus)
+				clients
+					.openWindow("https://cycling-hrwkzvlbsa-ew.a.run.app")
+					.then((windowClient) => (windowClient ? windowClient.focus() : null));
+		})
+	);
+});
