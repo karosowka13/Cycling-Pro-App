@@ -31,27 +31,27 @@ self.addEventListener("activate", (event) => {
 	);
 });
 
-/* Fetch event handler for responding to GET requests with the cached assets */
-self.addEventListener("fetch", (event) => {
-	event.respondWith(
-		caches.open("products-v2").then(async (cache) => {
-			/* Checking if the request is already present in the cache. If it is present, sending it directly to the client */
-			const response = await cache.match(event.request);
-			if (response) {
-				console.log(
-					"Cache hit! Fetching response from cache",
-					event.request.url
-				);
-				return response;
-			}
-			/* If the request is not present in the cache, we fetch it from the server and then put it in cache for subsequent requests. */
-			fetch(event.request).then((response_1) => {
-				cache.put(event.request, response_1.clone());
-				return response_1;
-			});
-		})
-	);
-});
+// /* Fetch event handler for responding to GET requests with the cached assets */
+// self.addEventListener("fetch", (event) => {
+// 	event.respondWith(
+// 		caches.open("products-v2").then(async (cache) => {
+// 			/* Checking if the request is already present in the cache. If it is present, sending it directly to the client */
+// 			const response = await cache.match(event.request);
+// 			if (response) {
+// 				console.log(
+// 					"Cache hit! Fetching response from cache",
+// 					event.request.url
+// 				);
+// 				return response;
+// 			}
+// 			/* If the request is not present in the cache, we fetch it from the server and then put it in cache for subsequent requests. */
+// 			fetch(event.request).then((response_1) => {
+// 				cache.put(event.request, response_1.clone());
+// 				return response_1;
+// 			});
+// 		})
+// 	);
+// });
 
 // We need this in Webpack plugin (refer to swSrc option): https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#full_injectmanifest_config
 workbox.precaching.precacheAndRoute(self.__precacheManifest);

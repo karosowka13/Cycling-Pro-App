@@ -9,6 +9,8 @@ webPush.setVapidDetails(
 	process.env.PRIVATE_VAPID_KEY
 );
 
+let pushIntervalID = null;
+
 //TOTAL TSS, IF, distance, time, ascent, work
 const query = {
 	intensity_factor: 1,
@@ -497,15 +499,16 @@ export const check3Days = async (req, res, next) => {
 			payload.push(
 				JSON.stringify({
 					title:
-						"Ride as much or as little, as long or as short as you feel. But ride! Last training was 3 days ago",
+						"Ride as much or as little, as long or as short as you feel. But ride!",
+					text: "Last training was done 3 days ago",
 				})
 			);
 		}
 		if (totalTSSMonth > 4920) {
 			payload.push(
 				JSON.stringify({
-					title:
-						"Take a rest! You have been training too hard in last 30 days!",
+					title: "Take a rest! You have been training too hard!",
+					text: `${totalTSSMonth} TSS in last 30days`,
 				})
 			);
 		}
@@ -513,6 +516,7 @@ export const check3Days = async (req, res, next) => {
 			payload.push(
 				JSON.stringify({
 					title: "Take a rest! You have been training too hard in last 7 days!",
+					text: `${totalTSSWeek} TSS in last 7days`,
 				})
 			);
 		}
@@ -530,9 +534,12 @@ export const check3Days = async (req, res, next) => {
 
 		const subscription = req.body;
 		res.status(201).json({});
-		webPush
-			.sendNotification(subscription, payload)
-			.catch((error) => console.error(error));
+		pushIntervalID = setInterval(() => {
+			webPush
+				.sendNotification(subscription, payload)
+				.catch(() => clearInterval(pushIntervalID));
+		}, 86400000);
+
 		next();
 	} catch (err) {
 		next(err);
