@@ -373,4 +373,168 @@ export const checkTSS = async (req, res, next) => {
 	next();
 };
 
-export const check3Days = async (req, res, next) => {};
+export const check3Days = async (req, res, next) => {
+	let from = new Date();
+	let last30 = new Date(from.getTime() - 30 * 24 * 60 * 60 * 1000).setHours(
+		0,
+		0,
+		0,
+		0
+	);
+	last30 = new Date(last30);
+	let last7 = new Date(from.getTime() - 7 * 24 * 60 * 60 * 1000).setHours(
+		0,
+		0,
+		0,
+		0
+	);
+	last7 = new Date(last7);
+
+	try {
+		const Week = await Training.aggregate([
+			{
+				$match: {
+					athlete_id: req.params.athleteid,
+					time_created: {
+						$gte: last7,
+						$lte: new Date(),
+					},
+				},
+			},
+			{ $project: querySmall },
+			{
+				$group: groupBySmall,
+			},
+		]);
+		const Month = await Training.aggregate([
+			{
+				$match: {
+					athlete_id: req.params.athleteid,
+					time_created: {
+						$gte: last30,
+						$lte: new Date(),
+					},
+				},
+			},
+			{ $project: querySmall },
+			{
+				$group: groupBySmall,
+			},
+		]);
+
+		const TSSMonth = await TSS.aggregate([
+			{
+				$match: {
+					athlete_id: req.params.athleteid,
+					day_assigned: { $gte: last30, $lte: new Date() },
+				},
+			},
+
+			{ $project: { time: queryTime, value: queryValue } },
+			{
+				$group: {
+					_id: null,
+					totalTime: { $sum: "$time" },
+					totalValue: { $sum: "$value" },
+				},
+			},
+		]);
+
+		const TSSWeek = await TSS.aggregate([
+			{
+				$match: {
+					athlete_id: req.params.athleteid,
+					day_assigned: { $gte: last7, $lte: new Date() },
+				},
+			},
+
+			{ $project: { time: queryTime, value: queryValue } },
+			{
+				$group: {
+					_id: null,
+					totalTime: { $sum: "$time" },
+					totalValue: { $sum: "$value" },
+				},
+			},
+		]);
+		let mentalTSSWeek = 0;
+		let mentalTSSMonth = 0;
+		if (TSSMonth.length > 0) {
+			const timeM = TSSMonth[0].totalTime;
+			const valueM = TSSMonth[0].totalValue;
+			mentalTSSMonth = (timeM * valueM) / (1 * 3600 * 1000);
+		}
+
+		if (TSSWeek.length > 0) {
+			const timeW = TSSWeek[0].totalTime;
+			const valueW = TSSWeek[0].totalValue;
+			mentalTSSWeek = (timeW * valueW) / (1 * 3600 * 1000);
+		}
+
+		let physicalTSSMonth = 0;
+		let physicalTSSWeek = 0;
+		if (Month.length > 0) {
+			physicalTSSMonth = Month[0].training_stress_score;
+		}
+		if (Week.length > 0) {
+			physicalTSSWeek = Week[0].training_stress_score;
+		}
+
+		const totalTSSMonth = mentalTSSMonth + physicalTSSMonth;
+		const totalTSSWeek = mentalTSSWeek + physicalTSSWeek;
+
+		const lastTrainingUpload = await TSS.aggregate([
+			{
+				$match: {
+					athlete_id: req.params.athleteid,
+					day_assigned: { $gte: last3, $lte: new Date() },
+				},
+			},
+		]);
+
+		let payload = [];
+		if (lastTrainingUpload.length > 0) {
+			payload.push(
+				JSON.stringify({
+					title:
+						"Ride as much or as little, as long or as short as you feel. But ride! Last training was 3 days ago",
+				})
+			);
+		}
+		if (totalTSSMonth > 4920) {
+			payload.push(
+				JSON.stringify({
+					title:
+						"Take a rest! You have been training too hard in last 30 days!",
+				})
+			);
+		}
+		if (totalTSSWeek > 1230) {
+			payload.push(
+				JSON.stringify({
+					title: "Take a rest! You have been training too hard in last 7 days!",
+				})
+			);
+		}
+		if (
+			totalTSSWeek <= 1230 &&
+			totalTSSMonth <= 4920 &&
+			lastTrainingUpload.length <= 0
+		) {
+			payload.push(
+				JSON.stringify({
+					title: "Keep training!",
+				})
+			);
+		}
+
+		const subscription = req.body;
+		res.status(201).json({});
+		webPush
+			.sendNotification(subscription, payload)
+			.catch((error) => console.error(error));
+		next();
+	} catch (err) {
+		next(err);
+	}
+};
