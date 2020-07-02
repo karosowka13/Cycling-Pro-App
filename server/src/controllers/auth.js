@@ -116,7 +116,6 @@ export const createNewAthlete = async (req, res, next) => {
 				});
 			}
 		);
-		res.json(newAthlete);
 		next();
 	} catch (err) {
 		next(err);

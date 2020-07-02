@@ -8,3 +8,4 @@
 .dockerignore
 **/*.gitignore
 README.md
+.vscode
