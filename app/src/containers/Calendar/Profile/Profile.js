@@ -23,7 +23,6 @@ class Profile extends Component {
 	submitHandler = (event) => {
 		event.preventDefault();
 		if (this.state.edit) {
-			console.log(this.props.profileData);
 			this.props.updateProfile(this.props.userId, this.props.profileData);
 		}
 		this.props.history.push({ pathname: "/" });

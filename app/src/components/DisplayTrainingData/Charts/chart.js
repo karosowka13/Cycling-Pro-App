@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-import { formatTime } from "../../../helpers/Training";
+import { formatTime, compare_time } from "../../../helpers/Training";
 import CanvasJSReact from "./canvasjs.react";
 
 import classes from "./chart.module.css";
@@ -9,7 +9,6 @@ const CanvasJSChart = CanvasJSReact.CanvasJSChart;
 class Chart extends Component {
 	render() {
 		let data = this.props.records;
-
 		let power = [];
 		let altitude = [];
 		let speed = [];
@@ -18,7 +17,8 @@ class Chart extends Component {
 		let temperature = [];
 		let options = null;
 		let Altitude = [];
-		if (data) {
+		data.sort(compare_time);
+		if (data.length > 0) {
 			for (let record of data) {
 				Altitude.push(record.altitude);
 

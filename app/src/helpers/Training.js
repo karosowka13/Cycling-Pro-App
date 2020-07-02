@@ -76,3 +76,16 @@ export function lastElement(array) {
 		return array;
 	} else return 0;
 }
+
+export function compare_time(a, b) {
+	// a should come before b in the sorted order
+	if (a.timer_time < b.timer_time) {
+		return -1;
+		// a should come after b in the sorted order
+	} else if (a.timer_time > b.timer_time) {
+		return 1;
+		// a and b are the same
+	} else {
+		return 0;
+	}
+}

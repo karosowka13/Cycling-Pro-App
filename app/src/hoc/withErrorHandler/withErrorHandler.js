@@ -37,7 +37,6 @@ const withErrorHandler = (WrappedComponent, axios) => {
 					return Promise.reject(error);
 				}
 			);
-			console.log(this.state.error);
 		}
 
 		componentWillUnmount() {

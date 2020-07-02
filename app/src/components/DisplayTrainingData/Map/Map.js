@@ -1,12 +1,13 @@
 import React, { Component } from "react";
-import { centerGeolocation } from "../../../helpers/Training";
+import { centerGeolocation, compare_time } from "../../../helpers/Training";
 import { Map, Polyline, TileLayer } from "react-leaflet";
 import classes from "./Map.module.css";
 class routeMap extends Component {
 	render() {
 		let polyline = [];
-
-		for (let point of this.props.coordinates) {
+		let records = this.props.coordinates;
+		records.sort(compare_time);
+		for (let point of records) {
 			polyline.push([point.position_lat, point.position_long]);
 		}
 		let center = centerGeolocation(polyline);

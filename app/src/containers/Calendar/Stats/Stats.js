@@ -36,7 +36,6 @@ class Stats extends Component {
 		let chartWeek = null;
 
 		if (this.props.statsSuccess && this.props.stats.month.length > 0) {
-			console.log(this.props.stats.month);
 			let recordMonth = this.props.stats.month[0];
 			let recordWeek = this.props.stats.week[0];
 			let totalTSSMonth = this.props.stats.totalTSSMonth;
