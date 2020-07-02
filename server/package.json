@@ -40,7 +40,7 @@
 	"scripts": {
 		"babel-runtime": "--plugins transform-runtime server.js",
 		"babel-node": "babel-node --presets=latest",
-		"start": "nodemon --exec npm run babel-node -- server.js",
+		"start": "nodemon --exec npm run babel-node -- src/server.js",
 		"build": "babel src -d dist",
 		"server": "node dist/server.js"
 	},

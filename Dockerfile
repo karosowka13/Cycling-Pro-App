@@ -19,8 +19,10 @@ RUN npm run build
 #production environment
 FROM httpd:2.4
 #COPY ./public-html/ /usr/local/apache2/htdocs/
+COPY ./.htaccess /usr/local/apache2/htdocs/.
 COPY --from=build /app/build /usr/local/apache2/htdocs/
-
+RUN sed -i 's/None/All/g' /usr/local/apache2/conf/httpd.conf
+RUN sed -i 's,#LoadModule rewrite_module modules/mod_rewrite.so,LoadModule rewrite_module modules/mod_rewrite.so,g' /usr/local/apache2/conf/httpd.conf
 EXPOSE 80
 
 
