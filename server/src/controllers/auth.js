@@ -116,8 +116,10 @@ export const createNewAthlete = async (req, res, next) => {
 				});
 			}
 		);
-		next();
 	} catch (err) {
-		next(err);
+		console.error(e);
+		res.status(500).json({
+			message: "Server Error",
+		});
 	}
 };

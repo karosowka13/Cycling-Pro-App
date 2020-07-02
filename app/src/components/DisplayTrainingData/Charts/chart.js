@@ -17,8 +17,10 @@ class Chart extends Component {
 		let temperature = [];
 		let options = null;
 		let Altitude = [];
-		data.sort(compare_time);
+		let chart = null;
+
 		if (data.length > 0) {
+			data.sort(compare_time);
 			for (let record of data) {
 				Altitude.push(record.altitude);
 
@@ -189,12 +191,16 @@ class Chart extends Component {
 					},
 				],
 			};
-		}
-		return (
-			<div id="chartContainer" className={classes.Chart}>
-				<CanvasJSChart options={options} onRef={(ref) => (this.chart = ref)} />
-			</div>
-		);
+			chart = (
+				<div id="chartContainer" className={classes.Chart}>
+					<CanvasJSChart
+						options={options}
+						onRef={(ref) => (this.chart = ref)}
+					/>
+				</div>
+			);
+		} else chart = <h3>Ther is no data avaliable for chart</h3>;
+		return { chart };
 	}
 }
 
