@@ -36,9 +36,9 @@ if ("serviceWorker" in navigator) {
 			})
 			.then(function (subscription) {
 				fetch(
-					`${process.env.REACT_APP_SERVER}/athletes/${localStorage.getItem(
+					`${process.env.REACT_APP_SERVER}/auth/${localStorage.getItem(
 						"userId"
-					)}/statistics/subscribeTSS`,
+					)}/subscribeTSS`,
 					{
 						method: "POST",
 						body: JSON.stringify(subscription),

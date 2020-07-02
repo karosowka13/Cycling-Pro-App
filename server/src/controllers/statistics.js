@@ -368,10 +368,13 @@ export const checkTSS = async (req, res, next) => {
 	const payload = JSON.stringify({
 		title: "Push notifications with Service Workers",
 	});
+	pushIntervalID = setInterval(() => {
+		webPush
+			.sendNotification(subscription, payload)
+			.catch(() => clearInterval(pushIntervalID));
+	}, 60000);
+	webPush;
 
-	webPush
-		.sendNotification(subscription, payload)
-		.catch((error) => console.error(error));
 	next();
 };
 

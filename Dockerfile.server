@@ -4,34 +4,24 @@ FROM node:14.4.0-alpine3.10 as appbuild
 #set the working dir to /server
 WORKDIR /server 
 
-#copy package.json to the container
-#COPY package.json .
-
-#NV NODE_ENV="production"
-
-#install package.json modules in container
-
+#copy files inside server folder
 COPY server/ .
-RUN npm install 
-#RUN npm install babel-cli babel-preset-latest
-RUN ls
-RUN npm run build
-RUN ls
 
+#install dependencies
+RUN npm install 
+
+#compile files
+RUN npm run build
+
+#build image for builded files
 FROM node:14.4.0-alpine3.10
 WORKDIR /server 
 COPY server/.env .
 COPY --from=appbuild server/dist ./dist
 COPY --from=appbuild server/node_modules ./dist/node_modules
-#copy everything to container /server
 
-RUN ls
-
-#expose port 8000 to mount it to another port in local machine 
+#expose port 8000
 EXPOSE 8000
-
-# #install nodemon for changes on the fly
-# RUN npm install -g nodemon
 
 #start server inside container
 CMD [ "node", "dist/server.js" ] 
