@@ -5,7 +5,8 @@ import {
 	checkLogin,
 	checkSignup,
 } from "../controllers/auth";
-import { check } from "express-validator";
+import { checkTSS, check3Days } from "../controllers/statistics";
+import { check } from "../../dist/node_modules/express-validator";
 
 const router = express.Router();
 
@@ -33,5 +34,8 @@ router.post(
 ); //log in
 
 router.get("/myaccount"); //get account
+
+router.post("/:athleteid/subscribeTSS", checkTSS); //route for push notification TSS
+router.post("/:athleteid/subscribeLastTraining", check3Days); //route for push notification last Training
 
 export default router;
