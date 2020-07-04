@@ -156,13 +156,7 @@ const uploadTrainings = async (oneFile, athleteID, res) => {
 	const allRecords = createRecords(allData);
 	try {
 		let queryAthlete = { $set: athlete };
-		let options = {
-			useFindAndModify: false,
-			upsert: true,
-			new: true,
-			setDefaultsOnInsert: true,
-		};
-		await Athlete.findByIdAndUpdate(athleteId, queryAthlete, options);
+		await Athlete.save(athleteId, queryAthlete, options);
 		const newTraining = await training.save();
 
 		const record = new Records({ training_id: newTraining._id });

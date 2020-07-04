@@ -360,15 +360,13 @@ export const deleteTSS = async (req, res, next) => {
 	}
 };
 
-export const check3Days = async (req, res, next) => {
+export const checkTSS = async (req, res, next) => {
 	const subscription = req.body;
 	let newSubscription = req.body;
 	Object.assign(newSubscription, { athlete_id: req.params.athleteid });
 	newSubscription = new Subscription(newSubscription);
 	await newSubscription.save();
 	res.status(201).json({ message: "success" });
-	console.log(newSubscription);
-	console.log("helo");
 	return await new Promise((resolve) => {
 		pushIntervalID = setInterval(() => {
 			const payload = JSON.stringify({
@@ -378,11 +376,12 @@ export const check3Days = async (req, res, next) => {
 			webPush
 				.sendNotification(subscription, payload)
 				.catch(() => clearInterval(pushIntervalID));
-		}, 60000);
+		}, 86400000);
+		//24h
 	});
 };
 
-export const checkTSS = async (req, res, next) => {
+export const check3Days = async (req, res, next) => {
 	let from = new Date();
 	let last30 = new Date(from.getTime() - 30 * 24 * 60 * 60 * 1000).setHours(
 		0,

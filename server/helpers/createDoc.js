@@ -19,7 +19,11 @@ export const createAthlete = (allData, athleteId) => {
 	Object.keys(userData)
 		.filter((key) => !neededForAthlete.includes(key))
 		.forEach((key) => delete userData[key]);
-
+	Object.keys(userData).forEach((key) => {
+		if (key === "height") {
+			userData[key] = userData[key] * 100000;
+		}
+	});
 	Object.assign(userData, { _id: athleteId });
 	const athlete = new Athlete(userData);
 	return athlete;
