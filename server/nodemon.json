@@ -1,5 +1,6 @@
 {
 	"watch": [".env", "package.json", "nodemon.json", "**/"],
 	"verbose": true,
-	"ignore": ["*.test.js", "*.spec.js"]
+	"ignore": ["*.test.js", "*.spec.js"],
+	"delay": "2500"
 }

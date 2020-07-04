@@ -374,7 +374,7 @@ export const checkTSS = async (req, res, next) => {
 		pushIntervalID = setInterval(() => {
 			const payload = JSON.stringify({
 				title: "Remember why you started!",
-				body: "Last training was done 3 days ago",
+				body: "You haven't train recently.",
 			});
 			webPush
 				.sendNotification(subscription, payload)

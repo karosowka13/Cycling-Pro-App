@@ -19,6 +19,7 @@ const tssSchema = new mongoose.Schema({
 	workout: valueTimeSchema,
 	concerns: valueTimeSchema,
 	others: valueTimeSchema,
+	comments: String,
 });
 
 module.exports = mongoose.model("TSS", tssSchema);

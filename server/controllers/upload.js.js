@@ -19,6 +19,11 @@ const upload = multer({
 	fileFilter: fileFilter,
 }).single("file");
 
+const multiUpload = multer({
+	storage: storage,
+	fileFilter: fileFilter,
+}).array("files", 8);
+
 const fitParser = new FitParser({
 	force: true,
 	speedUnit: "km/h",
@@ -27,6 +32,42 @@ const fitParser = new FitParser({
 	elapsedRecordField: true,
 	mode: "both",
 });
+
+export const multipleRawTrainingData = (req, res, next) => {
+	let lastTraining = null;
+	console.log(req.files);
+	multiUpload(req, res, (err) => {
+		if (req.fileValidationError) {
+			return res.end(res.writeHead(415, req.fileValidationError));
+		} else if (!req.files) {
+			return res.end(res.writeHead(404, "Please select a file to upload"));
+		} else if (err instanceof multer.MulterError) {
+			console.log("This is the invalid field ->", err.field);
+			return res.status(500).json(err);
+			// A Multer error occurred when uploading.
+		} else if (err) {
+			return res.status(500).json(err);
+			// An unknown error occurred when uploading.
+		}
+
+		const files = req.files;
+		let index, len;
+
+		for (index = 0, len = files.length; index < len; ++index) {
+			let encodedData = null;
+			fitParser.parse(files[index].buffer, (err, data) => {
+				// Handle result of parse method
+				if (err) {
+					console.log(err);
+				}
+				encodedData = data;
+			});
+
+			lastTraining = uploadTrainings(encodedData, req.headers.user, res);
+		}
+		res.json(lastTraining);
+	});
+};
 
 export const rawTrainingData = (req, res, next) => {
 	upload(req, res, (err) => {
@@ -59,7 +100,6 @@ export const uploadTraining = async (req, res) => {
 	let allData = res.locals.data;
 	let athleteId = res.locals.athleteId;
 	let allDataForTraining = {};
-
 	Object.assign(
 		allDataForTraining,
 		allData.file_id,
@@ -96,39 +136,44 @@ export const uploadTraining = async (req, res) => {
 		res.status(400).send(err);
 	}
 };
-// let lapRecords ={}
-// allData.laps.records.forEach((record) => {
-//   Object.keys(record)
-//     .filter((key) => !neededForRecords.includes(key))
-//     .forEach((key) => delete record[key]);
-//   Object.assign(record, { statistics: training._id });
-// });
 
-// let laps = {};
-// let neededForLaps = [
-//   "avg_cadence",
-//   "avg_heart_rate",
-//   "avg_power",
-//   "avg_speed",
-//   "end_position_lat",
-//   "end_position_long",
-//   "max_cadence",
-//   "max_heart_rate",
-//   "max_power",
-//   "max_speed",
-//   "normalized_power",
-//   "start_time",
-//   "total_ascent",
-//   "total_calories",
-//   "total_descent",
-//   "total_distance",
-//   "total_elapsed_time",
-//   "total_timer_time",
-//   "total_work",
-// ];
-// allData.laps.forEach((lap) => {
-//   Object.keys(key)
-//     .filter((key) => !neededForLaps.includes(key))
-//     .forEach((key) => delete lap[key]);
-//   Object.assign(laps, { training_id: training._id });
-// });
+const uploadTrainings = async (oneFile, athleteID, res) => {
+	let allData = oneFile;
+	let athleteId = athleteID;
+	let allDataForTraining = {};
+	console.log(allData);
+	Object.assign(
+		allDataForTraining,
+		allData.file_id,
+		allData.sport,
+		allData.sessions[0]
+	);
+	let allDataForAthlete = {};
+	Object.assign(allDataForAthlete, allData.user_profile, allData.zones_target);
+
+	const athlete = createAthlete(allDataForAthlete, athleteId);
+	const training = createTraining(allDataForTraining, athleteId);
+	const allRecords = createRecords(allData);
+	try {
+		let queryAthlete = { $set: athlete };
+		let options = {
+			useFindAndModify: false,
+			upsert: true,
+			new: true,
+			setDefaultsOnInsert: true,
+		};
+		await Athlete.findByIdAndUpdate(athleteId, queryAthlete, options);
+		const newTraining = await training.save();
+
+		const record = new Records({ training_id: newTraining._id });
+
+		const newRecord = await record.save();
+		await Records.updateOne(
+			{ training_id: newTraining._id },
+			{ $push: { details: { $each: allRecords, $sort: -1 } } }
+		);
+		return newTraining;
+	} catch (err) {
+		res.status(400).send(err);
+	}
+};
