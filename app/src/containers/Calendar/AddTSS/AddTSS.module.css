@@ -43,6 +43,16 @@
 	justify-items: end;
 }
 
+.Comment {
+	justify-self: center;
+	grid-column: 1 / span 2;
+	width: 90%;
+	height: 130px;
+	display: grid;
+	grid-template-rows: 1fr 3fr;
+	grid-auto-flow: row;
+}
+
 @media (max-width: 650px) {
 	.Buttons {
 		grid-column-gap: 15px;

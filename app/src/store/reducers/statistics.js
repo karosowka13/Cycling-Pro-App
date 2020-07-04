@@ -18,6 +18,7 @@ const initialState = {
 		workout: { value: 0, time: "" },
 		concerns: { value: 0, time: "" },
 		others: { value: 0, time: "" },
+		comments: "",
 	},
 };
 
@@ -88,6 +89,14 @@ const changeTSSTime = (state, action) => {
 	return updateObject(state, { TSS: updatedTSS });
 };
 
+const changeComment = (state, action) => {
+	let updatedComments = updateObject(state.comments, {
+		comments: action.comment,
+	});
+	console.log(updatedComments);
+	return updateObject(state, { comments: updatedComments });
+};
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.FETCH_STATISTICS_START:
@@ -106,6 +115,8 @@ const reducer = (state = initialState, action) => {
 			return changeTSSValue(state, action);
 		case actionTypes.CHANGE_TSS_TIME:
 			return changeTSSTime(state, action);
+		case actionTypes.CHANGE_COMMENTS:
+			return changeComment(state, action);
 		default:
 			return state;
 	}

@@ -17,14 +17,12 @@ class Logged extends Component {
 		const formData = this.toFormData(files);
 		console.log(files[0], files);
 		for (let i = 0; i < files.length; i++) {
-			const file = new Blob([files[i]]);
+			// const file = new Blob([files[i]]);
 			const file2 = new Blob([files[i]], { type: "application/octet-stream" });
-			console.log(file, file2);
-			formData.append("file", file2);
+			// console.log(file, file2);
+			formData.append("files", files[i]);
+			console.log(formData);
 		}
-		const file = new Blob([files[0]], { type: "application/octet-stream" });
-		formData.append("file", file);
-		console.log(formData);
 		this.props.loadMultipleTraining(formData, this.props.userId);
 		this.props.history.push("/trainingStats");
 	};

@@ -109,14 +109,15 @@ class AddTSS extends Component {
 	render() {
 		let buttons = null;
 		let form = [];
-
+		let comments = null;
 		let TSSData = this.props.TSS;
 		Object.keys(TSSData).map((name) => {
 			if (
 				name !== "_id" &&
 				name !== "day_assigned" &&
 				name !== "athlete_id" &&
-				name !== "__v"
+				name !== "__v" &&
+				name !== "comments"
 			) {
 				let icon = null;
 				if (name === "study") {
@@ -178,7 +179,21 @@ class AddTSS extends Component {
 				);
 			}
 		});
-
+		let onStartText = null;
+		if (TSSData[comments] !== null && TSSData[comments] !== 0) {
+			onStartText = TSSData[comments];
+		}
+		comments = (
+			<div className={classes.Comment}>
+				<p>Comments and feelings after this training cycle</p>
+				<textarea
+					value={onStartText}
+					onChange={(event, value) =>
+						this.props.textareaChangeHandler(event, value)
+					}
+				/>
+			</div>
+		);
 		buttons = (
 			<div key={"buttons2"} className={classes.Buttons}>
 				{/* <ButtonIcon btntype="DeleteIcon" onClick={this.removeTSSHandler} /> */}
@@ -198,6 +213,7 @@ class AddTSS extends Component {
 			>
 				<div className={classes.Form}>
 					{form}
+					{comments}
 					{buttons}
 				</div>
 			</Modal>
@@ -222,6 +238,8 @@ const mapDispatchToProps = (dispatch) => {
 			dispatch(actions.changeTSSValueHandler(value, name)),
 		changeTSSTimeHandler: (event, name) =>
 			dispatch(actions.changeTSSTimeHandler(event, name)),
+		textareaChangeHandler: (event, value) =>
+			dispatch(actions.changeCommentHandler(event, value)),
 	};
 };
 

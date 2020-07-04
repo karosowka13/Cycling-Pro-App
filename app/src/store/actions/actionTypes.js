@@ -38,6 +38,7 @@ export const ADD_TSS_SUCCESS = "ADD_TSS_SUCCESS";
 export const REMOVE_TSS_SUCCESS = "REMOVE_TSS_SUCCESS";
 export const CHANGE_TSS_VALUE = "CHANGE_TSS_VALUE";
 export const CHANGE_TSS_TIME = "CHANGE_TSS_TIME";
+export const CHANGE_COMMENTS = "CHANGE_COMMENTS";
 
 export const SET_DAY = "SET_DAY";
 export const SET_MONTH = "SET_MONTH";

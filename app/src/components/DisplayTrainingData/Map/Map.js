@@ -35,7 +35,7 @@ class routeMap extends Component {
 			);
 		} else map = <h3>Map is unavaliable.</h3>;
 
-		return { map };
+		return [map];
 	}
 }
 export default routeMap;

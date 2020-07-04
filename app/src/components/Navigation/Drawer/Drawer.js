@@ -17,8 +17,8 @@ const drawer = (props) => {
 					<Logo />
 				</div>
 				<nav>
-					<NavigationItems isAuth={props.isAuth} />
 					<NavigationItem link="/stats">Statistics</NavigationItem>
+					<NavigationItems isAuth={props.isAuth} />
 				</nav>
 			</div>
 		</React.Fragment>

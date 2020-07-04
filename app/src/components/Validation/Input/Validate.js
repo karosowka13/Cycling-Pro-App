@@ -17,6 +17,7 @@ const validate = (value, rules) => {
 				break;
 			case "isHHMM":
 				isValid = isValid && hhMMValidator(value);
+				break;
 			default:
 				isValid = true;
 		}

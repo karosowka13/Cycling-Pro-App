@@ -136,3 +136,11 @@ export const changeTSSTimeHandler = (event, name) => {
 		TSSData: TSSData,
 	};
 };
+
+export const changeCommentHandler = (event) => {
+	const value = event.target.value;
+	return {
+		type: actionTypes.CHANGE_COMMENTS,
+		comment: value,
+	};
+};

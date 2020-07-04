@@ -23,6 +23,7 @@
 }
 
 .ButtonIcon {
+	margin-top: 13px;
 	color: white;
 }
 /* .ButtonIcon {
@@ -42,14 +43,19 @@
 	z-index: -10;
 }
 .ButtonIcon {
-	font-size: 40px;
+	font-size: 45px;
 }
 .ButtonIcon label {
+	position: absolute;
+	right: 165px;
 	cursor: pointer;
 	color: white;
 }
 @media (max-width: 650px) {
 	/*check if we are on mobile devices */
+	.ButtonIcon {
+		display: none;
+	}
 	.Toolbar {
 		height: 50px;
 	}

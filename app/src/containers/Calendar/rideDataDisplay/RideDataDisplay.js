@@ -65,7 +65,9 @@ class RideDataDisplay extends Component {
 			!this.props.loading &&
 			this.state.displaying === "Chart"
 		) {
-			content = <Chart records={this.props.chartData} />;
+			if (this.props.chartData) {
+				content = <Chart key="chart" records={this.props.chartData} />;
+			} else content = <p key="erroe">Error</p>;
 		} else if (
 			(this.props.successTraining || this.props.trainingData) &&
 			!this.props.loading &&
@@ -78,9 +80,11 @@ class RideDataDisplay extends Component {
 			!this.props.loading &&
 			this.state.displaying === "Map"
 		) {
-			content = <Map coordinates={this.props.chartData} />;
+			if (this.props.chartData) {
+				content = <Map key="map" coordinates={this.props.chartData} />;
+			}
 		} else if (this.props.error) {
-			content = <h1>Error</h1>;
+			content = <h1 key="erroree">Error</h1>;
 		}
 
 		if (
@@ -144,7 +148,7 @@ class RideDataDisplay extends Component {
 				show={this.state.modalShow}
 				modalClosed={this.props.confirmHandler}
 			>
-				<div className={classes.Form}>
+				<div key="display" className={classes.Form}>
 					{content}
 					{buttons}
 				</div>

@@ -13,6 +13,7 @@ export {
 	removeTSS,
 	changeTSSValueHandler,
 	changeTSSTimeHandler,
+	changeCommentHandler,
 } from "./statistics";
 export { onDateClick, nextMonth, prevMonth } from "./date";
 export {
