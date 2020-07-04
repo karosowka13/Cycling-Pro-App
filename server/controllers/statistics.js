@@ -1,8 +1,9 @@
 import Training from "../models/training";
 import TSS from "../models/tss";
+import Subscription from "../models/subscription";
 import webPush from "web-push";
 
-webPush.setGCMAPIKey(process.env.GOOGLE_API_KEY);
+//webPush.setGCMAPIKey(process.env.GOOGLE_API_KEY);
 webPush.setVapidDetails(
 	"mailto:test@example.com",
 	process.env.PUBLIC_VAPID_KEY,
@@ -362,22 +363,24 @@ export const deleteTSS = async (req, res, next) => {
 
 export const checkTSS = async (req, res, next) => {
 	const subscription = req.body;
-	//or req.body.endpoint
-	res.status(201).json({});
-
-	const payload = JSON.stringify({
-		title:
-			"Ride as much or as little, as long or as short as you feel. But ride!",
-		text: "Last training was done 3 days ago",
+	let newSubscription = req.body;
+	Object.assign(newSubscription, { athlete_id: req.params.athleteid });
+	newSubscription = new Subscription(newSubscription);
+	await newSubscription.save();
+	res.status(201).json({ message: "success" });
+	console.log(newSubscription);
+	console.log("helo");
+	return await new Promise((resolve) => {
+		pushIntervalID = setInterval(() => {
+			const payload = JSON.stringify({
+				title: "Remember why you started!",
+				body: "Last training was done 3 days ago",
+			});
+			webPush
+				.sendNotification(subscription, payload)
+				.catch(() => clearInterval(pushIntervalID));
+		}, 60000);
 	});
-	pushIntervalID = setInterval(() => {
-		webPush
-			.sendNotification(subscription, payload)
-			.catch(() => clearInterval(pushIntervalID));
-	}, 60000);
-	webPush;
-
-	next();
 };
 
 export const check3Days = async (req, res, next) => {
