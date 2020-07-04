@@ -53,7 +53,7 @@ class Authentication extends Component {
 		);
 		this.askPermission();
 	};
-	async askPermission() {
+	askPermission = async () => {
 		const permissionResult_1 = await new Promise(function (resolve, reject) {
 			const permissionResult = Notification.requestPermission(function (
 				result
@@ -67,7 +67,7 @@ class Authentication extends Component {
 		if (permissionResult_1 !== "granted") {
 			throw new Error("We weren't granted permission.");
 		}
-	}
+	};
 	changeHandler = (event, formElementName) => {
 		const name = formElementName;
 		const value = event.target.value;
