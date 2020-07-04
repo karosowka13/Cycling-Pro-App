@@ -12,7 +12,6 @@ import classes from "./Profile.module.css";
 class Profile extends Component {
 	state = {
 		modalShow: true,
-		edit: false,
 	};
 
 	componentDidMount() {
@@ -21,19 +20,14 @@ class Profile extends Component {
 
 	submitHandler = (event) => {
 		event.preventDefault();
-		if (this.state.edit) {
-			this.props.updateProfile(this.props.userId, this.props.profileData);
-		}
+		this.props.updateProfile(this.props.userId, this.props.profileData);
+
 		this.props.history.push({ pathname: "/" });
 	};
 
 	deleteHandler = () => {
 		this.props.deleteProfile(this.props.userId);
 		this.props.history.push({ pathname: "/logout" });
-	};
-
-	editHandler = () => {
-		this.setState({ edit: true });
 	};
 
 	cancelHandler = () => {
@@ -43,8 +37,7 @@ class Profile extends Component {
 	render() {
 		let buttons = null;
 		let content = [];
-		let typeInput = "number";
-		let pattern = "[0-9]";
+
 		if (this.props.loading) {
 			content = <Spinner />;
 		} else if (this.props.profileData) {
@@ -58,25 +51,27 @@ class Profile extends Component {
 
 			form.map((formElement) => {
 				let suffix = null;
+				let typeInput = "number";
+				let pattern = "[0-9]";
 				if (formElement.id === "weight") {
 					suffix = "kg";
 				} else if (formElement.id === "height") {
 					suffix = "cm";
-					formElement.value = formElement.value * 100000;
 				} else if (formElement.id === "default_max_heart_rate") {
 					formElement = null;
 				} else if (formElement.id.match(/heart_rate/g)) {
 					suffix = "bmp";
 				} else if (formElement.id === "gender") {
 					typeInput = "text";
-					pattern = "[A-Za-z]";
+					suffix = " ";
+				} else if (formElement.id === "age") {
+					suffix = " ";
 				}
 				if (formElement !== null) {
 					let name = formElement.id.replace(/_/g, " ");
 					name = name.replace(/default/g, "");
 					content.push(
 						<TextInput
-							filledinput={!this.state.edit ? 1 : 0}
 							suffix={suffix}
 							key={name}
 							type={name}
@@ -109,7 +104,7 @@ class Profile extends Component {
 		}
 
 		return (
-			<Modal show={this.state.modalShow} modalClosed={this.submitHandler}>
+			<Modal show={this.state.modalShow} modalClosed={this.cancelHandler}>
 				<div className={classes.Form}>
 					<h2>Profile</h2>
 					{content}

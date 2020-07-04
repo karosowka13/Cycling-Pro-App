@@ -61,6 +61,7 @@ export const changeProfileHandler = (event, data) => {
 };
 
 export const updateProfile = (userId, data) => {
+	console.log(data);
 	return (dispatch) => {
 		const queryParams = "/athletes/" + userId;
 		axios
@@ -68,7 +69,7 @@ export const updateProfile = (userId, data) => {
 				data,
 			})
 			.then((res) => {
-				dispatch(updateProfileSuccess);
+				dispatch(updateProfileSuccess());
 			})
 			.catch((err) => {
 				dispatch(fetchProfileFail(err));

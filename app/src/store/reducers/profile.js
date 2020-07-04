@@ -26,17 +26,23 @@ const fetchProfileStart = (state, action) => {
 const fetchProfileSuccess = (state, action) => {
 	let oneRecord = {};
 	let newest = {};
-	for (let key in action.profileData) {
-		if (state.profileData[key] !== undefined) {
-			oneRecord[key] = action.profileData[key];
-			Object.assign(newest, updateObject(state.profileData, oneRecord));
+	if (action.profileData.age) {
+		for (let key in action.profileData) {
+			if (state.profileData[key] !== undefined) {
+				oneRecord[key] = action.profileData[key];
+				Object.assign(newest, updateObject(state.profileData, oneRecord));
+			}
 		}
-	}
-	return updateObject(state, {
-		profileData: newest,
-		loading: false,
-		success: true,
-	});
+		return updateObject(state, {
+			profileData: newest,
+			loading: false,
+			success: true,
+		});
+	} else
+		return updateObject(state, {
+			loading: false,
+			success: true,
+		});
 };
 
 const changeProfile = (state, action) => {
