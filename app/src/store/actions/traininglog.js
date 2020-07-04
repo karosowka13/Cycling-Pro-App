@@ -47,6 +47,25 @@ export const loadTraininglog = (trainingLog, userId) => {
 	};
 };
 
+export const loadMultipleTraining = (files, userId) => {
+	return (dispatch) => {
+		dispatch(traininglogStart());
+		console.log(files);
+		axios
+			.post(process.env.REACT_APP_SERVER + "/upload/multi", files, {
+				headers: { user: userId, "Content-Type": "multipart/form-data" },
+			})
+			.then((response) => {
+				console.log(response);
+				dispatch(traininglogSuccess(response.data));
+			})
+			.catch((err) => {
+				console.log(err);
+				dispatch(traininglogFail(err.response.data || "Unexpected error"));
+			});
+	};
+};
+
 export const fetchTrainingsSuccess = (trainings) => {
 	return {
 		type: actionTypes.FETCH_TRAININGS_SUCCESS,

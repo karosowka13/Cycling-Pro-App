@@ -3,6 +3,7 @@ import classes from "./Toolbar.module.css";
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
 import Menu from "../Drawer/Menu/Menu";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 
 const toolbar = (props) => (
 	<header className={classes.Toolbar}>
@@ -11,20 +12,19 @@ const toolbar = (props) => (
 		</div>
 		<div className={classes.Logo}>
 			<Logo />
-		</div>{" "}
-		{/* <div className={classes.ButtonIcon}>
-			<PictureAsPdfIcon fontSize="inherit" />
+		</div>
+		<div className={classes.ButtonIcon}>
 			<label htmlFor="multi">
 				<CloudUploadIcon fontSize="inherit" />
 			</label>
 			<input
 				type="file"
+				multiple
 				id="multi"
 				onChange={props.onChange}
 				onClick={(event) => (event.target.value = null)}
-				multiple
 			/>
-		</div> */}
+		</div>
 		<nav className={classes.DesktopOnly}>
 			<NavigationItems isAuth={props.isAuth} />
 		</nav>

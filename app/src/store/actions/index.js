@@ -1,5 +1,10 @@
 export { auth, logout, authCheckState, setAuthRedirectPath } from "./auth";
-export { loadTraininglog, fetchTrainings, deleteTraining } from "./traininglog";
+export {
+	loadTraininglog,
+	fetchTrainings,
+	deleteTraining,
+	loadMultipleTraining,
+} from "./traininglog";
 export { loadChartData } from "./chart";
 export {
 	fetchStatistics,
