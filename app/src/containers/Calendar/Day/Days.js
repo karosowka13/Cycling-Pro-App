@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import * as dateFns from "date-fns";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
-
+import Tooltip from "rc-tooltip";
+import "rc-tooltip/assets/bootstrap.css";
 import axios from "axios";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 import ButtonIcon from "../../../components/UI/ButtonIcon/ButtonIcon";
@@ -99,11 +100,18 @@ class Day extends Component {
 						trainedDay = dateFns.parseISO(trainedDay);
 						if (dateFns.isSameDay(cloneDay, trainedDay)) {
 							trainingIcon.push(
-								<DirectionsBikeIcon
-									key={cloneDay}
-									style={{ fontSize: "inherit", cursor: "pointer" }}
-									onClick={this.props.showRide}
-								/>
+								<Tooltip
+									placement="topRight"
+									trigger={["hover"]}
+									mouseLeaveDelay="0.1"
+									overlay={<span>View training</span>}
+								>
+									<DirectionsBikeIcon
+										key={cloneDay}
+										style={{ fontSize: "inherit", cursor: "pointer" }}
+										onClick={this.props.showRide}
+									/>
+								</Tooltip>
 							);
 						}
 					});
@@ -126,11 +134,18 @@ class Day extends Component {
 					if (i === 6) {
 						addTSSButton = (
 							<div className={classes.AddMentalTSS}>
-								<ChatIcon
-									style={{ fontSize: "inherit", cursor: "pointer" }}
-									btntype="EditIcon"
-									onClick={this.props.addTSS}
-								/>
+								<Tooltip
+									placement="topRight"
+									trigger={["hover"]}
+									mouseLeaveDelay="0.1"
+									overlay={<span>Extra TSS</span>}
+								>
+									<ChatIcon
+										style={{ fontSize: "inherit", cursor: "pointer" }}
+										btntype="EditIcon"
+										onClick={this.props.addTSS}
+									/>
+								</Tooltip>
 							</div>
 						);
 					}
@@ -142,6 +157,7 @@ class Day extends Component {
 					>
 						<div className={classes.Container}>
 							<div className={classes.Number}>{dayNumber}</div>
+
 							<ButtonIcon
 								key={cloneDay.getTime() + 8}
 								btntype="AddCircleOutlineIcon"

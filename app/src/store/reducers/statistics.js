@@ -90,11 +90,11 @@ const changeTSSTime = (state, action) => {
 };
 
 const changeComment = (state, action) => {
-	let updatedComments = updateObject(state.comments, {
+	let updatedComments = updateObject(state.TSS, {
 		comments: action.comment,
 	});
 	console.log(updatedComments);
-	return updateObject(state, { comments: updatedComments });
+	return updateObject(state, { TSS: updatedComments });
 };
 
 const reducer = (state = initialState, action) => {

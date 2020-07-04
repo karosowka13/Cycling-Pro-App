@@ -6,11 +6,9 @@ import "rc-tooltip/assets/bootstrap.css";
 
 import axios from "axios";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
-import ButtonIcon from "../../../components/UI/ButtonIcon/ButtonIcon";
 import Button from "../../../components/UI/Button/Button";
 import Modal from "../../../components/UI/Modal/Modal";
 import Cleave from "cleave.js/react";
-import validate from "../../../components/Validation/Input/Validate";
 
 import classes from "./AddTSS.module.css";
 
@@ -77,28 +75,9 @@ class AddTSS extends Component {
 		}
 	}
 
-	boxToggleHandler = () => this.setState({ showBox: !this.state.showBox });
-
-	submitTSSHandler = () => {
-		let valid = [];
-		Object.keys(this.props.TSS).map((name) => {
-			if (
-				this.props.TSS[name].time !== null &&
-				this.props.TSS[name].time !== 0 &&
-				typeof this.props.TSS[name].time !== "undefined"
-			) {
-				valid.push(
-					validate(this.props.TSS[name].time, this.state.validationRules)
-				);
-			}
-		});
-
-		if (valid.length === 0 || !valid.includes(false)) {
-			this.props.addTSS(this.props.TSS, this.props.userId, this.props.day);
-			this.props.confirmHandler();
-		} else {
-			alert("Input time in hh:mm format");
-		}
+	confirmAddTSSHandler = () => {
+		this.props.addTSS(this.props.TSS, this.props.userId, this.props.day);
+		this.props.confirmHandler();
 	};
 
 	removeTSSHandler = () => {
@@ -124,27 +103,126 @@ class AddTSS extends Component {
 			) {
 				let icon = null;
 				if (name === "study") {
-					icon = <SchoolIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<SchoolIcon />
+						</Tooltip>
+					);
 				} else if (name === "exam") {
-					icon = <MenuBookIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<MenuBookIcon />
+						</Tooltip>
+					);
 				} else if (name === "race") {
-					icon = <EmojiEventsIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<EmojiEventsIcon />
+						</Tooltip>
+					);
 				} else if (name === "housework") {
-					icon = <HomeWorkIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<HomeWorkIcon />
+						</Tooltip>
+					);
 				} else if (name === "party") {
-					icon = <LocalBarIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<LocalBarIcon />
+						</Tooltip>
+					);
 				} else if (name === "concerns") {
-					icon = <SentimentDissatisfiedIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<SentimentDissatisfiedIcon />
+						</Tooltip>
+					);
 				} else if (name === "journey") {
-					icon = <FlightTakeoffIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<FlightTakeoffIcon />
+						</Tooltip>
+					);
 				} else if (name === "shopping") {
-					icon = <LocalGroceryStoreIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<LocalGroceryStoreIcon />
+						</Tooltip>
+					);
 				} else if (name === "sickness") {
-					icon = <HealingIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<HealingIcon />
+						</Tooltip>
+					);
 				} else if (name === "workout") {
-					icon = <FitnessCenterIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<FitnessCenterIcon />
+						</Tooltip>
+					);
 				} else if (name === "others") {
-					icon = <CheckBoxOutlineBlankIcon />;
+					icon = (
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>{name}</span>}
+						>
+							<CheckBoxOutlineBlankIcon />
+						</Tooltip>
+					);
 				}
 				let onStartValue = 0;
 				if (TSSData[name].value !== null && TSSData[name].value !== 0) {
@@ -157,49 +235,55 @@ class AddTSS extends Component {
 				form.push(
 					<React.Fragment>
 						<div key={name.split("", 4)} className={classes.HintDisplay}>
-							<div className={classes.Icon}>
-								<Tooltip
-									placement="topRight"
-									trigger={["hover"]}
-									mouseLeaveDelay="0.1"
-									overlay={<span>{name}</span>}
-								>
-									{icon}
-								</Tooltip>
-							</div>
+							<div className={classes.Icon}>{icon}</div>
 						</div>
-
-						<Cleave
-							key={name}
-							className={classes.TimeInput}
-							placeholder="hh:mm"
-							options={{ time: true, timePattern: ["h", "m"] }}
-							value={onStartTime}
-							onChange={(event) => this.props.changeTSSTimeHandler(event, name)}
-						/>
-
-						<div className={classes.Slider}>
-							<PrettoSlider
-								key={name.split("", 3)}
-								valueLabelDisplay="auto"
-								aria-label="pretto slider"
-								value={onStartValue}
-								onChange={(event, value) =>
-									this.sliderChangeHandler(event, value, name)
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>duration</span>}
+						>
+							<Cleave
+								key={name}
+								className={classes.TimeInput}
+								placeholder="hh:mm"
+								options={{ time: true, timePattern: ["h", "m"] }}
+								value={onStartTime}
+								onChange={(event) =>
+									this.props.changeTSSTimeHandler(event, name)
 								}
 							/>
+						</Tooltip>
+
+						<div className={classes.Slider}>
+							<Tooltip
+								placement="topRight"
+								trigger={["hover"]}
+								mouseLeaveDelay="0.1"
+								overlay={<span>intensity</span>}
+							>
+								<PrettoSlider
+									key={name.split("", 3)}
+									valueLabelDisplay="auto"
+									aria-label="pretto slider"
+									value={onStartValue}
+									onChange={(event, value) =>
+										this.sliderChangeHandler(event, value, name)
+									}
+								/>
+							</Tooltip>
 						</div>
 					</React.Fragment>
 				);
 			}
 		});
 		let onStartText = null;
-		if (TSSData[comments] !== null && TSSData[comments] !== 0) {
-			onStartText = TSSData[comments];
+		if (TSSData.comments !== null && TSSData.comments !== 0) {
+			onStartText = TSSData.comments;
 		}
 		comments = (
 			<div className={classes.Comment}>
-				<p>Comments and feelings after this training cycle:</p>
+				<p>Comments after this training cycle:</p>
 				<textarea
 					value={onStartText}
 					onChange={(event, value) =>
@@ -211,10 +295,14 @@ class AddTSS extends Component {
 		buttons = (
 			<div key={"buttons2"} className={classes.Buttons}>
 				{/* <ButtonIcon btntype="DeleteIcon" onClick={this.removeTSSHandler} /> */}
-				<Button clicked={this.props.confirmHandler} btnType="Small">
+				<Button clicked={this.confirmHandler} btnType="Small">
 					Cancel
 				</Button>
-				<Button key="submit" clicked={this.submitTSSHandler} btnType="Small">
+				<Button
+					key="submit"
+					clicked={this.confirmAddTSSHandler}
+					btnType="Small"
+				>
 					Done
 				</Button>
 			</div>
@@ -225,7 +313,7 @@ class AddTSS extends Component {
 				show={this.state.modalShow}
 				modalClosed={this.props.confirmHandler}
 			>
-				<h2>Include additional stress factors that impact your form!</h2>
+				<h2 className={classes.Title}>Additional stress factors this week:</h2>
 				<div className={classes.Form}>
 					{form}
 					{comments}

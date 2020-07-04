@@ -6,6 +6,11 @@
 	align-items: start;
 	justify-items: start;
 }
+.Title {
+	font-family: "Roboto", sans-serif;
+	letter-spacing: 0.1em;
+	color: rgba(0, 0, 0, 0.8);
+}
 
 .Icon {
 	grid-column: 1 / 2;
@@ -57,7 +62,7 @@
 }
 .Comment p {
 	font-family: "Roboto", sans-serif;
-	letter-spacing: 0.15em;
+	letter-spacing: 0.1em;
 	color: rgba(0, 0, 0, 0.8);
 	font-weight: bold;
 	margin-top: 6px;
