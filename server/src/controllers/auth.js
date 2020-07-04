@@ -1,4 +1,4 @@
-import { validationResult } from "../../dist/node_modules/express-validator";
+import { validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import Athlete from "../models/athlete";
@@ -94,7 +94,7 @@ export const createNewAthlete = async (req, res, next) => {
 		const salt = await bcrypt.genSalt(10);
 		newAthlete.password = await bcrypt.hash(password, salt);
 		await newAthlete.save();
-		const localId = athlete._id;
+		const localId = newAthlete._id;
 		const expiresIn = 3600;
 		const payload = {
 			user: {
@@ -117,9 +117,6 @@ export const createNewAthlete = async (req, res, next) => {
 			}
 		);
 	} catch (err) {
-		console.error(e);
-		res.status(500).json({
-			message: "Server Error",
-		});
+		next(err);
 	}
 };

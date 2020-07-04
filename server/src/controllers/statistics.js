@@ -2,7 +2,7 @@ import Training from "../models/training";
 import TSS from "../models/tss";
 import webPush from "web-push";
 
-webpush.setGCMAPIKey(process.env.GOOGLE_API_KEY);
+webPush.setGCMAPIKey(process.env.GOOGLE_API_KEY);
 webPush.setVapidDetails(
 	"mailto:test@example.com",
 	process.env.PUBLIC_VAPID_KEY,

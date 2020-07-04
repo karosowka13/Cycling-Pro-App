@@ -9,7 +9,6 @@ import {
 	createTSS,
 	deleteTSS,
 	getTSS,
-,
 } from "../controllers/statistics";
 const router = express.Router({ mergeParams: true });
 
@@ -21,7 +20,5 @@ router.get("/year", getYearStatistics); //get year statistics
 router.put("/TSS", createTSS); //create/update TSS data
 router.get("/TSS/:day", getTSS); //get TSS data
 router.delete("/TSS/:id", deleteTSS); //delete TSS data
-
-
 
 export default router;
