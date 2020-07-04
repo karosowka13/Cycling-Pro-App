@@ -21,8 +21,9 @@ export const getAthlete = async (req, res, next) => {
 export const updateAthlete = async (req, res, next) => {
 	try {
 		const athlete = await Athlete.findByIdAndUpdate(
-			req.params.athleteid,
-			req.body
+			{ _id: req.params.athleteid },
+			req.body.data,
+			{ new: true }
 		);
 		res.json(athlete);
 	} catch (err) {
