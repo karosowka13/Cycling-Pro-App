@@ -1,6 +1,8 @@
 import React, { Component } from "react";
+import ReactDOM from "react-dom";
 import { connect } from "react-redux";
 import * as actions from "../../../store/actions/index";
+import "rc-tooltip/assets/bootstrap.css";
 
 import axios from "axios";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
@@ -23,7 +25,7 @@ import HealingIcon from "@material-ui/icons/Healing";
 import SentimentDissatisfiedIcon from "@material-ui/icons/SentimentDissatisfied";
 import FitnessCenterIcon from "@material-ui/icons/FitnessCenter";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-
+import Tooltip from "rc-tooltip";
 import { withStyles } from "@material-ui/core/styles";
 import Slider from "@material-ui/core/Slider";
 
@@ -82,7 +84,8 @@ class AddTSS extends Component {
 		Object.keys(this.props.TSS).map((name) => {
 			if (
 				this.props.TSS[name].time !== null &&
-				this.props.TSS[name].time !== 0
+				this.props.TSS[name].time !== 0 &&
+				typeof this.props.TSS[name].time !== "undefined"
 			) {
 				valid.push(
 					validate(this.props.TSS[name].time, this.state.validationRules)
@@ -154,8 +157,18 @@ class AddTSS extends Component {
 				form.push(
 					<React.Fragment>
 						<div key={name.split("", 4)} className={classes.HintDisplay}>
-							<div className={classes.Icon}>{icon}</div>
+							<div className={classes.Icon}>
+								<Tooltip
+									placement="topRight"
+									trigger={["hover"]}
+									mouseLeaveDelay="0.1"
+									overlay={<span>{name}</span>}
+								>
+									{icon}
+								</Tooltip>
+							</div>
 						</div>
+
 						<Cleave
 							key={name}
 							className={classes.TimeInput}
@@ -164,6 +177,7 @@ class AddTSS extends Component {
 							value={onStartTime}
 							onChange={(event) => this.props.changeTSSTimeHandler(event, name)}
 						/>
+
 						<div className={classes.Slider}>
 							<PrettoSlider
 								key={name.split("", 3)}
@@ -185,7 +199,7 @@ class AddTSS extends Component {
 		}
 		comments = (
 			<div className={classes.Comment}>
-				<p>Comments and feelings after this training cycle</p>
+				<p>Comments and feelings after this training cycle:</p>
 				<textarea
 					value={onStartText}
 					onChange={(event, value) =>
@@ -211,6 +225,7 @@ class AddTSS extends Component {
 				show={this.state.modalShow}
 				modalClosed={this.props.confirmHandler}
 			>
+				<h2>Include additional stress factors that impact your form!</h2>
 				<div className={classes.Form}>
 					{form}
 					{comments}
