@@ -10,6 +10,7 @@ import TrainingSummary from "../../../components/DisplayTrainingData/TrainingSum
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Button from "../../../components/UI/Button/Button";
 import Chart from "../../../components/DisplayTrainingData/Charts/chart";
+import ChartsMobile from "../../../components/DisplayTrainingData/ChartsMobile/ChartsMobile";
 import Map from "../../../components/DisplayTrainingData/Map/Map";
 import Modal from "../../../components/UI/Modal/Modal";
 import classes from "./RideDataDisplay.module.css";
@@ -66,7 +67,12 @@ class RideDataDisplay extends Component {
 			this.state.displaying === "Chart"
 		) {
 			if (this.props.chartData) {
-				content = <Chart key="chart" records={this.props.chartData} />;
+				content = (
+					<React.Fragment>
+						<Chart key="chart" records={this.props.chartData} />
+						<ChartsMobile key="chartM" records={this.props.chartData} />
+					</React.Fragment>
+				);
 			} else content = <p key="erroe">Error</p>;
 		} else if (
 			(this.props.successTraining || this.props.trainingData) &&

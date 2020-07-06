@@ -1,8 +1,9 @@
 import Training from "../models/training";
 import TSS from "../models/tss";
+import Subscription from "../models/subscription";
 import webPush from "web-push";
 
-webPush.setGCMAPIKey(process.env.GOOGLE_API_KEY);
+//webPush.setGCMAPIKey(process.env.GOOGLE_API_KEY);
 webPush.setVapidDetails(
 	"mailto:test@example.com",
 	process.env.PUBLIC_VAPID_KEY,
@@ -315,7 +316,6 @@ export const getOnloadStatistics = async (req, res, next) => {
 };
 
 export const createTSS = async (req, res, next) => {
-	console.log(req.body);
 	try {
 		const tss = await TSS.updateOne(
 			{
@@ -362,20 +362,23 @@ export const deleteTSS = async (req, res, next) => {
 
 export const checkTSS = async (req, res, next) => {
 	const subscription = req.body;
-	//or req.body.endpoint
-	res.status(201).json({});
-
-	const payload = JSON.stringify({
-		title: "Push notifications with Service Workers",
+	let newSubscription = req.body;
+	Object.assign(newSubscription, { athlete_id: req.params.athleteid });
+	newSubscription = new Subscription(newSubscription);
+	await newSubscription.save();
+	res.status(201).json({ message: "success" });
+	return await new Promise((resolve) => {
+		pushIntervalID = setInterval(() => {
+			const payload = JSON.stringify({
+				title: "Remember why you've started!",
+				body: "You haven't trained recently.",
+			});
+			webPush
+				.sendNotification(subscription, payload)
+				.catch(() => clearInterval(pushIntervalID));
+		}, 86400000);
+		//24h
 	});
-	pushIntervalID = setInterval(() => {
-		webPush
-			.sendNotification(subscription, payload)
-			.catch(() => clearInterval(pushIntervalID));
-	}, 60000);
-	webPush;
-
-	next();
 };
 
 export const check3Days = async (req, res, next) => {
@@ -394,12 +397,27 @@ export const check3Days = async (req, res, next) => {
 		0
 	);
 	last7 = new Date(last7);
+	let last3 = new Date(from.getTime() - 3 * 24 * 60 * 60 * 1000).setHours(
+		0,
+		0,
+		0,
+		0
+	);
+	last3 = new Date(last3);
 
-	try {
+	const athleteId = req.params.athlete_id;
+	const subscription = req.body;
+	let newSubscription = req.body;
+	Object.assign(newSubscription, { athlete_id: athleteId });
+	newSubscription = new Subscription(newSubscription);
+	await newSubscription.save();
+	res.status(201).json({ message: "success" });
+
+	pushIntervalID = setInterval(async () => {
 		const Week = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: req.params.athleteid,
+					athlete_id: athleteId,
 					time_created: {
 						$gte: last7,
 						$lte: new Date(),
@@ -414,7 +432,7 @@ export const check3Days = async (req, res, next) => {
 		const Month = await Training.aggregate([
 			{
 				$match: {
-					athlete_id: req.params.athleteid,
+					athlete_id: athleteId,
 					time_created: {
 						$gte: last30,
 						$lte: new Date(),
@@ -430,7 +448,7 @@ export const check3Days = async (req, res, next) => {
 		const TSSMonth = await TSS.aggregate([
 			{
 				$match: {
-					athlete_id: req.params.athleteid,
+					athlete_id: athleteId,
 					day_assigned: { $gte: last30, $lte: new Date() },
 				},
 			},
@@ -448,7 +466,7 @@ export const check3Days = async (req, res, next) => {
 		const TSSWeek = await TSS.aggregate([
 			{
 				$match: {
-					athlete_id: req.params.athleteid,
+					athlete_id: athleteId,
 					day_assigned: { $gte: last7, $lte: new Date() },
 				},
 			},
@@ -491,19 +509,19 @@ export const check3Days = async (req, res, next) => {
 		const lastTrainingUpload = await TSS.aggregate([
 			{
 				$match: {
-					athlete_id: req.params.athleteid,
+					athlete_id: athleteId,
 					day_assigned: { $gte: last3, $lte: new Date() },
 				},
 			},
 		]);
-
+		console.log(lastTrainingUpload, totalTSSMonth, totalTSSWeek);
 		let payload = [];
-		if (lastTrainingUpload.length > 0) {
+		if (lastTrainingUpload.length <= 0) {
 			payload.push(
 				JSON.stringify({
 					title:
 						"Ride as much or as little, as long or as short as you feel. But ride!",
-					text: "Last training was done 3 days ago",
+					body: "Last training was done 3 days ago",
 				})
 			);
 		}
@@ -519,7 +537,7 @@ export const check3Days = async (req, res, next) => {
 			payload.push(
 				JSON.stringify({
 					title: "Take a rest! You have been training too hard in last 7 days!",
-					text: `${totalTSSWeek} TSS in last 7days`,
+					body: `${totalTSSWeek} TSS in last 7days`,
 				})
 			);
 		}
@@ -535,16 +553,10 @@ export const check3Days = async (req, res, next) => {
 			);
 		}
 
-		const subscription = req.body;
-		res.status(201).json({});
-		pushIntervalID = setInterval(() => {
-			webPush
-				.sendNotification(subscription, payload)
-				.catch(() => clearInterval(pushIntervalID));
-		}, 86400000);
-
-		next();
-	} catch (err) {
-		next(err);
-	}
+		webPush
+			.sendNotification(subscription, payload)
+			.catch(() => clearInterval(pushIntervalID));
+	}, 60000);
+	//86400000
+	next();
 };

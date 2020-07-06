@@ -7,7 +7,9 @@ self.addEventListener("push", (event) => {
 	const { title } = message;
 	let options = {
 		body: message.body,
-		icon: "LogoSmall.png",
+		badge: "Logo96.png",
+		image: "Logo96.png",
+		icon: "Logo96.png",
 		vibrate: [500, 100, 500],
 	};
 	/* The showNotification method is available on the registration object of the service worker.
@@ -95,7 +97,7 @@ workbox.routing.registerRoute(
 	})
 );
 workbox.routing.registerRoute(
-	new RegExp("^http:localhost"),
+	new RegExp("^https://cycling-server-hrwkzvlbsa-ew.a.run.app/api"),
 	new workbox.strategies.NetworkFirst({
 		cacheName: "training",
 		plugins: [
