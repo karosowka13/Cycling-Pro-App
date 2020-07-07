@@ -14,7 +14,7 @@ class routeMap extends Component {
 			}
 			let center = centerGeolocation(polyline);
 			map = (
-				<div className={classes.Map}>
+				<div className={classes.Map} key="mapa">
 					<meta
 						name="viewport"
 						content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
@@ -24,6 +24,7 @@ class routeMap extends Component {
 						style={{ height: "300px", width: "500px" }}
 						center={center}
 						zoom={12}
+						key="maprendered"
 					>
 						<TileLayer
 							url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -33,7 +34,7 @@ class routeMap extends Component {
 					</Map>
 				</div>
 			);
-		} else map = <h3>Map is unavaliable.</h3>;
+		} else map = <h3 key="unavaliable">Map is unavaliable.</h3>;
 
 		return [map];
 	}

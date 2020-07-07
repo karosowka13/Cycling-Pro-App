@@ -87,7 +87,7 @@ class RideDataDisplay extends Component {
 			this.state.displaying === "Map"
 		) {
 			if (this.props.chartData) {
-				content = <Map key="map" coordinates={this.props.chartData} />;
+				content = <Map key="mapp" coordinates={this.props.chartData} />;
 			}
 		} else if (this.props.error) {
 			content = <h1 key="erroree">Error</h1>;

@@ -8,22 +8,22 @@ const withErrorHandler = (WrappedComponent, axios) => {
 			error: null,
 		};
 
-		componentDidMount() {
-			this.reqInterceptor = axios.interceptors.request.use((req) => {
-				this.setState({ error: null });
-				return req;
-			});
-			this.resInterceptor = axios.interceptors.response.use(
-				(res) => res,
-				(error) => {
-					console.log(error);
-					this.setState({ error: error });
-					return Promise.reject(error);
-				}
-			);
-		}
+		// componentDidMount() {
+		// 	this.reqInterceptor = axios.interceptors.request.use((req) => {
+		// 		this.setState({ error: null });
+		// 		return req;
+		// 	});
+		// 	this.resInterceptor = axios.interceptors.response.use(
+		// 		(res) => res,
+		// 		(error) => {
+		// 			console.log(error);
+		// 			this.setState({ error: error });
+		// 			return Promise.reject(error);
+		// 		}
+		// 	);
+		// }
 
-		componentDidUpdate() {
+		UNSAFE_componentWillMount() {
 			this.reqInterceptor = axios.interceptors.request.use((req) => {
 				console.log(req);
 				this.setState({ error: req.error });
@@ -39,6 +39,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
 			);
 		}
 
+		// clear interceptors for prevent using much more than it's needed for each separete component
 		componentWillUnmount() {
 			axios.interceptors.request.eject(this.reqInterceptor);
 			axios.interceptors.response.eject(this.resInterceptor);
@@ -49,6 +50,7 @@ const withErrorHandler = (WrappedComponent, axios) => {
 		};
 
 		render() {
+			console.log(this.state.error);
 			return (
 				<React.Fragment>
 					<Modal
