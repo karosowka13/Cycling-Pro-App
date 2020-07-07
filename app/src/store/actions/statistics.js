@@ -57,6 +57,7 @@ export const removeTSSSuccess = (TSS) => {
 		TSS: TSS,
 	};
 };
+
 export const addTSS = (TSS, userId, day) => {
 	Object.keys(TSS).map((name) => {
 		if (TSS[name].time !== null && TSS[name].time) {
@@ -103,12 +104,29 @@ export const fetchTSS = (userId, day) => {
 			.get(process.env.REACT_APP_SERVER + queryParams)
 			.then((res) => {
 				let TSS = res.data[0];
-				Object.keys(TSS).map((name) => {
-					if (TSS[name].time) {
-						TSS[name].time = formatTime(TSS[name].time);
-					}
-				});
-				if (TSS.length !== 0) {
+				console.log(TSS, res.data[0]);
+				if (res.data.length > 0) {
+					Object.keys(TSS).map((name) => {
+						if (TSS[name].time) {
+							TSS[name].time = formatTime(TSS[name].time);
+						}
+					});
+					dispatch(addTSSSuccess(TSS));
+				} else {
+					TSS = {
+						study: { value: 0, time: "" },
+						exam: { value: 0, time: "" },
+						race: { value: 0, time: "" },
+						housework: { value: 0, time: "" },
+						party: { value: 0, time: "" },
+						journey: { value: 0, time: "" },
+						shopping: { value: 0, time: "" },
+						sickness: { value: 0, time: "" },
+						workout: { value: 0, time: "" },
+						concerns: { value: 0, time: "" },
+						others: { value: 0, time: "" },
+						comments: "",
+					};
 					dispatch(addTSSSuccess(TSS));
 				}
 			})

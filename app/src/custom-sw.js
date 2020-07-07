@@ -8,7 +8,6 @@ self.addEventListener("push", (event) => {
 	let options = {
 		body: message.body,
 		badge: "Logo96.png",
-		image: "Logo96.png",
 		icon: "Logo96.png",
 		vibrate: [500, 100, 500],
 	};

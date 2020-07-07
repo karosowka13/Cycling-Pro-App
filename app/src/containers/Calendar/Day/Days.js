@@ -96,11 +96,12 @@ class Day extends Component {
 				const cloneDay = day;
 				const trainingIcon = [];
 				if (trainedDays.length > 0) {
-					trainedDays.forEach((trainedDay) => {
+					trainedDays.forEach((trainedDay, index) => {
 						trainedDay = dateFns.parseISO(trainedDay);
 						if (dateFns.isSameDay(cloneDay, trainedDay)) {
 							trainingIcon.push(
 								<Tooltip
+									key={index}
 									placement="topRight"
 									trigger={["hover"]}
 									mouseLeaveDelay="0.1"

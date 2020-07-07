@@ -35,7 +35,23 @@ const fetchStatisticsSuccess = (state, action) => {
 };
 
 const fetchStatisticsFail = (state, action) => {
-	return updateObject(state, { loading: false });
+	return updateObject(state, {
+		TSS: {
+			study: { value: 0, time: "" },
+			exam: { value: 0, time: "" },
+			race: { value: 0, time: "" },
+			housework: { value: 0, time: "" },
+			party: { value: 0, time: "" },
+			journey: { value: 0, time: "" },
+			shopping: { value: 0, time: "" },
+			sickness: { value: 0, time: "" },
+			workout: { value: 0, time: "" },
+			concerns: { value: 0, time: "" },
+			others: { value: 0, time: "" },
+			comments: "",
+		},
+		loading: false,
+	});
 };
 
 const addTSSSuccess = (state, action) => {
@@ -63,6 +79,7 @@ const removeTSSSuccess = (state, action) => {
 		sickness: { value: 0, time: "" },
 		workout: { value: 0, time: "" },
 		others: { value: 0, time: "" },
+		comments: "",
 	};
 	return updateObject(state, {
 		TSS: updatedTSS,

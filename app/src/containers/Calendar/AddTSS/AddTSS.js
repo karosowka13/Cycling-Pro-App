@@ -93,7 +93,7 @@ class AddTSS extends Component {
 		let form = [];
 		let comments = null;
 		let TSSData = this.props.TSS;
-		Object.keys(TSSData).map((name) => {
+		Object.keys(TSSData).map((name, index) => {
 			if (
 				name !== "_id" &&
 				name !== "day_assigned" &&
@@ -225,7 +225,11 @@ class AddTSS extends Component {
 					);
 				}
 				let onStartValue = 0;
-				if (TSSData[name].value !== null && TSSData[name].value !== 0) {
+				if (
+					TSSData[name].value !== null &&
+					TSSData[name].value !== 0 &&
+					!isNaN(TSSData[name].value)
+				) {
 					onStartValue = TSSData[name].value;
 				}
 				let onStartTime = "";
@@ -233,10 +237,9 @@ class AddTSS extends Component {
 					onStartTime = TSSData[name].time;
 				}
 				form.push(
-					<React.Fragment>
-						<div key={name.split("", 4)} className={classes.HintDisplay}>
-							<div className={classes.Icon}>{icon}</div>
-						</div>
+					<React.Fragment key={index}>
+						<div className={classes.Icon}>{icon}</div>
+
 						<Tooltip
 							placement="topRight"
 							trigger={["hover"]}
@@ -255,24 +258,24 @@ class AddTSS extends Component {
 							/>
 						</Tooltip>
 
-						<div className={classes.Slider}>
-							<Tooltip
-								placement="topRight"
-								trigger={["hover"]}
-								mouseLeaveDelay="0.1"
-								overlay={<span>intensity</span>}
-							>
-								<PrettoSlider
-									key={name.split("", 3)}
-									valueLabelDisplay="auto"
-									aria-label="pretto slider"
-									value={onStartValue}
-									onChange={(event, value) =>
-										this.sliderChangeHandler(event, value, name)
-									}
-								/>
-							</Tooltip>
-						</div>
+						<Tooltip
+							placement="topRight"
+							trigger={["hover"]}
+							mouseLeaveDelay="0.1"
+							overlay={<span>intensity</span>}
+						>
+							<PrettoSlider
+								className={classes.Slider}
+								key={name.split("", 3)}
+								valueLabelDisplay="auto"
+								aria-label="pretto slider"
+								value={onStartValue}
+								defaultValue={onStartValue}
+								onChange={(event, value) =>
+									this.sliderChangeHandler(event, value, name)
+								}
+							/>
+						</Tooltip>
 					</React.Fragment>
 				);
 			}
@@ -295,7 +298,7 @@ class AddTSS extends Component {
 		buttons = (
 			<div key={"buttons2"} className={classes.Buttons}>
 				{/* <ButtonIcon btntype="DeleteIcon" onClick={this.removeTSSHandler} /> */}
-				<Button clicked={this.confirmHandler} btnType="Small">
+				<Button clicked={this.props.confirmHandler} btnType="Small">
 					Cancel
 				</Button>
 				<Button
