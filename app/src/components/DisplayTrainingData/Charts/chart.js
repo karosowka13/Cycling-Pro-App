@@ -192,7 +192,7 @@ class Chart extends Component {
 				],
 			};
 			chart.push(
-				<div id="chartContainer" className={classes.Chart}>
+				<div id="chartContainer" key="chartBig" className={classes.Chart}>
 					<CanvasJSChart
 						options={options}
 						onRef={(ref) => (this.chart = ref)}

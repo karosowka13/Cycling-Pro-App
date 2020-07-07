@@ -33,21 +33,65 @@ class ChartsMobile extends Component {
 			}
 			let minAltitude = Math.min(...Altitude);
 			options = {
-				exportFileName: `Training ${data[0].timestamp}`,
-				exportEnabled: true,
 				theme: "light2",
 				animationEnabled: true,
 				zoomEnabled: true,
 				width: 500,
-				axis2Y: [
+				height: 240,
+				axisY: [
+					{
+						//heart rate
+						minimum: 0,
+						tickColor: "rgba(196, 24, 47)",
+						labelFontColor: "rgba(196, 24, 47)",
+						gridThickness: 0,
+						margin: 0,
+						labelFontSize: 10,
+					},
+					{
+						//power
+						minimum: 0,
+						tickColor: "rgba(37, 124, 186)",
+						labelFontColor: "rgba(37, 124, 186)",
+						gridThickness: 0,
+						margin: 0,
+						labelFontSize: 10,
+					},
+					{
+						//cadence
+						minimum: 0,
+						tickColor: "rgba(34, 130, 37)",
+						labelFontColor: "rgba(34, 130, 37)",
+						gridThickness: 0,
+						margin: 0,
+						labelFontSize: 10,
+					},
+				],
+				axisY2: [
 					{
 						//ascent
 						viewportMinimum: minAltitude,
-						lineColor: "#f9f9f9",
-						titleFontColor: "#f9f9f9",
-						labelFontColor: "#f9f9f9",
+						lineColor: "rgba(94, 102, 107)",
+						titleFontColor: "rgba(94, 102, 107)",
+						labelFontColor: "rgba(94, 102, 107)",
 						margin: 0,
-						labelFontSize: 0,
+						labelFontSize: 10,
+					},
+					{
+						//temperature
+						lineColor: "rgba(86, 15, 145)",
+						titleFontColor: "rgba(86, 15, 145)",
+						labelFontColor: "rgba(86, 15, 145)",
+						margin: 0,
+						labelFontSize: 10,
+					},
+					{
+						//speed
+						lineColor: "rgba(227, 224, 48)",
+						titleFontColor: "rgba(227, 224, 48)",
+						labelFontColor: "rgba(227, 224, 48)",
+						margin: 0,
+						labelFontSize: 10,
 					},
 				],
 				axisX: {
@@ -59,6 +103,7 @@ class ChartsMobile extends Component {
 				legend: {
 					verticalAlign: "bottom",
 					horizontalAlign: "center",
+
 					cursor: "pointer",
 					itemclick: function (e) {
 						if (
@@ -82,6 +127,7 @@ class ChartsMobile extends Component {
 						name: "Heart rate",
 						color: "rgba(196, 24, 47,0.75)",
 						type: "spline",
+
 						markerSize: 0,
 						dataPoints: heartrate,
 					},
@@ -92,6 +138,7 @@ class ChartsMobile extends Component {
 						axisYIndex: 1,
 						type: "spline",
 						color: "rgba(37, 124, 186,0.9)",
+
 						markerSize: 0,
 						dataPoints: power,
 					},
@@ -99,8 +146,7 @@ class ChartsMobile extends Component {
 						showInLegend: true,
 						legendMarkerType: "circle",
 						name: "Cadence",
-						axisYType: "secondary",
-						axisYIndex: 0,
+						axisYIndex: 2,
 						color: "rgba(34, 130, 37,0.7)",
 						type: "spline",
 
@@ -113,6 +159,8 @@ class ChartsMobile extends Component {
 						name: "Altitude",
 						type: "area",
 						color: "rgba(94, 102, 107,0.40)",
+						axisYType: "secondary",
+
 						markerSize: 0,
 						dataPoints: altitude,
 					},
@@ -143,7 +191,7 @@ class ChartsMobile extends Component {
 				],
 			};
 			chart.push(
-				<div id="chartContainer" className={classes.Chart}>
+				<div id="chartContainer" key="chartMobile" className={classes.Chart}>
 					<CanvasJSChart
 						options={options}
 						onRef={(ref) => (this.chart = ref)}

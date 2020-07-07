@@ -60,3 +60,9 @@
 		place-content: center center;
 	}
 }
+
+@media (max-width: 500px) {
+	.Chart {
+		top: 100px;
+	}
+}
