@@ -63,7 +63,8 @@ class Stats extends Component {
 					month.push({ y: newValue, label: newKey });
 				}
 			});
-			if (this.props.stats.week > 0) {
+
+			if (this.props.stats.week.length > 0) {
 				Object.keys(recordWeek).forEach((key) => {
 					if (key !== "_id") {
 						let newKey = null;

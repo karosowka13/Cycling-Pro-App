@@ -1,86 +1,62 @@
 # Master Thesis: UI/UX design for sport's platforms
 
+## Description
+
 Nowadays there is high demand for fitness app, but those who are
 delivered by the sport vendors are not very efficient and user friendly.
-The main aim of the work is to provide web application with better UX/UI
+The main aim of the project is to provide web application with better UX/UI
 than available in the current market of sports devices applications.
-The work consists of conducting a survey in the group of athletes who
-use others app, defining the requirements for the project, designing an
-application, releasing and testing of the application and finally
-improving of the functionalities.
+On the basis of contacted survey amog 50 professional cyclists the requirements for the project were defined, implemented and tested by the users.
 
-## Main properties of the application:
-* Computation of TSS taking into account amount of sleep, additional acitvities, studies. 
-* Fullfilment of activiies which do not use garmin and summary of the training module once a week.
-* Automatization of marketing, reminder.
-* Predict the best hours of training depend of weather forecast.
-* Summary of the month available to download in pdf format with trainer comment.
-* Pedal Smoothne.
-* Torque effectivness.
+## Perview of the application
 
-## Work plan
-* Overview of popular sport's app.
-* Advanteges and disadvanteges of available platforms.
-* Neeeds of profeional cyclists' training.
-* Defining specification of application (UI/UC, archteture, backend, frontend)
-* Creating and app.
-* Tests.
-* Feedback from athlets.
-* Fix of error and improvement of functionalities.
-* Tests and feedback from athlets one more time.
-* Conclusions
+![responssiveversion](./images/responssiveleyout.png)
 
-### Defining functionality
-* Athleths can
-  * create an account
-  * retrieve lost passwords
-  * change passwords
-  * add his metrics (age, weight, height)
-  * plan training
-  * upload trainig from garmin automaticly
-  * upload training data manually
-  * make comments
-  * view statistics of workout
-  * view statistics of week and month
-  * view the best houres for training
-  * recive push notification
-  * assign to a trainer
-   
-* Trainer can
-  * creat an account
-  * retrieve lost passwords
-  * change passwords
-  * view metrics of athlets
-  * view workouts of athlets
-  * plan trainings
-  * upload athlets training mannualy
-  * make additional comments before and after workout
-  * view statistics of week/month and make comments on them
+### Desktop version
 
-### Sketch of Web App
-1.Mobile v1
-![Mobile v1](img/1.png =300x)
-![Mobile v1](img/2.png)
-2.Mobile v2
-![Mobile v2](img/1(1).png)
-![Mobile v2](img/2(1).png)
-3.Desktop v1
-![Desktop v1](img/Desktop(1).png = 500x)
-4.Desktop v2
-![Desktop v2](img/Desktop.png)
+![dashboard](./images/extraTSS.png)
+![tss](./images/HintsTSS.png)
 
-### Workflow plan
-* Homepage
-  * log in (a calendar with planned workouts)
-    * settings
-    * statistics
-  * log out (options to creat account and log in)
-    * create account
+### Mobile version
 
-### Prototype in Adobe XD or UXPin
+![mobileversion](./images/PWA.png)
+![pushnotification](./images/PushM.png)
 
-### Structure of SQL database
+## Functionality
 
-### Connection with Garmin devices
+Core functionalities of the application:
 
+- create an account,
+- delete the own account,
+- upload training from Garmin device,
+- delete training,
+- view the data from training,
+- create chart from training data,
+- view the map from training data,
+- display statistics from week,
+- display statistics from month,
+- add metrics to the profile,
+- edit metrics of the profile,
+- remove metrics of the profile,
+- add additional stress factors to the plan,
+- edit additional stress factor in the plan,
+- delete additional stress factor from the plan,
+- send push notification, while the particular value of TSS is reached,
+- send push notification, while the last training was uploaded 3 days ago,
+- the shortcut of the application on the screen,
+- the application is avaliable on the phone,
+- the application is avaliable in the browser.
 
+## Architecture of the application
+
+The schema of the entire structure of the application is in the picture below. Front-end is created in React JS library with just one HTML file and many JS and CSS files due to module approach. Static files are host on WWW Apache server. Back-end is built in Node.js, all requests are handled by the Express API and database objects are accessed using the mongoose ODM library. The data is stored in a non-relational database–mongoDB. Front-end and server are containerized in the Docker host. Nevertheless, database is established outside the Docker host. Since the current methods of establishing database in the container are unreliable and unstable for production build. When the Docker image of database is not in use it would be closed down as well as all data in it. To provide continuous work of the database in the container, it would be necessary to use Kubernetes orchestration system.
+
+![Architecture](./images/architektura.png)
+
+## DB structure
+
+![DBstructure](./images/newBase.png)
+
+## States of the app handled by Redux
+
+![Redux](./images/ReduxTree.png)

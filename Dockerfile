@@ -11,7 +11,7 @@ ENV REACT_APP_LOGIN https://cycling-server-hrwkzvlbsa-ew.a.run.app/api/auth/logi
 ENV REACT_APP_SIGNUP https://cycling-server-hrwkzvlbsa-ew.a.run.app/api/auth/signup
 
 #no souce code avaliable 
-#ENV GENERATE_SOURCEMAP=false
+ENV GENERATE_SOURCEMAP=false
 
 RUN npm install
 RUN npm run build
